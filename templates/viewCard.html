@@ -1,29 +1,34 @@
-{% extends 'base.html' %}
-
-
-{% block head %}
-<title>View card details</title>
-{% endblock %}
-
-{% block body %}
+{% extends 'base.html' %} {% block head %}
+<title>View card</title>
+{% endblock %} {% block body %}
 <div class="content">
-    <!-- {% set term = card.english %}
-    <h1>{{term}}</h1> -->
-    <!-- <h1>{{card.english}}</h1> -->
+  {% set term = card.english %}
+  <h1>{{term}}</h1>
 
-    <h3>insert hint</h3>
+  <button type="button" onclick="toggle_hint()">Toggle hint</button>
+  <div id="hint" style="visibility: hidden">this is the hint</div>
+  <!-- <form action="/viewHint" method="POST">
+    <input type="submit" value="View Hint" />
+  </form> -->
 
-    <!-- {% for mp4 in car%} -->
-    <!-- {% set mp4 = card.media["mp4s"][0] %}
-    <video width="320" height= "240" controls>
-        <source src= "{{mp4}}"
-            type="video/mp4">
-    </video> -->
-                    
-
-    <!-- <form action="/" method="POST">
-        <input type="text" name="content" id="content">
-        <input type="submit" value="Add Task">
-    </form> -->
+  {% set mp4 = card.media["mp4s"][0] %}
+  <video width="400" controls>
+    <source src="{{mp4}}" type="video/mp4" />
+  </video>
 </div>
+
+<!-- not sure why accessing an external js file isnt working -->
+<!-- <script>
+  src = "../js/toggle_hint.js";
+</script> -->
+<script>
+  function toggle_hint() {
+    el = document.getElementById("hint");
+    if (el.style.visibility == "hidden") {
+      el.style.visibility = "visible";
+    } else {
+      el.style.visibility = "hidden";
+    }
+  }
+</script>
 {% endblock %}
