@@ -57,8 +57,8 @@ def get_media(word, source='SIGNINGSAVVY'):
     return mp4s, labels
 
 # testing 
-print(get_media('cat'))
-print(get_media('avocado'))
-print(get_media('math'))
-print(get_media('computer science'))
+# print(get_media('happy'))
+# print(get_media('avocado'))
+# print(get_media('math'))
+# print(get_media('computer science'))
 # get_media('cat', source='LIFEPRINT')

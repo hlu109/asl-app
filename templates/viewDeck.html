@@ -2,7 +2,7 @@
 
 
 {% block head %}
-<title>View Cards in deck</title>
+<title>View cards in deck</title>
 {% endblock %}
 
 {% block body %}
@@ -12,13 +12,13 @@
     <table>
         <tr>
             <th>English</th>
-            <th>ASL</th>
+            <th>View Card</th>
             <!-- <th>Practice</th> -->
         </tr>
-        {% for term in deck.cards['term'] %}
+        {% for term in deck.cards['term'].tolist() %}
             <tr>
                 <td>{{ term }}</td>
-                <td>"placeholder for ASL video"</td>
+                <td><a href="/{{deck_name}}/{{term}}">View Card</a></td>
                 <!-- <td>
                     <a href="/{{deck_id}}/practice">Practice</a>
                 </td> -->
