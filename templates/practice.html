@@ -1,21 +1,26 @@
-{% extends 'base.html' %} {% block head %}
-<title>View card</title>
-{% endblock %} {% block body %}
+{% extends 'base.html' %} {% block body %}
 <div class="content">
   {% set term = card.english %}
+
   <h1>{{term}}</h1>
 
-  <button type="button" onclick="toggle_hint()">Toggle Hint</button>
+  <button type="button" onclick="toggle_hint()">Toggle hint</button>
   <div id="hint" style="visibility: hidden">this is the hint</div>
   <!-- <form action="/viewHint" method="POST">
     <input type="submit" value="View Hint" />
   </form> -->
 
-  <button type="button" onclick="view_back()">View Back</button>
-  {% set mp4 = card.media["mp4s"][0] %}
-  <video width="400" controls>
-    <source src="{{mp4}}" type="video/mp4" />
-  </video>
+  <button type="button" onclick="toggle_backside()">
+    Show back of flashcard
+  </button>
+  <div id="backside" style="visibility: hidden">
+    {% set mp4 = card.media["mp4s"][0] %}
+    <video width="400" controls>
+      <source src="{{mp4}}" type="video/mp4" />
+    </video>
+
+    <!-- add quality buttons here -->
+  </div>
 </div>
 
 <!-- not sure why accessing an external js file isnt working -->
@@ -32,8 +37,8 @@
     }
   }
 
-  function view_back() {
-    el = document.getElementById("hint");
+  function toggle_backside() {
+    el = document.getElementById("backside");
     if (el.style.visibility == "hidden") {
       el.style.visibility = "visible";
     } else {

@@ -58,8 +58,9 @@ class Card():
         # elif form == "ASLtoEng": self.qualASLtoEng = quality
         return quality
 
-    def reviewCard(self):
-        self.getQuality()
+    def reviewCard(self, quality):
+        # self.getQuality()
+        self.quality = quality
         self.lastReviewDate = datetime.today()
         if self.sm2Data == None:
             self.sm2Data = SMTwo.first_review(self.lastReviewDate, self.quality)

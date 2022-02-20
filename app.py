@@ -33,11 +33,31 @@ def view_deck(deck_name):
     return render_template("viewDeck.html", deck=deck, deck_name=deck_name)
 
 
-@app.route('/<string:deck_name>/practice')
+@app.route('/<string:deck_name>/practice', methods=['POST', 'GET'])
+# inputs: deck, queue of cards to learn today, mode: ASL or English first (add this later)
+# need button to reveal back of card
+# then need button for quality
+# then add checkbox to review again - bool
+# return post, quality, bool for review again
 def practice(deck_name):
     deck = all_decks[deck_name]
-    cards_to_practice = deck.learn_today  # list of cards
-    return "placeholder"
+    cards_to_practice = deck.learn_today  # deque of cards
+
+    if not cards_to_practice:  # if empty
+        return "placeholder"
+        # route back to view deck page
+
+    next_card = cards_to_practice.popleft()
+    print(type(next_card))
+    # front = True
+    # TODO: add code to deal with displaying english vs displaying ASL
+
+    if request.method == 'POST':
+        pass
+    else:
+        pass
+        return render_template("practice.html", card=next_card)
+    # return "placeholder"
 
 
 @app.route('/<string:deck_name>/<string:card_term>')

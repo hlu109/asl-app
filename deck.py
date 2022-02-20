@@ -1,6 +1,8 @@
 from card import *
 from datetime import datetime, timedelta
 import pandas as pd
+import random
+from collections import deque
 
 
 class Deck():
@@ -8,14 +10,14 @@ class Deck():
         self.cards = pd.DataFrame(
             columns=["next review date", "term", "quality", "card"])
         # self.allCards = pd.DataFrame(columns= ['Card'])
-        self.learn_today = []  # list of card objects
+        self.learn_today = deque([])  # deque of card objects
         self.size = 0
         # TODO add this
         self.progress = None  # % of cards that have 4 or higher quality score / total cards
 
     def get_todays_cards(self):
-        todays_cards = self.cards[self.cards['next review date'] ==
-                                  datetime.today()]['term'].tolist()
+        todays_cards = self.cards[self.cards['next review date'].date() <=
+                                  datetime.today().date()]['term'].tolist()
         return todays_cards
 
     def addCard(self, term, importance=1, tags=[]):
@@ -42,5 +44,7 @@ class Deck():
         return 0
 
     def practice(self):
-        self.learn_today = self.get_todays_cards()
-        pass
+        self.learn_today = self.get_todays_cards().sample(frac=1)
+        while (self.learn_today != None):
+            self.learn_today.iloc(0)
+            self.learn_today.iloc(0).drop
