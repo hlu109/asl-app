@@ -20,6 +20,20 @@
     </video>
 
     <!-- add quality buttons here -->
+    <form action="/{{deck_name}}/practice" method="POST">
+      <button type="submit" name="quality" value="5">5: Perfect (Easy)</button>
+      <button type="submit" name="quality" value="4">
+        4: Correct (Hesitant)
+      </button>
+      <button type="submit" name="quality" value="3">
+        3: Correct (Extremely Difficult)
+      </button>
+      <button type="submit" name="quality" value="2">
+        2: Incorrect (Tip of the Tongue)
+      </button>
+      <button type="submit" name="quality" value="1">1: Incorrect</button>
+      <button type="submit" name="quality" value="0">0: Blackout</button>
+    </form>
   </div>
 </div>
 

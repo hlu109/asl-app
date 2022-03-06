@@ -41,35 +41,37 @@ def view_deck(deck_name):
 # return post, quality, bool for review again
 def practice(deck_name):
     deck = all_decks[deck_name]
-    cards_to_practice = deck.learn_today  # deque of cards
+    if not deck.in_session:
+        deck.update_todays_cards()
+        deck.in_session = True
 
-    if not cards_to_practice:  # if empty
-        return "placeholder"
-        # route back to view deck page
+    if not deck.learn_today:  # if empty
+        deck.in_session = False
+        return "no more flashcards to practice today"
+        # TODO: route back to page that tells them they are done practicing
+        #on that page, add button to go back to deck
 
-    next_card = cards_to_practice.popleft()
-    print(type(next_card))
+    next_card_term = deck.learn_today.popleft()
+    next_card = getCard(deck_name, next_card_term)
     # front = True
     # TODO: add code to deal with displaying english vs displaying ASL
+    # (english front asl back)
 
     if request.method == 'POST':
-        pass
+        print('HANDLING POST REQUEST')
+        quality = int(request.form['quality'])
+        deck.updateProgress(next_card, quality)
+        return redirect('/' + deck_name + '/practice')
     else:
-        pass
-        return render_template("practice.html", card=next_card)
-    # return "placeholder"
+        return render_template("practice.html",
+                               deck_name=deck_name,
+                               card=next_card)
 
 
 @app.route('/<string:deck_name>/<string:card_term>')
 def view_card(deck_name, card_term):
     card = getCard(deck_name, card_term)
     return render_template("viewCard.html", card=card)
-
-
-@app.route('/<string:deck_name>/<string:card_term>/viewHint')
-def viewHint(deck_name, card_term):
-    card = getCard(deck_name, card_term)
-    pass
 
 
 ####### helper functions #######

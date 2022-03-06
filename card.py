@@ -35,7 +35,7 @@ class Card():
         # SMTwo.first_review(quality, datetime.today())
         self.lastReviewDate = None
         # This has the format "datetime.datetime(2022, 1, 13, 16, 50, 31, 568809)"
-        self.nextReviewDate = datetime.today()
+        self.nextReviewDate = datetime.today().date()
         self.tags = tags
         # self.qualEngtoASL = 0
         # self.qualASLtoEng = 0
@@ -48,22 +48,11 @@ class Card():
         # placeholder
         return media
 
-    def getQuality(self):
-        """ placeholder function for now. get the quality that the user selects
-            when the term is tested 
-        """
-        quality = None
+    def updateQuality(self, quality):
         self.quality = quality
-        # if form == "EngtoASL": self.qualEngtoASL = quality
-        # elif form == "ASLtoEng": self.qualASLtoEng = quality
-        return quality
-
-    def reviewCard(self, quality):
-        # self.getQuality()
-        self.quality = quality
-        self.lastReviewDate = datetime.today()
+        self.lastReviewDate = datetime.today().date()
         if self.sm2Data == None:
-            self.sm2Data = SMTwo.first_review(self.lastReviewDate, self.quality)
+            self.sm2Data = SMTwo.first_review(self.quality, self.lastReviewDate)
         else:
             self.sm2Data.review(self.lastReviewDate, self.quality)
         interval = timedelta(days=self.sm2Data.interval)
