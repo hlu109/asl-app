@@ -51,18 +51,23 @@ def practice(deck_name):
         # TODO: route back to page that tells them they are done practicing
         #on that page, add button to go back to deck
 
-    next_card_term = deck.learn_today.popleft()
-    next_card = getCard(deck_name, next_card_term)
+    print("\n\n\n\n\n", deck.learn_today, "\n\n\n\n\n")
+
     # front = True
     # TODO: add code to deal with displaying english vs displaying ASL
     # (english front asl back)
 
     if request.method == 'POST':
         print('HANDLING POST REQUEST')
-        quality = int(request.form['quality'])
-        deck.updateProgress(next_card, quality)
+        quality_term = request.form['quality-term']
+        quality = int(quality_term.split("-")[0])
+        term = quality_term.split("-")[1]
+
+        deck.updateProgress(term, quality)
         return redirect('/' + deck_name + '/practice')
     else:
+        next_card_term = deck.learn_today.popleft()
+        next_card = getCard(deck_name, next_card_term)
         return render_template("practice.html",
                                deck_name=deck_name,
                                card=next_card)
@@ -77,14 +82,16 @@ def view_card(deck_name, card_term):
 ####### helper functions #######
 def getCard(deck_name, card_term):
     deck = all_decks[deck_name]
-    card_entries = deck.cards[deck.cards['term'] == card_term]
-
-    if card_entries.empty:
+    # card_entries = deck.cards[deck.cards['term'] == card_term]
+    print(deck.cards)
+    if card_term in deck.cards.index:
+        card = deck.cards.at[card_term, 'card']
+    else:
         raise Exception("The card " + card_term + " doesn't exist")
-    elif len(card_entries) > 1:
-        raise Exception("There are multiple cards with the term " + card_term)
+    # elif len(card_entries) > 1:
+    #     raise Exception("There are multiple cards with the term " + card_term)
 
-    card = card_entries.card.values[0]
+    # card = card_entries.card.values[0]
     return card
 
 

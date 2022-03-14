@@ -54,7 +54,7 @@ class Card():
         if self.sm2Data == None:
             self.sm2Data = SMTwo.first_review(self.quality, self.lastReviewDate)
         else:
-            self.sm2Data.review(self.lastReviewDate, self.quality)
+            self.sm2Data.review(self.quality, self.lastReviewDate)
         interval = timedelta(days=self.sm2Data.interval)
         # TODO: update algorithm for shorter intervals (e.g. 10 min)
         self.nextReviewDate = self.lastReviewDate + interval

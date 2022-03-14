@@ -17,6 +17,3 @@ terms = [
 
 for term in terms:
     test_deck.addCard(term)
-
-print(type(test_deck.cards[test_deck.cards['term'] == 'learn'].card.values[0]))
-# print(test_deck.cards[test_deck.cards['term']=='learn'].loc[:, "card"].head())

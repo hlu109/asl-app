@@ -21,18 +21,24 @@
 
     <!-- add quality buttons here -->
     <form action="/{{deck_name}}/practice" method="POST">
-      <button type="submit" name="quality" value="5">5: Perfect (Easy)</button>
-      <button type="submit" name="quality" value="4">
+      <button type="submit" name="quality-term" value="5-{{term}}">
+        5: Perfect (Easy)
+      </button>
+      <button type="submit" name="quality-term" value="4-{{term}}">
         4: Correct (Hesitant)
       </button>
-      <button type="submit" name="quality" value="3">
+      <button type="submit" name="quality-term" value="3-{{term}}">
         3: Correct (Extremely Difficult)
       </button>
-      <button type="submit" name="quality" value="2">
+      <button type="submit" name="quality-term" value="2-{{term}}">
         2: Incorrect (Tip of the Tongue)
       </button>
-      <button type="submit" name="quality" value="1">1: Incorrect</button>
-      <button type="submit" name="quality" value="0">0: Blackout</button>
+      <button type="submit" name="quality-term" value="1-{{term}}">
+        1: Incorrect
+      </button>
+      <button type="submit" name="quality-term" value="0-{{term}}">
+        0: Blackout
+      </button>
     </form>
   </div>
 </div>
