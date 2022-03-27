@@ -24,7 +24,12 @@ def get_media(word, source='SIGNINGSAVVY'):
         page_soup = BeautifulSoup(r_search.text, "lxml")
 
         # get links for all variations of the sign
+        # if there is a single result, the html will contain a div tag with the 
+        # class "signing_header"; 
+        # if there are multiple results, then we need to look through the 
+        # "search_results" div to pick which term we actually want.
         header_div = page_soup.findAll("div", {"class": "signing_header"})
+
         variations_li = header_div[0].ul.findAll('li')
 
         for var in variations_li:

@@ -11,7 +11,7 @@
     <input type="submit" value="View Hint" />
   </form> -->
 
-  <button type="button" onclick="view_back()">View Back</button>
+  <!-- <button type="button" onclick="view_back()">View Back</button> -->
   {% set mp4 = card.media["mp4s"][0] %}
   <video width="400" controls>
     <source src="{{mp4}}" type="video/mp4" />
@@ -32,13 +32,13 @@
     }
   }
 
-  function view_back() {
-    el = document.getElementById("hint");
-    if (el.style.visibility == "hidden") {
-      el.style.visibility = "visible";
-    } else {
-      el.style.visibility = "hidden";
-    }
-  }
+  // function view_back() {
+  //   el = document.getElementById("hint");
+  //   if (el.style.visibility == "hidden") {
+  //     el.style.visibility = "visible";
+  //   } else {
+  //     el.style.visibility = "hidden";
+  //   }
+  // }
 </script>
 {% endblock %}

@@ -10,7 +10,7 @@ app = Flask(__name__)
 # db = SQLAlchemy(app)
 
 # TEMPORARY LIST OF ALL DECKS (SO WE CAN TEST THE APP WITHOUT A DB)
-all_decks = {"Test Deck": test_deck}
+ALL_DECKS = {"Test Deck": test_deck}
 
 # class DeckDB(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
@@ -22,14 +22,21 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/decks')
+@app.route('/decks', methods=['POST', 'GET'])
 def view_all_decks():
-    return render_template("decks.html", decks=all_decks)
+    if request.method == 'POST':
+        print('HANDLING POST REQUEST')
+        new_deck_name = request.form['new_deck_name']
+        # deck_index = len(ALL_DECKS) + 1
+        new_deck = Deck()
+        ALL_DECKS[new_deck_name] = new_deck
+
+    return render_template("decks.html", decks=ALL_DECKS)
 
 
 @app.route('/<string:deck_name>')
 def view_deck(deck_name):
-    deck = all_decks[deck_name]
+    deck = ALL_DECKS[deck_name]
     return render_template("viewDeck.html", deck=deck, deck_name=deck_name)
 
 
@@ -40,7 +47,7 @@ def view_deck(deck_name):
 # then add checkbox to review again - bool
 # return post, quality, bool for review again
 def practice(deck_name):
-    deck = all_decks[deck_name]
+    deck = ALL_DECKS[deck_name]
     if not deck.in_session:
         deck.update_todays_cards()
         deck.in_session = True
@@ -81,7 +88,7 @@ def view_card(deck_name, card_term):
 
 ####### helper functions #######
 def getCard(deck_name, card_term):
-    deck = all_decks[deck_name]
+    deck = ALL_DECKS[deck_name]
     # card_entries = deck.cards[deck.cards['term'] == card_term]
     print(deck.cards)
     if card_term in deck.cards.index:

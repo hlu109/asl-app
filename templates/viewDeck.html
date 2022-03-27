@@ -3,14 +3,17 @@
 {% endblock %} {% block body %}
 <div class="content">
   <h1>Cards:</h1>
-
+  
+  <button type="button" onclick="add_cards()">Add New Cards</button>
+  <div id="add_card">???</div>
+  
   <table>
     <tr>
       <th>English</th>
       <th>View Card</th>
       <!-- <th>Practice</th> -->
     </tr>
-    {% for term in deck.index.tolist() %}
+    {% for term in deck.cards.index.tolist() %}
     <tr>
       <td>{{ term }}</td>
       <td><a href="/{{deck_name}}/{{term}}">View Card</a></td>

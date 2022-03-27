@@ -9,6 +9,14 @@
 <div class="content">
     <h1>Decks:</h1>
 
+    <!-- <button type="button" onclick="new_deck()">Create New Deck</button>
+    <div id="add_deck">???</div> -->
+    <form action="/decks" method="POST">
+        <input type="text" name="new_deck_name" id="new_deck_name">
+        <input type="submit" value="Create New Deck">
+    </form>
+
+      
     <table>
         <tr>
             <th>Name</th>
