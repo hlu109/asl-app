@@ -25,7 +25,7 @@ def index():
 @app.route('/decks', methods=['POST', 'GET'])
 def view_all_decks():
     if request.method == 'POST':
-        print('HANDLING POST REQUEST')
+        print('HANDLING POST REQUEST TO CREATE NEW DECK')
         new_deck_name = request.form['new_deck_name']
         # deck_index = len(ALL_DECKS) + 1
         new_deck = Deck()
@@ -85,6 +85,13 @@ def view_card(deck_name, card_term):
     card = getCard(deck_name, card_term)
     return render_template("viewCard.html", card=card)
 
+@app.route('/<string:deck_name>/add_card', methods=['POST', 'GET'])
+def add_card(deck_name):
+    if request.method == 'POST':
+        print('HANDLING POST REQUEST TO CREATE NEW CARD')
+        new_term = request.form['new_term']
+        new_card = ALL_DECKS[deck_name].addCard(new_term)
+    return render_template("selectMedia.html", card=new_card)
 
 ####### helper functions #######
 def getCard(deck_name, card_term):

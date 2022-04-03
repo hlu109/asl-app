@@ -22,7 +22,8 @@ class Card():
         # TODO: create subclass? to account for different directions of review
         # (i.e. ASLtoEng or EngtoASL)
         self.english = term
-        self.media = self.getMedia()  # list of links to mp4s, images, etc
+        self.media = []  # list of links to media
+        # self.media = self.getMedia()  # list of links to mp4s, images, etc
         self.description = ""
         self.hint = ""  #Need to find hint in ASL Browser notes text file
         # TODO: try to get hint/description from the text file

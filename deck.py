@@ -26,24 +26,16 @@ class Deck():
         self.learn_today = deque(todays_cards)
         print(self.cards.head(6))
 
+    def getCard(self, term):
+        card = self.cards.at[term, "card"]
+        return card
+
     def addCard(self, term, importance=1, tags=[]):
         card = Card(term, importance, tags)
         if term not in self.cards.index:
             self.cards.loc[term] = [card.nextReviewDate, card.quality, card]
-        #
-        # self.cards.append(
-        #     {
-        #         "next review date": card.nextReviewDate,
-        #         "term": term,
-        #         "quality": card.quality,
-        #         "card": card  # temporary until we set up a server/database
-        #     },
-        # ignore_index=True)
-        # self.learn_today.append(card)ard
-
-        # ignore_index=True)
-        # self.learn_today.append(card)
         self.size += 1
+        return card
 
     def deleteCard(self, term):
         self.cards.drop(term, inplace=True)

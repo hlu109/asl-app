@@ -17,3 +17,5 @@ terms = [
 
 for term in terms:
     test_deck.addCard(term)
+    card = test_deck.getCard(term)
+    card.media = card.getMedia()

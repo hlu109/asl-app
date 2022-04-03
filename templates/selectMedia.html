@@ -2,14 +2,34 @@
 <title>Select media</title>
 {% endblock %} {% block body %}
 <div class="content">
-    {% for i in range(len(card.media["mp4s"])) %}
-    {% set mp4 = card.media["mp4s"][i] %}
-    
-    <button type="button" onclick="add_media()" value=i>Add Video To Card</button>
+  {% for i in range(len(card.getMedia()["mp4s"])) %} 
+    {% set mp4 = card.getMedia()["mp4s"][i] %}
+    <button
+      type="button"
+      name="button_{{i}}"
+      onclick="add_media(i, mp4)"
+      value="{{mp4}}"
+      style="color: orange"
+    >Add Video To Card
+    </button>
     <video width="400" controls>
       <source src="{{mp4}}" type="video/mp4" />
     </video>
-
-
+  {% endfor %}
 </div>
+
+<script>
+  function add_media(i, mp4) {
+    el = document.getElementsByName("button_" + i)[0];
+    if (el.style.color == "orange") {
+      el.style.color = "green";
+      card.media += [mp4];
+      print(card.media)
+    } else {
+      el.style.color = "orange";
+      card.media.remove(mp4);
+      print(card.media)
+    }
+  }
+</script>
 {% endblock %}
