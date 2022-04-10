@@ -2,34 +2,50 @@
 <title>Select media</title>
 {% endblock %} {% block body %}
 <div class="content">
-  {% for i in range(len(card.getMedia()["mp4s"])) %} 
+  {% print(card.getMedia()["mp4s"]) %}
+  {% for i in range(card.getMedia()["mp4s"]|length) %} 
     {% set mp4 = card.getMedia()["mp4s"][i] %}
-    <button
-      type="button"
-      name="button_{{i}}"
-      onclick="add_media(i, mp4)"
-      value="{{mp4}}"
-      style="color: orange"
-    >Add Video To Card
-    </button>
-    <video width="400" controls>
-      <source src="{{mp4}}" type="video/mp4" />
-    </video>
+    <br>
+    <div class = "button">
+      <button
+        type="button"
+        name="button_{{i}}"
+        onclick="test_print()"
+        value="{{mp4}}"
+        style="background-color: orange"
+      >Add Video To Card
+      </button>
+    </div>
+    <div>
+      <video width="400" controls>
+        <source src="{{mp4}}" type="video/mp4" />
+      </video>
+    </div>
+    <br>
   {% endfor %}
+  
 </div>
 
 <script>
+  // TODO: function not running at all
   function add_media(i, mp4) {
+    console.log(mp4)
+    console.log(i)
     el = document.getElementsByName("button_" + i)[0];
-    if (el.style.color == "orange") {
-      el.style.color = "green";
+    console.log(el)
+    if (el.style.backgroundColor == "orange") {
+      el.style.backgroundColor = "green";
       card.media += [mp4];
       print(card.media)
     } else {
-      el.style.color = "orange";
+      el.style.backgroundColor = "orange";
       card.media.remove(mp4);
       print(card.media)
     }
+  }
+
+  function test_print() {
+    console.log("ajsfaskjdf")
   }
 </script>
 {% endblock %}
