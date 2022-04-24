@@ -1,33 +1,22 @@
 {% extends 'base.html' %} {% block head %}
 <title>Select media</title>
 {% endblock %} {% block body %}
-<button 
-  type="button" 
-  id="toggle_button" 
-  style="background-color: orange" 
-  onclick="toggle_hint()"
-  >Toggle Hint
-</button>
-<div id="hint" style="visibility: hidden">this is the hint</div>
 
 <!-- TODO FIX THIS FUNCTION, currently mp4 is not defined in add_media -->
 <div class="content">
-{% print(card.getMedia()["mp4s"]) %}
-{% for i in range(card.getMedia()["mp4s"]|length) %} 
+  {% for i in range(card.getMedia()["mp4s"]|length) %} 
   {% set mp4 = card.getMedia()["mp4s"][i] %}
   <br>
-  <div class = "button">
-    <button
-      type="button"
-      id="{{mp4}}"
-      <!-- https://stackoverflow.com/questions/9643311/pass-a-string-parameter-in-an-onclick-function -->
-      <!-- Or reroute in app.py -->
-      onclick="add_media(abcde)" // when it is like this abcde is not defined so the fxn doesn't run
-      value="{{mp4}}"
-      style="background-color: orange"
-    >Add Video To Card
-    </button>
-  </div>
+  <script>
+    var addButton = document.createElement("input");
+    addButton.id = "{{mp4}}";
+    addButton.type = "button";
+    addButton.style.backgroundColor = "orange";
+    addButton.value = "Add to Card";
+
+    document.getElementsByClassName("content")[0].appendChild(addButton);
+  </script>
+
   <div>
     <video width="400" controls>
       <source src="{{mp4}}" type="video/mp4" />
@@ -35,24 +24,29 @@
   </div>
   <br>
   {% endfor %}
-  
+
+  {% set mp4s = card.getMedia()["mp4s"] %}
+  <script>
+    var mp4_list = JSON.parse('{{ mp4s | tojson | safe }}');
+    function add_on_click() {
+      for (let i = 0; i < mp4_list.length; i++) {
+        mp4 = mp4_list[i]
+        var btn = getElementById(mp4);
+        btn.addEventListener(
+          'click', 
+          function() {
+            add_media(mp4);
+          }
+        );
+      }
+    }
+    add_on_click();
+  </script>
+
 </div>
 
 <script>
-  function toggle_hint() {
-    console.log("kjdfbkasjdfbksjdbfkdfj skjf")
-    el = document.getElementById("hint");
-    if (el.style.visibility == "hidden") {
-      el.style.visibility = "visible";
-    } else {
-      el.style.visibility = "hidden";
-    }
-    bt = document.getElementById("toggle_button");
-    bt.style.backgroundColor = "lightgreen";
-  }
-
   function add_media(mp4) {
-    print('test print()');
     console.log(mp4);
     el = document.getElementById(mp4);
     console.log(el);
