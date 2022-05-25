@@ -80,10 +80,16 @@ def practice(deck_name):
                                card=next_card)
 
 
-@app.route('/<string:deck_name>/<string:card_term>')
+@app.route('/<string:deck_name>/<string:card_term>', methods=['POST', 'GET'])
 def view_card(deck_name, card_term):
-    card = getCard(deck_name, card_term)
-    return render_template("viewCard.html", card=card)
+    if request.method == 'POST':
+        print('handling post request')
+        mp4_keep = request.form['mp4s_to_keep']
+        print("mp4_keep", mp4_keep)
+        return mp4_keep
+    else:
+        card = getCard(deck_name, card_term)
+        return render_template("viewCard.html", card=card)
 
 @app.route('/<string:deck_name>/add_card', methods=['POST', 'GET'])
 def add_card(deck_name):
@@ -91,7 +97,8 @@ def add_card(deck_name):
         print('HANDLING POST REQUEST TO CREATE NEW CARD')
         new_term = request.form['new_term']
         new_card = ALL_DECKS[deck_name].addCard(new_term)
-    return render_template("selectMedia.html", card=new_card)
+    return render_template("selectMedia.html", card=new_card, 
+                            deck_name=deck_name)
 
 ####### helper functions #######
 def getCard(deck_name, card_term):
