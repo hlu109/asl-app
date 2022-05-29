@@ -23,7 +23,6 @@ class Card():
         # (i.e. ASLtoEng or EngtoASL)
         self.english = term
         self.media = []  # list of links to media
-        # self.media = self.getMedia()  # list of links to mp4s, images, etc
         self.description = ""
         self.hint = ""  #Need to find hint in ASL Browser notes text file
         # TODO: try to get hint/description from the text file
@@ -47,7 +46,7 @@ class Card():
         mp4s, labels = get_media(self.english)
         media = {"mp4s": mp4s, "labels": labels}
         # placeholder
-        return media
+        return mp4s
 
     def updateQuality(self, quality):
         self.quality = quality

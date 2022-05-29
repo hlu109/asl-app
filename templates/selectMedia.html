@@ -3,10 +3,9 @@
 <title>Select media</title>
 {% endblock %} {% block body %}
 
-<!-- TODO FIX THIS FUNCTION, currently mp4 is not defined in add_media -->
 <div class="content">
-  {% for i in range(card.getMedia()["mp4s"]|length) %} 
-  {% set mp4 = card.getMedia()["mp4s"][i] %}
+  {% for i in range(card.getMedia()|length) %} 
+  {% set mp4 = card.getMedia()[i] %}
   <br>
   <script>
     var addButton = document.createElement("input");
@@ -25,18 +24,17 @@
   </div>
   {% endfor %}
 
-  {% set num_media = card.getMedia()["mp4s"]|length %}
+  <button type="button" onclick="finish()">Finish Card</button>
+
+  {% set num_media = card.getMedia()|length %}
   <script>
     let mp4_keep = new Array(parseInt("{{num_media}}"));
-    // let mp4_keep = "0".repeat(parseInt("{{num_media}}"));
     mp4_keep.fill(0);
     function add_on_click() {
       for (let i = 0; i < parseInt("{{num_media}}"); i++) {
         (
           function() {
             var btn = document.getElementById(i);
-            console.log("btn.id", btn.id, i);
-            console.log("btn.value", btn.value);
             btn.addEventListener(
               'click', 
               function() {
@@ -53,51 +51,38 @@
 
 </div>
 
+{% set term = card.english %}
+
 <script>
   function add_media(i) {
-    // console.log("mp4 for add_media", mp4);
     el = document.getElementById(i);
-    console.log(el);
     if (el.style.backgroundColor == "orange") {
       el.style.backgroundColor = "lightgreen";
       el.value = "Remove from Card";
       mp4_keep[i] = 1;
-      // mp4_keep[i] = "1";
       console.log("list", mp4_keep);
     } else {
       el.style.backgroundColor = "orange";
       el.value = "Add to Card";
       mp4_keep[i] = 0;
-      // mp4_keep[i] = "0";
       console.log("list", mp4_keep);
     }
   }
 
   function finish() {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = "/{{deck_name}}/{{term}}";
 
+    const field = document.createElement('input');
+    field.type = 'hidden';
+    field.name = 'myData';
+    field.value = mp4_keep.toString();
+
+    form.appendChild(field);
+    document.body.appendChild(form);
+    form.submit();
   }
 </script>
-
-{% set term = card.english %}
-<div class="finish">
-  <script>
-    // finish_button = '<form action="/{{deck_name}}/{{term}}" method="POST">' +
-    //   '<button type="submit" name="mp4s_to_keep" value=' + mp4_keep.toString() +
-    //   '>Finished!</button></form>'
-    var finishForm = document.createElement("form");
-    finishForm.action = "/{{deck_name}}/{{term}}";
-    finishForm.method = "POST";
-    
-    var finishButton = document.createElement("button");
-    finishButton.type = "submit";
-    finishButton.name = "mp4s_to_keep";
-    finishButton.value = mp4_keep.toString();
-    finishButton.innerText = "Finish!";
-
-    finishForm.appendChild(finishButton)
-    document.body.appendChild(finishForm);
-
-  </script>
-</div>
 
 {% endblock %}

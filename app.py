@@ -83,13 +83,18 @@ def practice(deck_name):
 @app.route('/<string:deck_name>/<string:card_term>', methods=['POST', 'GET'])
 def view_card(deck_name, card_term):
     if request.method == 'POST':
-        print('handling post request')
-        mp4_keep = request.form['mp4s_to_keep']
-        print("mp4_keep", mp4_keep)
-        return mp4_keep
+        print('HANDLING POST REQUEST TO ADD MEDIA')
+        mp4_keep = request.form['myData'].split(",")
+
+        # update the card's media
+        card = getCard(deck_name, card_term)
+        links = card.getMedia()
+        for i in range(len(mp4_keep)):
+            if mp4_keep[i] == '1':
+                card.media += [links[i]]
     else:
         card = getCard(deck_name, card_term)
-        return render_template("viewCard.html", card=card)
+    return render_template("viewCard.html", card=card)
 
 @app.route('/<string:deck_name>/add_card', methods=['POST', 'GET'])
 def add_card(deck_name):

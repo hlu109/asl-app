@@ -7,17 +7,26 @@ SIGNINGSAVVY = 'https://www.signingsavvy.com'
 LIFEPRINT_PREFIX = 'https://lifeprint.com/asl101/pages-signs'
 LIFEPRINT_SUFFIX = '.htm'
 
-def get_media(word, source='SIGNINGSAVVY'):
+def get_duplicate_terms(word, source='SIGNINGSAVVY'):
+    """ returns list of indexes for the word and description 
+    """
+    pass
+
+def get_media(word, idx=None, source='SIGNINGSAVVY'):
     """ returns list of .mp4 links
         arguments: 
             word, the string to look up in the dictionary
+            idx, the index of the result (if there are duplicates)
             source, the asl website to search. must be from the list sources"""
     
     mp4s = []
     labels = []
 
     if source=='SIGNINGSAVVY':
-        search_url = os.path.join(SIGNINGSAVVY, 'search', word)
+        if not idx:
+            search_url = os.path.join(SIGNINGSAVVY, 'search', word)
+        else:
+            search_url = os.path.join(SIGNINGSAVVY, 'sign', word, idx)
         var_urls = [search_url]
 
         r_search = requests.get(search_url)
