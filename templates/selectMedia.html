@@ -4,8 +4,8 @@
 {% endblock %} {% block body %}
 
 <div class="content">
-  {% for i in range(card.getMedia()|length) %} 
-  {% set mp4 = card.getMedia()[i] %}
+  {% for i in range(mp4s|length) %} 
+  {% set mp4 = mp4s[i] %}
   <br>
   <script>
     var addButton = document.createElement("input");

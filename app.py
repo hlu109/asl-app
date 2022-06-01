@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from deck import *
 from card import *
+from webscrape import *
 from testing import test_deck
 
 app = Flask(__name__)
@@ -96,14 +97,35 @@ def view_card(deck_name, card_term):
         card = getCard(deck_name, card_term)
     return render_template("viewCard.html", card=card)
 
-@app.route('/<string:deck_name>/add_card', methods=['POST', 'GET'])
-def add_card(deck_name):
-    if request.method == 'POST':
-        print('HANDLING POST REQUEST TO CREATE NEW CARD')
-        new_term = request.form['new_term']
-        new_card = ALL_DECKS[deck_name].addCard(new_term)
+@app.route('/<string:deck_name>/select_term', methods = ['POST'])
+def select_term(deck_name):
+    print('HANDLING POST REQUEST TO CREATE NEW CARD')
+    new_term = request.form['new_term']
+    results = get_duplicate_terms(new_term)
+    if not results: 
+        # if the word has a unique result, redirect to select_media
+        return redirect('/' + deck_name + '/select_media/' + new_term, 
+                        # data= , "search/" + new_term 
+                        code=307) 
+        # TODO: Figure out data passing in redirect, use urlfor()
+    else:
+        render_template("selectTerm.html", deck_name=deck_name, 
+                        results=results)
+
+
+# TODO: perhaps make the new_term parameter hidden from the url somehow?
+@app.route('/<string:deck_name>/select_media/<string:new_term>', 
+           methods=['POST'])
+def select_media(deck_name, new_term):
+    print('HANDLING POST REQUEST TO CREATE NEW CARD')
+    # new_term  = request.form("new_term")
+    url_suffix  = request.form("url_suffix")
+    new_card = ALL_DECKS[deck_name].addCard(new_term)
+    mp4s = get_media(new_term, url_suffix)
+
     return render_template("selectMedia.html", card=new_card, 
-                            deck_name=deck_name)
+                        deck_name=deck_name, mp4s=mp4s)
+
 
 ####### helper functions #######
 def getCard(deck_name, card_term):
