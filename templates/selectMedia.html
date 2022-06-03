@@ -26,7 +26,7 @@
 
   <button type="button" onclick="finish()">Finish Card</button>
 
-  {% set num_media = card.getMedia()|length %}
+  {% set num_media = mp4s|length %}
   <script>
     let mp4_keep = new Array(parseInt("{{num_media}}"));
     mp4_keep.fill(0);

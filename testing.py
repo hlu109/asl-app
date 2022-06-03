@@ -1,3 +1,4 @@
+from webbrowser import get
 from deck import *
 from card import *
 
@@ -18,4 +19,4 @@ terms = [
 for term in terms:
     test_deck.addCard(term)
     card = test_deck.getCard(term)
-    card.media = card.getMedia()
+    card.media = get_media(term)[0]

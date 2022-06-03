@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from deck import *
@@ -89,7 +89,7 @@ def view_card(deck_name, card_term):
 
         # update the card's media
         card = getCard(deck_name, card_term)
-        links = card.getMedia()
+        links = get_media(card_term)[0]
         for i in range(len(mp4_keep)):
             if mp4_keep[i] == '1':
                 card.media += [links[i]]
@@ -97,29 +97,37 @@ def view_card(deck_name, card_term):
         card = getCard(deck_name, card_term)
     return render_template("viewCard.html", card=card)
 
+
 @app.route('/<string:deck_name>/select_term', methods = ['POST'])
 def select_term(deck_name):
     print('HANDLING POST REQUEST TO CREATE NEW CARD')
     new_term = request.form['new_term']
-    results = get_duplicate_terms(new_term)
-    if not results: 
+    results = get_terms(new_term)
+    
+    if results == None: # no search results
+        return render_template("wordNotFound.html")
+    elif len(results) == 1: 
         # if the word has a unique result, redirect to select_media
-        return redirect('/' + deck_name + '/select_media/' + new_term, 
-                        # data= , "search/" + new_term 
-                        code=307) 
+        # return redirect('/' + deck_name + '/select_media/' + new_term, 
+        #                 # data= , "search/" + new_term 
+        #                 code=307) 
+        return redirect(url_for("select_media", deck_name = deck_name, 
+               new_term = new_term, url_suffix = "search/" + new_term))
         # TODO: Figure out data passing in redirect, use urlfor()
     else:
-        render_template("selectTerm.html", deck_name=deck_name, 
+        return render_template("selectTerm.html", deck_name=deck_name, 
                         results=results)
-
+# TODO!!! check all instances of get_media and ensure that they are using 
+# url_suffix if necessary, currently videos are not showing up for run
 
 # TODO: perhaps make the new_term parameter hidden from the url somehow?
 @app.route('/<string:deck_name>/select_media/<string:new_term>', 
            methods=['POST'])
 def select_media(deck_name, new_term):
     print('HANDLING POST REQUEST TO CREATE NEW CARD')
-    # new_term  = request.form("new_term")
-    url_suffix  = request.form("url_suffix")
+    # new_term  = request.form["new_term"]
+    url_suffix  = request.form["url_suffix"]
+    print(url_suffix)
     new_card = ALL_DECKS[deck_name].addCard(new_term)
     mp4s = get_media(new_term, url_suffix)
 

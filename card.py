@@ -41,12 +41,6 @@ class Card():
         # self.qualASLtoEng = 0
         self.quality = 0
 
-    def getMedia(self):
-        print("attempting to get media for ", self.english)
-        mp4s, labels = get_media(self.english)
-        media = {"mp4s": mp4s, "labels": labels}
-        # placeholder
-        return mp4s
 
     def updateQuality(self, quality):
         self.quality = quality
@@ -59,7 +53,7 @@ class Card():
         # TODO: update algorithm for shorter intervals (e.g. 10 min)
         self.nextReviewDate = self.lastReviewDate + interval
 
-    # create function to get Hint
+    # TODO: create function to get Hint
     def getHint(self):
         """placeholder, when user clicks 'Get Hint' button, hint appears
             we update the hint variable from the ASL Browser notes text file

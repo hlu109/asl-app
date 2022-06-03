@@ -7,11 +7,10 @@ SIGNINGSAVVY = 'https://www.signingsavvy.com'
 LIFEPRINT_PREFIX = 'https://lifeprint.com/asl101/pages-signs'
 LIFEPRINT_SUFFIX = '.htm'
 
-def get_duplicate_terms(word, source='SIGNINGSAVVY'):
-    """ if there is only a single term, returns False. otherwise, returns list 
-        of 3-tuples (term, url_suffixes, descriptions) for the various terms
+def get_terms(word, source='SIGNINGSAVVY'):
+    """ if no signs exist, returns None. Otherwise, returns list of 3-tuples 
+        (term, url_suffixes, descriptions) for the various terms
     """
-    results = []
     
     if source=='SIGNINGSAVVY':
         search_url = os.path.join(SIGNINGSAVVY, 'search', word)
@@ -20,8 +19,14 @@ def get_duplicate_terms(word, source='SIGNINGSAVVY'):
         
         search_results_div = page_soup.find("div", class_="search_results")
         if search_results_div == None:
-            return False
+            if page_soup.find("div", class_ = "sign_module"): 
+                # word is unique
+                return [(word, 'search/' + word, None)]
+            else: 
+                # word does not exist
+                return None
         
+        results = []
         terms_li = search_results_div.ul.find_all('li')
 
         for term in terms_li:
@@ -31,7 +36,7 @@ def get_duplicate_terms(word, source='SIGNINGSAVVY'):
     return results
 
 def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
-    """ returns list of .mp4 links
+    """ returns list of .mp4 links and list of labels
         arguments: 
             word, the string to look up in the dictionary
             url_suffix, string with the format "sign/{TERM}/{ID}{/OPTIONAL VARIATION INDEX}" (e.g. "sign/RUN/10423/1")
@@ -58,6 +63,7 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
       
         # header_div = page_soup.findAll("div", {"class": "signing_header"})
         header_div = page_soup.find("div", class_="signing_header")
+        print("header_div", header_div)
 
         variations_li = header_div.ul.find_all('li')
 
@@ -71,7 +77,7 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
             var_label = var.a.text
             labels.append(var_label)
 
-            if var.a['class'] == 'current':
+            if var.a.has_attr('class') and var.a['class'] == 'current':
                 var_urls.append(search_url)
             else:
                 var_urls.append(os.path.join(SIGNINGSAVVY, link_suffix))
@@ -83,7 +89,6 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
             page_soup = BeautifulSoup(r.content, "html.parser")
             vid_div = page_soup.find("div", class_="videocontent")
 
-            # idk if this line of code still works
             media_url = os.path.join(SIGNINGSAVVY, vid_div.source['src'])
             mp4s.append(media_url)
     
@@ -99,13 +104,15 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
 
     return mp4s, labels
 
-# testing 
-# print(get_media('happy'))
-# print(get_media('avocado'))
-# print(get_media('math'))
-# print(get_media('computer science'))
-# get_media('cat', source='LIFEPRINT')
-
 if __name__ == "__main__":
-    # testing
-    pass
+    ## testing ##
+    # print(get_media('happy'))
+    print('testing get_media()\n-------------------')
+    print(get_media('avocado'))
+    print(get_media('math'))
+    print(get_media('computer science'))
+    print(get_media('run', url_suffix='sign/RUN/10423/1'))
+    # get_media('cat', source='LIFEPRINT')
+
+    print('\ntesting get_terms()\n------------------------')
+    print(get_terms('run'))
