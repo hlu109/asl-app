@@ -1,6 +1,7 @@
 from webbrowser import get
 from deck import *
 from card import *
+from webscrape import *
 
 test_deck = Deck()
 

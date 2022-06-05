@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% block head %}
+{% endblock %} {% block body %}
+<script>
+    function redirect() {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = "/{{deck_name}}/select_media/{{term}}";
+
+        const field = document.createElement('input');
+        field.type = 'hidden';
+        field.name = 'url_suffix';
+        field.value = 'search/{{term}}'
+
+        form.appendChild(field);
+        document.body.appendChild(form);
+        form.submit();
+    }
+    redirect();
+</script>
+{% endblock %}

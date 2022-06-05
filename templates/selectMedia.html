@@ -4,8 +4,8 @@
 {% endblock %} {% block body %}
 
 <div class="content">
-  {% for i in range(mp4s|length) %} 
-  {% set mp4 = mp4s[i] %}
+  {% for i in range(mp4s[0]|length) %} 
+  {% set mp4 = mp4s[0][i] %}
   <br>
   <script>
     var addButton = document.createElement("input");
@@ -16,12 +16,13 @@
 
     document.getElementsByClassName("content")[0].appendChild(addButton);
   </script>
+  
+  <br>
+  <video width="400" controls>
+    <source src="{{mp4}}" type="video/mp4" />
+  </video>
+  <br>
 
-  <div>
-    <video width="400" controls>
-      <source src="{{mp4}}" type="video/mp4" />
-    </video>
-  </div>
   {% endfor %}
 
   <button type="button" onclick="finish()">Finish Card</button>
@@ -74,12 +75,18 @@
     form.method = 'POST';
     form.action = "/{{deck_name}}/{{term}}";
 
-    const field = document.createElement('input');
-    field.type = 'hidden';
-    field.name = 'myData';
-    field.value = mp4_keep.toString();
+    const field1 = document.createElement('input');
+    field1.type = 'hidden';
+    field1.name = 'mp4_keep';
+    field1.value = mp4_keep.toString();
+    
+    const field2 = document.createElement('input');
+    field2.type = 'hidden';
+    field2.name = 'url_suffix';
+    field2.value = "{{url_suffix}}";
 
-    form.appendChild(field);
+    form.appendChild(field1);
+    form.appendChild(field2);
     document.body.appendChild(form);
     form.submit();
   }

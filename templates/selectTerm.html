@@ -10,9 +10,9 @@
     {% set term = result[0] %}
     {% set url_suffix = result[1] %}
     {% set description = result[2] %}
-        <form action="/{{deck_name}}/select_media/{{term}}" method="POST">
+        <form action="/{{deck_name}}/select_media/{{term}} ({{description}})" method="POST">
             <button type="submit" name="url_suffix" value="{{url_suffix}}">
-                {{term}} : {{description}}
+                {{term}} : as in "{{description}}"
             </button>    
         </form>
     {% endfor %}

@@ -1,20 +1,7 @@
+from shared_db import db
 from datetime import datetime, timedelta
 from supermemo2 import SMTwo
 import pandas as pd
-
-from webscrape import get_media
-
-
-class HistoricalPerformance():
-    def __init__(self):
-        self.history = pd.DataFrame(columns=["date", "quality"])
-
-    def add_record(self, date, quality):
-        self.history.append({
-            "date": date,
-            "quality": quality
-        },
-                            ignore_index=True)
 
 
 class Card():
@@ -27,7 +14,6 @@ class Card():
         self.hint = ""  #Need to find hint in ASL Browser notes text file
         # TODO: try to get hint/description from the text file
         self.importance = importance
-        self.history = HistoricalPerformance()
         self.sm2Data = None  # obj of type SMTwo
         # self.SM2data will contain the easiness score, interval, and next
         # review date

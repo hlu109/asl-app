@@ -75,7 +75,7 @@ def practice(deck_name):
         return redirect('/' + deck_name + '/practice')
     else:
         next_card_term = deck.learn_today.popleft()
-        next_card = getCard(deck_name, next_card_term)
+        next_card = get_card(deck_name, next_card_term)
         return render_template("practice.html",
                                deck_name=deck_name,
                                card=next_card)
@@ -85,17 +85,13 @@ def practice(deck_name):
 def view_card(deck_name, card_term):
     if request.method == 'POST':
         print('HANDLING POST REQUEST TO ADD MEDIA')
-        mp4_keep = request.form['myData'].split(",")
-
-        # update the card's media
-        card = getCard(deck_name, card_term)
-        links = get_media(card_term)[0]
-        for i in range(len(mp4_keep)):
-            if mp4_keep[i] == '1':
-                card.media += [links[i]]
+        mp4_keep = request.form['mp4_keep'].split(",")
+        url_suffix = request.form['url_suffix']
+        card = update_card(deck_name, card_term, mp4_keep, url_suffix)
     else:
-        card = getCard(deck_name, card_term)
+        card = get_card(deck_name, card_term)
     return render_template("viewCard.html", card=card)
+
 
 
 @app.route('/<string:deck_name>/select_term', methods = ['POST'])
@@ -108,17 +104,14 @@ def select_term(deck_name):
         return render_template("wordNotFound.html")
     elif len(results) == 1: 
         # if the word has a unique result, redirect to select_media
-        # return redirect('/' + deck_name + '/select_media/' + new_term, 
-        #                 # data= , "search/" + new_term 
-        #                 code=307) 
-        return redirect(url_for("select_media", deck_name = deck_name, 
-               new_term = new_term, url_suffix = "search/" + new_term))
-        # TODO: Figure out data passing in redirect, use urlfor()
+        return render_template("redirectToSelectMedia.html", 
+                                deck_name=deck_name, term=new_term)
     else:
         return render_template("selectTerm.html", deck_name=deck_name, 
                         results=results)
 # TODO!!! check all instances of get_media and ensure that they are using 
 # url_suffix if necessary, currently videos are not showing up for run
+
 
 # TODO: perhaps make the new_term parameter hidden from the url somehow?
 @app.route('/<string:deck_name>/select_media/<string:new_term>', 
@@ -132,11 +125,11 @@ def select_media(deck_name, new_term):
     mp4s = get_media(new_term, url_suffix)
 
     return render_template("selectMedia.html", card=new_card, 
-                        deck_name=deck_name, mp4s=mp4s)
+                        deck_name=deck_name, mp4s=mp4s, url_suffix=url_suffix)
 
 
 ####### helper functions #######
-def getCard(deck_name, card_term):
+def get_card(deck_name, card_term):
     deck = ALL_DECKS[deck_name]
     # card_entries = deck.cards[deck.cards['term'] == card_term]
     print(deck.cards)
@@ -150,6 +143,14 @@ def getCard(deck_name, card_term):
     # card = card_entries.card.values[0]
     return card
 
+#TODO: add description 
+def update_card(deck_name, card_term, mp4_keep, url_suffix=None):
+    card = get_card(deck_name, card_term)
+    links = get_media(card_term, url_suffix)[0]
+    for i in range(len(mp4_keep)):
+        if mp4_keep[i] == '1':
+            card.media += [links[i]]
+    return card
 
 if __name__ == "__main__":
     app.run(debug=True)

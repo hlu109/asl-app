@@ -1,3 +1,4 @@
+from shared_db import db
 from card import *
 from datetime import datetime, timedelta
 import pandas as pd
