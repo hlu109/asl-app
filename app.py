@@ -1,3 +1,5 @@
+from shared_db import db
+
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -7,7 +9,8 @@ from webscrape import *
 from testing import test_deck
 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+db.init_app(app)
 # db = SQLAlchemy(app)
 
 # TEMPORARY LIST OF ALL DECKS (SO WE CAN TEST THE APP WITHOUT A DB)
@@ -53,12 +56,6 @@ def practice(deck_name):
         deck.update_todays_cards()
         deck.in_session = True
 
-    if not deck.learn_today:  # if empty
-        deck.in_session = False
-        return "no more flashcards to practice today"
-        # TODO: route back to page that tells them they are done practicing
-        #on that page, add button to go back to deck
-
     print("\n\n\n\n\n", deck.learn_today, "\n\n\n\n\n")
 
     # front = True
@@ -73,7 +70,14 @@ def practice(deck_name):
 
         deck.updateProgress(term, quality)
         return redirect('/' + deck_name + '/practice')
-    else:
+
+    if not deck.learn_today:  # if empty
+        deck.in_session = False
+        return "no more flashcards to practice today"
+        # TODO: route back to page that tells them they are done practicing
+        #on that page, add button to go back to deck
+        
+    else: # first starting the practice session
         next_card_term = deck.learn_today.popleft()
         next_card = get_card(deck_name, next_card_term)
         return render_template("practice.html",

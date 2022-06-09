@@ -6,7 +6,7 @@ import random
 from collections import deque
 
 
-class Deck():
+class Deck(db.Model):
     def __init__(self):
         self.cards = pd.DataFrame(
             columns=["next review date", "term", "quality", "card"])
@@ -48,7 +48,6 @@ class Deck():
         # TODO: verify that card is inside this deck
         assert term in self.cards.index
         card = self.cards.at[term, 'card']
-        print(type(card))
         card.updateQuality(quality)
 
         # update deck dataframe

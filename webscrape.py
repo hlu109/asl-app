@@ -63,7 +63,6 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
       
         # header_div = page_soup.findAll("div", {"class": "signing_header"})
         header_div = page_soup.find("div", class_="signing_header")
-        print("header_div", header_div)
 
         variations_li = header_div.ul.find_all('li')
 
