@@ -7,18 +7,26 @@ from collections import deque
 
 
 class Deck(db.Model):
-    def __init__(self):
-        self.cards = pd.DataFrame(
-            columns=["next review date", "term", "quality", "card"])
-        self.cards.set_index('term', inplace=True)
-        # self.allCards = pd.DataFrame(columns= ['Card'])
+    __tablename__ = 'deck'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    progress = db.Column(db.Integer, default=0, nullable=False)
+    # TODO: update this with % of cards that have 4 or higher quality score / total cards
+    cards = db.relationship('Card', uselist=True, backref='deck')
+    # check if we want to modify backref and lazy ?
+
+    def __init__(self, **kwargs):
+        super(Deck, self).__init__(**kwargs)
+        # TODO: UPDATE HOW WE ITERATE OVER CARDS!!
+        self.init_on_load()
+
+    @orm.reconstructor
+    def init_on_load(self):
         self.learn_today = deque([])  # deque of card objects
-        self.size = 0
         self.in_session = False
-        # TODO add this
-        self.progress = None  # % of cards that have 4 or higher quality score / total cards
 
     def update_todays_cards(self):
+        # TODO: UPDATE THIS
         todays_cards = self.cards.index[
             self.cards['next review date'] <= datetime.today().date()].tolist()
         # todays_cards = self.cards[self.cards['next review date'] <=
@@ -35,12 +43,10 @@ class Deck(db.Model):
         card = Card(term, importance, tags)
         if term not in self.cards.index:
             self.cards.loc[term] = [card.nextReviewDate, card.quality, card]
-        self.size += 1
         return card
 
     def deleteCard(self, term):
         self.cards.drop(term, inplace=True)
-        self.size -= 1
 
     # TODO add this
     def updateProgress(self, term, quality):
@@ -48,7 +54,7 @@ class Deck(db.Model):
         # TODO: verify that card is inside this deck
         assert term in self.cards.index
         card = self.cards.at[term, 'card']
-        card.updateQuality(quality)
+        card.update_quality(quality)
 
         # update deck dataframe
         self.cards.at[term, "next review date"] = card.nextReviewDate
