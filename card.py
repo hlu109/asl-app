@@ -1,7 +1,7 @@
 from shared_db import db
 from datetime import datetime, timedelta
 from supermemo2 import SMTwo
-import pandas as pd
+# import pandas as pd
 
 
 class Media(db.Model):
@@ -14,9 +14,9 @@ class Media(db.Model):
 
 class History(db.Model):
     __tablename__ = 'history'
+    card_id = db.Column(db.Integer, db.ForeignKey('card.id'), primary_key=True)
     review_date = db.Column(db.DateTime, nullable=False)  # yyyy-mm-dd format
     quality = db.Column(db.Integer, nullable=False)
-    card_id = db.Column(db.Integer, db.ForeignKey('card.id'), nullable=False)
 
 
 class Card(db.Model):
@@ -43,10 +43,17 @@ class Card(db.Model):
     hint = db.Column(db.Text, nullable=True)
     importance = db.Column(db.Integer, nullable=True)
 
-    def __init__(self, **kwargs):
+    def __init__(self, english, mp4s, deck_id, **kwargs):
         # user only needs to pass in english, media, link it to a deck somehow ?
         # and can optionally pass in description, hint, and importance
-        super(Card, self).__init__(**kwargs)
+        for link in mp4s:
+            db.session.add(Media(link=link, card_id=self.id))
+        db.session.commit()
+        # self.media = list of Media objs? 
+
+        super(Card, self).__init__(english, deck_id, **kwargs)
+
+        
         # self.deck_id = ??
         # TODO: how do we add a deck id ???
 

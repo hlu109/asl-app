@@ -76,8 +76,8 @@ def practice(deck_name):
         return "no more flashcards to practice today"
         # TODO: route back to page that tells them they are done practicing
         #on that page, add button to go back to deck
-        
-    else: # first starting the practice session
+
+    else:  # first starting the practice session
         next_card_term = deck.learn_today.popleft()
         next_card = get_card(deck_name, next_card_term)
         return render_template("practice.html",
@@ -89,47 +89,58 @@ def practice(deck_name):
 def view_card(deck_name, card_term):
     if request.method == 'POST':
         print('HANDLING POST REQUEST TO ADD MEDIA')
-        mp4_keep = request.form['mp4_keep'].split(",")
-        url_suffix = request.form['url_suffix']
-        card = update_card(deck_name, card_term, mp4_keep, url_suffix)
+        if request.form['new_card'] == 'True':
+            mp4_keep = request.form['mp4_keep'].split(",")
+            url_suffix = request.form['url_suffix']
+            mp4s = idx_to_links(card_term, url_suffix, mp4_keep)
+            card = ALL_DECKS[deck_name].addCard(card_term, mp4s)
+        else: # in this case we'd be editing/updating an existing card
+            pass 
+            # card = update_card(deck_name, card_term, mp4_keep, url_suffix)
     else:
         card = get_card(deck_name, card_term)
     return render_template("viewCard.html", card=card)
 
 
-
-@app.route('/<string:deck_name>/select_term', methods = ['POST'])
+@app.route('/<string:deck_name>/select_term', methods=['POST'])
 def select_term(deck_name):
     print('HANDLING POST REQUEST TO CREATE NEW CARD')
     new_term = request.form['new_term']
     results = get_terms(new_term)
-    
-    if results == None: # no search results
+
+    if results == None:  # no search results
         return render_template("wordNotFound.html")
-    elif len(results) == 1: 
+    elif len(results) == 1:
         # if the word has a unique result, redirect to select_media
-        return render_template("redirectToSelectMedia.html", 
-                                deck_name=deck_name, term=new_term)
+        return render_template("redirectToSelectMedia.html",
+                               deck_name=deck_name,
+                               term=new_term)
     else:
-        return render_template("selectTerm.html", deck_name=deck_name, 
-                        results=results)
-# TODO!!! check all instances of get_media and ensure that they are using 
+        return render_template("selectTerm.html",
+                               deck_name=deck_name,
+                               results=results)
+
+
+# TODO!!! check all instances of get_media and ensure that they are using
 # url_suffix if necessary, currently videos are not showing up for run
 
 
 # TODO: perhaps make the new_term parameter hidden from the url somehow?
-@app.route('/<string:deck_name>/select_media/<string:new_term>', 
+@app.route('/<string:deck_name>/select_media/<string:new_term>',
            methods=['POST'])
 def select_media(deck_name, new_term):
     print('HANDLING POST REQUEST TO CREATE NEW CARD')
     # new_term  = request.form["new_term"]
-    url_suffix  = request.form["url_suffix"]
+    url_suffix = request.form["url_suffix"]
     print(url_suffix)
-    new_card = ALL_DECKS[deck_name].addCard(new_term)
+    # new_card = ALL_DECKS[deck_name].addCard(new_term)
     mp4s = get_media(new_term, url_suffix)
 
-    return render_template("selectMedia.html", card=new_card, 
-                        deck_name=deck_name, mp4s=mp4s, url_suffix=url_suffix)
+    return render_template("selectMedia.html",
+                           term=new_term,
+                           deck_name=deck_name,
+                           mp4s=mp4s,
+                           url_suffix=url_suffix)
 
 
 ####### helper functions #######
@@ -147,14 +158,27 @@ def get_card(deck_name, card_term):
     # card = card_entries.card.values[0]
     return card
 
-#TODO: add description 
+
+#TODO: add description
 def update_card(deck_name, card_term, mp4_keep, url_suffix=None):
     card = get_card(deck_name, card_term)
+    # TODO: update this function
+    card.media = idx_to_links(card_term, url_suffix, mp4_keep)
+    # links = get_media(card_term, url_suffix)[0]
+    # for i in range(len(mp4_keep)):
+    #     if mp4_keep[i] == '1':
+    #         card.media += [links[i]]
+    return card
+
+def idx_to_links(card_term, url_suffix, mp4_keep):
     links = get_media(card_term, url_suffix)[0]
+    mp4s = []
     for i in range(len(mp4_keep)):
         if mp4_keep[i] == '1':
-            card.media += [links[i]]
-    return card
+            mp4s += [links[i]]
+    return mp4s
+    
+
 
 if __name__ == "__main__":
     app.run(debug=True)

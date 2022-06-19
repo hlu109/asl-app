@@ -52,8 +52,6 @@
 
 </div>
 
-{% set term = card.english %}
-
 <script>
   function add_media(i) {
     el = document.getElementById(i);
@@ -84,6 +82,11 @@
     field2.type = 'hidden';
     field2.name = 'url_suffix';
     field2.value = "{{url_suffix}}";
+
+    const field3 = document.createElement('input');
+    field2.type = 'hidden';
+    field2.name = 'new_card';
+    field2.value = "True";
 
     form.appendChild(field1);
     form.appendChild(field2);
