@@ -68,7 +68,7 @@ def practice(deck_name):
         quality = int(quality_term.split("-")[0])
         term = quality_term.split("-")[1]
 
-        deck.updateProgress(term, quality)
+        deck.update_progress(term, quality)
         return redirect('/' + deck_name + '/practice')
 
     if not deck.learn_today:  # if empty
@@ -93,7 +93,7 @@ def view_card(deck_name, card_term):
             mp4_keep = request.form['mp4_keep'].split(",")
             url_suffix = request.form['url_suffix']
             mp4s = idx_to_links(card_term, url_suffix, mp4_keep)
-            card = ALL_DECKS[deck_name].addCard(card_term, mp4s)
+            card = ALL_DECKS[deck_name].add_card(card_term, mp4s)
         else: # in this case we'd be editing/updating an existing card
             pass 
             # card = update_card(deck_name, card_term, mp4_keep, url_suffix)
@@ -133,7 +133,7 @@ def select_media(deck_name, new_term):
     # new_term  = request.form["new_term"]
     url_suffix = request.form["url_suffix"]
     print(url_suffix)
-    # new_card = ALL_DECKS[deck_name].addCard(new_term)
+    # new_card = ALL_DECKS[deck_name].add_card(new_term)
     mp4s = get_media(new_term, url_suffix)
 
     return render_template("selectMedia.html",

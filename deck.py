@@ -24,6 +24,7 @@ class Deck(db.Model):
 
     @orm.reconstructor
     def init_on_load(self):
+        print('init on load')
         self.learn_today = deque([])  # deque of card objects
         self.in_session = False
 
@@ -41,16 +42,19 @@ class Deck(db.Model):
         self.learn_today = deque(todays_cards)
         # print(self.cards.head(6))
 
-    def getCard(self, term):
+    def get_card(self, term):
         card = Card.query.filter(
-            db.and_(Card.deck.any(name=self.name).all(),
+            # db.and_(Card.deck.any(name=self.name),
+            #         Card.english == term)).first()
+            db.and_(Card.deck.name == self.name,
                     Card.english == term)).first()
+            # Card.deck is a comparator object (???)
         # card = self.cards.at[term, "card"]
         return card
 
-    def addCard(self, term, mp4s, importance=1, tags=[]):
+    def add_card(self, term, mp4s, importance=1, tags=[]):
         # TODO: check if card is already in deck
-        if self.getCard(self, term) == None:
+        if self.get_card(term) == None:
             card = Card(english=term,
                         mp4s=mp4s,
                         deck_id=self.id,
@@ -63,26 +67,27 @@ class Deck(db.Model):
             print('card already exists, pls update using a different function')
             return False
 
-    def deleteCard(self, term):
-        self.getCard(self, term).delete()
+    def delete_card(self, term):
+        self.get_card(term).delete()
         # TODO: do we need to check if the query = None?
         # self.cards.drop(term, inplace=True)
         db.session.commit()
 
     # TODO add this
-    def updateProgress(self, term, quality):
+    def update_progress(self, term, quality):
         print('updating deck')
         # TODO: verify that card is inside this deck
-        assert term in self.cards.index
-        card = self.cards.at[term, 'card']
+        assert self.get_card(term) == None
+        # assert term in self.cards.index
+        card = self.get_card(term)
         card.update_quality(quality)
 
-        # update deck dataframe
-        self.cards.at[term, "next review date"] = card.nextReviewDate
-        self.cards.at[term, "quality"] = card.quality
+        # # update deck dataframe
+        # self.cards.at[term, "next review date"] = card.nextReviewDate
+        # self.cards.at[term, "quality"] = card.quality
 
-        print(self.cards.head(6))
+        # print(self.cards.head(6))
 
         # TODO: update today's deque if the card needs to be repeated
         if quality <= 1:
-            self.learn_today.append(term)
+            self.learn_today.append(card)

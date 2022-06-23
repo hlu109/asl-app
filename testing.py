@@ -18,6 +18,6 @@ terms = [
 ]
 
 for term in terms:
-    test_deck.addCard(term)
-    card = test_deck.getCard(term)
+    test_deck.add_card(term)
+    card = test_deck.get_card(term)
     card.media = get_media(term)[0]
