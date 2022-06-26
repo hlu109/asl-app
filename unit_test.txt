@@ -1,0 +1,202 @@
+/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/flask_sqlalchemy/__init__.py:872: FSADeprecationWarning: SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead and will be disabled by default in the future.  Set it to True or False to suppress this warning.
+  warnings.warn(FSADeprecationWarning(
+EEE...
+======================================================================
+ERROR: test_add_card (__main__.MyTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: misuse of aggregate function max()
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "unit_test_db.py", line 149, in test_add_card
+    card = deck.add_card(term, links)
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/deck.py", line 60, in add_card
+    card = Card(english=term,
+  File "<string>", line 4, in __init__
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/state.py", line 480, in _initialize_instance
+    manager.dispatch.init_failure(self, args, kwargs)
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/state.py", line 477, in _initialize_instance
+    return manager.original_init(*mixed[1:], **kwargs)
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/card.py", line 59, in __init__
+    card_id = self.generate_id()
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/card.py", line 114, in generate_id
+    last_card = db.session.query(Card).filter(Card.id == func.max(Card.id)).first()
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2810, in first
+    return self.limit(1)._iter().first()
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2894, in _iter
+    result = self.session.execute(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1692, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) misuse of aggregate function max()
+[SQL: SELECT card.id AS card_id, card.english AS card_english, card.deck_id AS card_deck_id, card.last_review_date AS card_last_review_date, card."last_EF" AS "card_last_EF", card.last_interval AS card_last_interval, card.repetitions AS card_repetitions, card.next_review_date AS card_next_review_date, card.quality AS card_quality, card.description AS card_description, card.hint AS card_hint, card.importance AS card_importance 
+FROM card 
+WHERE card.id = max(card.id)
+ LIMIT ? OFFSET ?]
+[parameters: (1, 0)]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+
+======================================================================
+ERROR: test_card_constructor (__main__.MyTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: misuse of aggregate function max()
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "unit_test_db.py", line 71, in test_card_constructor
+    card = Card(english=term,
+  File "<string>", line 4, in __init__
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/state.py", line 480, in _initialize_instance
+    manager.dispatch.init_failure(self, args, kwargs)
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/state.py", line 477, in _initialize_instance
+    return manager.original_init(*mixed[1:], **kwargs)
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/card.py", line 59, in __init__
+    card_id = self.generate_id()
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/card.py", line 114, in generate_id
+    last_card = db.session.query(Card).filter(Card.id == func.max(Card.id)).first()
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2810, in first
+    return self.limit(1)._iter().first()
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2894, in _iter
+    result = self.session.execute(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1692, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) misuse of aggregate function max()
+[SQL: SELECT card.id AS card_id, card.english AS card_english, card.deck_id AS card_deck_id, card.last_review_date AS card_last_review_date, card."last_EF" AS "card_last_EF", card.last_interval AS card_last_interval, card.repetitions AS card_repetitions, card.next_review_date AS card_next_review_date, card.quality AS card_quality, card.description AS card_description, card.hint AS card_hint, card.importance AS card_importance 
+FROM card 
+WHERE card.id = max(card.id)
+ LIMIT ? OFFSET ?]
+[parameters: (1, 0)]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+
+======================================================================
+ERROR: test_card_query (__main__.MyTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: misuse of aggregate function max()
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "unit_test_db.py", line 91, in test_card_query
+    last_card_null= db.session.query(Card).filter(Card.id == func.max(Card.id)).first()
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2810, in first
+    return self.limit(1)._iter().first()
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2894, in _iter
+    result = self.session.execute(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1692, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) misuse of aggregate function max()
+[SQL: SELECT card.id AS card_id, card.english AS card_english, card.deck_id AS card_deck_id, card.last_review_date AS card_last_review_date, card."last_EF" AS "card_last_EF", card.last_interval AS card_last_interval, card.repetitions AS card_repetitions, card.next_review_date AS card_next_review_date, card.quality AS card_quality, card.description AS card_description, card.hint AS card_hint, card.importance AS card_importance 
+FROM card 
+WHERE card.id = max(card.id)
+ LIMIT ? OFFSET ?]
+[parameters: (1, 0)]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+
+----------------------------------------------------------------------
+Ran 6 tests in 5.358s
+
+FAILED (errors=3)
+init on load
+kwargs
+{'importance': 1}
+kwargs after
+{'importance': 1, 'english': 'apple', 'deck_id': 1}
+self.id 1
+card_id 1
+kwargs
+{'importance': 1}
+kwargs after
+{'importance': 1, 'english': 'name', 'deck_id': 1}
+init on load
+kwargs
+{}
+kwargs after
+{'english': 'apple', 'deck_id': 1}
+self.id 1
+card_id 1
+kwargs
+{}
+kwargs after
+{'english': 'name', 'deck_id': 1}
+init on load
+init on load
+init on load
+init on load
+kwargs
+{}
+kwargs after
+{'english': 'apple', 'deck_id': 1}
+self.id 1
+card_id 1

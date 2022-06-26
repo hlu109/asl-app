@@ -1,5 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql.functions import func
+
 from flask_testing import TestCase
 import unittest
 
@@ -57,10 +59,84 @@ class MyTest(TestCase):
 
         assert first_deck == deck1
         
+    def test_card_constructor(self):
+        deck = Deck(name='test_deck')
+        db.session.add(deck)
+        db.session.commit()
 
+        card_dict = {}
+
+        for term in TEST_TERMS:
+            mp4s = get_media(term)[0]
+            card = Card(english=term,
+                        mp4s=mp4s,
+                        deck_id=deck.id
+                        )
+            db.session.add(card)
+        
+        db.session.commit()
+        
+        all_cards = Card.query.all() # list of all cards that exist in the db
+        print(all_cards)
+        # TODO: add assert statements
+
+    def test_card_query(self):
+        # test querying for task id
+        # compare when db is empty vs has cards 
+        
+        deck = Deck(name='test_deck')
+        db.session.add(deck)
+        db.session.commit()
+        
+        last_card_null= db.session.query(Card).filter(Card.id == func.max(Card.id)).first()
+        print(last_card_null)
+        print(type(last_card_null))
+        # assert last_card_null == None
+        # print('last id query with no cards', last_id_null)
+
+        card_dict = {}
+
+        for term in TEST_TERMS:
+            mp4s = get_media(term)[0]
+            card = Card(english=term,
+                        mp4s=mp4s,
+                        deck_id=deck.id
+                        )
+            db.session.add(card)
+        
+        db.session.commit()
+        last_id = db.session.query(Card).filter(Card.id == func.max(Card.id)).first()
+        print('last_id', last_id)
+        teacher_id = Card.query.filter(Card.english == 'teacher').id()
+        assert last_id == teacher_id
+
+    def test_get_card(self):
+        deck = Deck(name='test_deck')
+        db.session.add(deck)
+        db.session.commit()
+
+        # verify what happens when card doesn't exist
+        null_card = deck.get_card('apple')
+        # im not sure what type this is, maybe its a None object?
+        # print('TODO insert an assert here')
+        # print(type(null_card))
+        assert null_card == None
+        
+        # now add the card and verify that we can get it back
+        term = 'apple'
+        mp4s = get_media(term)[0]
+        card = Card(english=term,
+                    mp4s=mp4s,
+                    deck_id=deck.id
+                    )
+        db.session.add(card)
+        db.session.commit()
+
+        apple_card = deck.get_card('apple')
+        assert apple_card == card
 
     # test Card constructor and querying
-    def test_card_constructor_query(self):
+    def test_add_card(self):
         deck = Deck(name='test_deck')
         db.session.add(deck)
         db.session.commit()
@@ -79,7 +155,7 @@ class MyTest(TestCase):
         # get a specific card
         apple_card = Card.query.filter(
                 db.and_(
-                    Card.deck.any(name='test_deck'),
+                    Card.deck.has(name='test_deck'),
                     Card.english == 'apple')).first()
         
         assert deck.get_card('apple') == apple_card
@@ -88,7 +164,7 @@ class MyTest(TestCase):
         # get a list of cards filtered by review date
         todays_cards = Card.query.filter(
                 db.and_(
-                    Card.deck.any(name='test_deck'),
+                    Card.deck.has(name='test_deck'),
                     Card.next_review_date <= datetime.today().date())).all()
         
         assert todays_cards == card_dict.values()

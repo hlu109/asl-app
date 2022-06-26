@@ -1,5 +1,5 @@
 from shared_db import db
-from card import *
+from card import Card
 from datetime import datetime, timedelta
 # import pandas as pd
 import random
@@ -32,7 +32,7 @@ class Deck(db.Model):
         # TODO: UPDATE THIS
         todays_cards = Card.query.filter(
             db.and_(
-                Card.deck.any(name=self.name).all(),
+                Card.deck.h(name=self.name).all(),
                 Card.next_review_date <= datetime.today().date()))
         print("todays_cards \n", todays_cards)
         # self.cards['next review date'] <= datetime.today().date()].tolist()
@@ -44,11 +44,13 @@ class Deck(db.Model):
 
     def get_card(self, term):
         card = Card.query.filter(
+            db.and_(Card.deck.has(name=self.name),
+                    Card.english == term)).first()
             # db.and_(Card.deck.any(name=self.name),
             #         Card.english == term)).first()
-            db.and_(Card.deck.name == self.name,
-                    Card.english == term)).first()
-            # Card.deck is a comparator object (???)
+            # db.and_(Card.deck.name == self.name,
+            #         Card.english == term)).first()
+            # # Card.deck is a comparator object (???)
         # card = self.cards.at[term, "card"]
         return card
 
@@ -59,7 +61,8 @@ class Deck(db.Model):
                         mp4s=mp4s,
                         deck_id=self.id,
                         importance=importance,
-                        tags=tags)
+                        # tags=tags
+                        )
             db.session.add(card)
             db.session.commit()
             return card

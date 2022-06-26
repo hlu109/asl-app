@@ -1,6 +1,7 @@
 from shared_db import db
 from datetime import datetime, timedelta
 from supermemo2 import SMTwo
+from sqlalchemy.sql.functions import func
 # import pandas as pd
 
 
@@ -46,13 +47,28 @@ class Card(db.Model):
     def __init__(self, english, mp4s, deck_id, **kwargs):
         # user only needs to pass in english, media, link it to a deck somehow ?
         # and can optionally pass in description, hint, and importance
+        # self.media = list? of Media objs? 
+        print('kwargs')
+        print(kwargs)
+
+        kwargs['english'] = english
+        kwargs['deck_id'] = deck_id
+        print('kwargs after')
+        print(kwargs)
+
+        card_id = self.generate_id()
+        self.id = card_id
+        
+        super(Card, self).__init__(**kwargs)
+        # todo: add something to check if the super() is updating self.id
+        # right now when we are testing, self.id and card_id are the same so
+        # we don't know if super() is overriding anything (with the same value)
+        print('self.id', self.id)
+        print('card_id', card_id)
+
         for link in mp4s:
-            db.session.add(Media(link=link, card_id=self.id))
+            db.session.add(Media(link=link, card_id=card_id))
         db.session.commit()
-        # self.media = list of Media objs? 
-
-        super(Card, self).__init__(english, deck_id, **kwargs)
-
         
         # self.deck_id = ??
         # TODO: how do we add a deck id ???
@@ -81,6 +97,26 @@ class Card(db.Model):
         # self.qualASLtoEng = 0
         # self.quality = 0
         # self.history = [] # list of tuples (review date, quali)
+
+    def generate_id(self):
+        """ stupid simple id generator that returns autoincrementing integers 
+            for card ids to get around inability to access self.id inside 
+            __init__()
+        """
+        db_size = db.session.query(func.count(Card.id)).scalar()
+        # last_id = db.session.query(Card).order_by(Card.id.desc()).first().id()
+        # print('last_id 1', last_id)
+        # print('last_id 2', last_id)
+
+        if db_size == 0:
+            return 1
+        else: 
+            last_card = db.session.query(Card).filter(Card.id == func.max(Card.id)).first()
+            print('last id type', type(last_card))
+            print('last_card.id()', last_card.id()) 
+            # print('last_card.id', last_card.id) 
+            last_id = last_card.id()
+            return last_id + 1
 
     def update_quality(self, quality):
         self.quality = quality
