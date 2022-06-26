@@ -117,9 +117,6 @@ class MyTest(TestCase):
 
         # verify what happens when card doesn't exist
         null_card = deck.get_card('apple')
-        # im not sure what type this is, maybe its a None object?
-        # print('TODO insert an assert here')
-        # print(type(null_card))
         assert null_card == None
         
         # now add the card and verify that we can get it back
