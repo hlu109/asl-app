@@ -73,50 +73,22 @@ class Card(db.Model):
         # self.deck_id = ??
         # TODO: how do we add a deck id ???
 
-        # TODO: create subclass? to account for different directions of review
-        # (i.e. ASLtoEng or EngtoASL)
-        # self.english = term
-        # self.media = []  # list of links to media
-        # self.description = ""
-        # self.hint = ""  #Need to find hint in ASL Browser notes text file
-        # # TODO: try to get hint/description from the text file
-        # self.importance = importance
-        # self.sm2Data = None  # obj of type SMTwo
-        # self.SM2data will contain the easiness score, interval, and next
-        # review date
-        # update self.sm2Data once the user is tested on this word to be
-        # SMTwo.first_review(quality, datetime.today())
-        # self.lastReviewDate = None # type string
-        # self.last_EF = None # type int
-        # self.last_interval = None # type int
-        # self.repetitions = 0 # type int
-        # # This has the format "datetime.datetime(2022, 1, 13, 16, 50, 31, 568809)"
-        # self.nextReviewDate = datetime.today().date().strftime('%Y-%m-%d') #type string
-        # self.tags = tags : can add later if we want
-        # self.qualEngtoASL = 0
-        # self.qualASLtoEng = 0
-        # self.quality = 0
-        # self.history = [] # list of tuples (review date, quali)
 
     def generate_id(self):
         """ stupid simple id generator that returns autoincrementing integers 
-            for card ids to get around inability to access self.id inside 
-            __init__()
+            for card ids to get around inability to access self.id inside the 
+            __init__() method
         """
         db_size = db.session.query(func.count(Card.id)).scalar()
-        # last_id = db.session.query(Card).order_by(Card.id.desc()).first().id()
-        # print('last_id 1', last_id)
-        # print('last_id 2', last_id)
 
         if db_size == 0:
             return 1
         else: 
-            last_card = db.session.query(Card).filter(Card.id == func.max(Card.id)).first()
-            print('last id type', type(last_card))
-            print('last_card.id()', last_card.id()) 
-            # print('last_card.id', last_card.id) 
-            last_id = last_card.id()
-            return last_id + 1
+            # if the db contains any cards, we have to find the current highest 
+            # id separately because its possible that max_id != # cards (e.g. 
+            # if we deleted any cards)
+            max_id = db.session.query(func.max(Card.id)).scalar()
+            return max_id + 1
 
     def update_quality(self, quality):
         self.quality = quality

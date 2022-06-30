@@ -30,10 +30,14 @@ class Deck(db.Model):
 
     def update_todays_cards(self):
         # TODO: UPDATE THIS
+        # find out type of next_review_date and type of datetime.today.date
+        # also check what time datetime.today() returns (vs datetime.now())
+        # one hypothesis is that the query is comparing against 00:00 today
+        # though all of today's cards have review dates after 00:00
         todays_cards = Card.query.filter(
             db.and_(
-                Card.deck.h(name=self.name).all(),
-                Card.next_review_date <= datetime.today().date()))
+                Card.deck.has(name=self.name),
+                Card.next_review_date <= datetime.today().date())).all()
         print("todays_cards \n", todays_cards)
         # self.cards['next review date'] <= datetime.today().date()].tolist()
         # todays_cards = self.cards[self.cards['next review date'] <=

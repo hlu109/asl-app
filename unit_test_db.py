@@ -1,9 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.functions import func
-
 from flask_testing import TestCase
 import unittest
+import logging
 
 from card import Card
 from deck import Deck
@@ -11,6 +11,11 @@ from shared_db import db
 
 from webscrape import get_media
 from datetime import datetime
+
+# log = logging.getLogger(__name__)
+# print out debugging text; comment out of we don't want to see it anymore
+# log.setLevel(logging.info)
+logging.basicConfig(level=logging.INFO)
 
 # let's just use terms with singular meanings for now
 TEST_TERMS = ['apple',
@@ -21,10 +26,10 @@ TEST_TERMS = ['apple',
                 'teacher']
 
 
-
 class MyTest(TestCase):
 
     def create_app(self):
+        logging.info("____________ CREATE APP TEST _________________ \n")
         app = Flask(__name__)
         app.config['TESTING'] = True
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///unit_tests.db'
@@ -43,8 +48,11 @@ class MyTest(TestCase):
 
     # test Deck constructor and querying
     def test_deck_constructor_query(self):
-        # only test constructing an empty deck
-        # (we will test adding stuff to decks later when we test other functions)
+        """ only test constructing an empty deck 
+            (we will test adding stuff to decks later when we test other 
+            functions)
+        """
+        logging.info("\n____________ TEST DECK CONSTRUCTOR TEST _________________ \n")
         deck1 = Deck(name='test_deck1')
         deck2 = Deck(name='test_deck2')
         db.session.add(deck1)
@@ -52,19 +60,19 @@ class MyTest(TestCase):
         db.session.commit()
 
         decks = Deck.query.all()
-        # TODO: check if session is cleared after query
-        
         assert decks == [deck1, deck2]
-        first_deck = Deck.query.filter_by(name='test_deck1').first()
 
+        first_deck = Deck.query.filter_by(name='test_deck1').first()
         assert first_deck == deck1
+        # yay, session does not get cleared after the first query
         
     def test_card_constructor(self):
+        logging.info("\n____________ CARD CONSTRUCTOR TEST _________________ \n")
         deck = Deck(name='test_deck')
         db.session.add(deck)
         db.session.commit()
 
-        card_dict = {}
+        card_list = []
 
         for term in TEST_TERMS:
             mp4s = get_media(term)[0]
@@ -72,28 +80,31 @@ class MyTest(TestCase):
                         mp4s=mp4s,
                         deck_id=deck.id
                         )
+            card_list += [card]
             db.session.add(card)
         
         db.session.commit()
         
-        all_cards = Card.query.all() # list of all cards that exist in the db
-        print(all_cards)
-        # TODO: add assert statements
+        all_cards = Card.query.all()
+        logging.info('all_cards')
+        logging.info(all_cards)
+        assert all_cards == card_list
 
     def test_card_query(self):
         # test querying for task id
         # compare when db is empty vs has cards 
-        
+        logging.info("\n____________ CARD QUERY TEST _________________ \n")
         deck = Deck(name='test_deck')
         db.session.add(deck)
         db.session.commit()
         
-        last_card_null= db.session.query(Card).filter(Card.id == func.max(Card.id)).first()
-        print(last_card_null)
-        print(type(last_card_null))
+        # check what happens when we do a query on an empty db
+        last_id_null = db.session.query(func.max(Card.id)).scalar()
+        last_card_null= db.session.query(Card).filter(Card.id == last_id_null).first()
+        logging.info('last card in empty db', last_card_null)
+        logging.info(type(last_card_null))
         # assert last_card_null == None
         # print('last id query with no cards', last_id_null)
-
         card_dict = {}
 
         for term in TEST_TERMS:
@@ -103,14 +114,35 @@ class MyTest(TestCase):
                         deck_id=deck.id
                         )
             db.session.add(card)
+            card_dict[term] = card
         
         db.session.commit()
-        last_id = db.session.query(Card).filter(Card.id == func.max(Card.id)).first()
-        print('last_id', last_id)
-        teacher_id = Card.query.filter(Card.english == 'teacher').id()
+
+        # verify that the id is as expected when the db is populated
+        last_id = db.session.query(func.max(Card.id)).scalar()
+        logging.info('last_id', last_id)
+        teacher_id = Card.query.filter(Card.english == 'teacher').first().id
         assert last_id == teacher_id
 
+        # verify that the review date query is working
+        deck.update_todays_cards()
+        todays_cards = deck.learn_today
+
+        todays_query = Card.query.filter(
+            db.and_(
+                Card.deck.has(name=self.name),
+                Card.next_review_date <= datetime.today().date())).all()
+        
+        logging.info('todays_cards')
+        logging.info(todays_cards)
+        logging.info('card dict values')
+        logging.info(card_dict.values())
+        assert len(todays_cards) == len(card_dict.values())
+        for card in card_dict.values():
+            assert card in todays_cards
+
     def test_get_card(self):
+        logging.info("\n____________ GET CARD TEST _________________ \n")
         deck = Deck(name='test_deck')
         db.session.add(deck)
         db.session.commit()
@@ -134,20 +166,21 @@ class MyTest(TestCase):
 
     # test Card constructor and querying
     def test_add_card(self):
+        logging.info("\n____________ ADD CARD TEST _________________ \n")
         deck = Deck(name='test_deck')
         db.session.add(deck)
         db.session.commit()
         
         card_dict = {}
         
-        # TODO: FIX THE QUERY IN DECK.GET_CARD()
         for term in TEST_TERMS:
             links = get_media(term)[0]
             card = deck.add_card(term, links)
             card_dict[term] = card
         
         all_cards = Card.query.all() # list of all cards that exist in the db
-        print(all_cards)
+        logging.info('all_cards')
+        logging.info(all_cards)
         
         # get a specific card
         apple_card = Card.query.filter(
@@ -158,13 +191,6 @@ class MyTest(TestCase):
         assert deck.get_card('apple') == apple_card
         assert card_dict['apple'] == apple_card
         
-        # get a list of cards filtered by review date
-        todays_cards = Card.query.filter(
-                db.and_(
-                    Card.deck.has(name='test_deck'),
-                    Card.next_review_date <= datetime.today().date())).all()
-        
-        assert todays_cards == card_dict.values()
 
     # test Card update quality
     def test_card_update_quality(self):
