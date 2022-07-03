@@ -10,7 +10,7 @@
   <div id="hint" style="visibility: hidden">this is the hint</div>
 
   {% for i in range(card.media|length) %} 
-  {% set mp4 = card.media[i] %}
+  {% set mp4 = card.media[i].link %}
     <div>
       <video width="400" controls>
         <source src="{{mp4}}" type="video/mp4" />

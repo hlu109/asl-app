@@ -9,8 +9,6 @@
 <div class="content">
     <h1>Decks:</h1>
 
-    <!-- <button type="button" onclick="new_deck()">Create New Deck</button>
-    <div id="add_deck">???</div> -->
     <form action="/decks" method="POST">
         <input type="text" name="new_deck_name" id="new_deck_name">
         <input type="submit" value="Create New Deck">
@@ -23,22 +21,17 @@
             <th>Size</th>
             <th>Practice</th>
         </tr>
-        {% for deck_name in decks %}
+        {% for deck in decks %}
             <tr>
-                <td>{{ deck_name }}</td>
-                <td>{{ decks[deck_name].size }}</td>
+                <td>{{ deck.name }}</td>
+                <td>TODO add a size attribute </td>
                 <td>
-                    <a href="/{{deck_name}}">View deck</a>
+                    <a href="/{{deck.name}}">View deck</a>
                     <br>
-                    <a href="/{{deck_name}}/practice">Practice</a>
+                    <a href="/{{deck.name}}/practice">Practice</a>
                 </td>
             </tr>
         {% endfor %}
     </table>
-
-    <!-- <form action="/" method="POST">
-        <input type="text" name="content" id="content">
-        <input type="submit" value="Add Task">
-    </form> -->
 </div>
 {% endblock %}

@@ -1,24 +1,22 @@
-from shared_db import db
+from setup import db, create_app
 
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from deck import *
-from card import *
-from webscrape import *
-from testing import test_deck
+from deck import Deck
+from card import Card
+import webscrape
+from testing import make_test_deck
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-db.init_app(app)
-# db = SQLAlchemy(app)
+import logging
 
-# TEMPORARY LIST OF ALL DECKS (SO WE CAN TEST THE APP WITHOUT A DB)
-ALL_DECKS = {"Test Deck": test_deck}
+logging.basicConfig(level=logging.INFO)
 
-# class DeckDB(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(200), nullable=False)
+app = create_app()
+db.create_all(app=app)
+
+# add a test deck to the db
+# make_test_deck()
 
 
 @app.route('/')
@@ -29,19 +27,22 @@ def index():
 @app.route('/decks', methods=['POST', 'GET'])
 def view_all_decks():
     if request.method == 'POST':
-        print('HANDLING POST REQUEST TO CREATE NEW DECK')
+        logging.info('HANDLING POST REQUEST TO CREATE NEW DECK')
         new_deck_name = request.form['new_deck_name']
-        # deck_index = len(ALL_DECKS) + 1
-        new_deck = Deck()
-        ALL_DECKS[new_deck_name] = new_deck
-
-    return render_template("decks.html", decks=ALL_DECKS)
+        new_deck = Deck(name=new_deck_name)
+        db.session.add(new_deck)
+        db.session.commit()
+    
+    all_decks = db.session.query(Deck).all()
+    return render_template("decks.html", decks=all_decks)
 
 
 @app.route('/<string:deck_name>')
 def view_deck(deck_name):
-    deck = ALL_DECKS[deck_name]
-    return render_template("viewDeck.html", deck=deck, deck_name=deck_name)
+    cards = db.session.query(Card).filter(
+        Card.deck.has(name=deck_name)).all()
+    # TODO: add error handling
+    return render_template("viewDeck.html", deck_name=deck_name, cards=cards)
 
 
 @app.route('/<string:deck_name>/practice', methods=['POST', 'GET'])
@@ -51,19 +52,20 @@ def view_deck(deck_name):
 # then add checkbox to review again - bool
 # return post, quality, bool for review again
 def practice(deck_name):
-    deck = ALL_DECKS[deck_name]
+    deck = db.session.query(Deck).filter_by(name = deck_name).first()
+    # TODO: add error handling
     if not deck.in_session:
         deck.update_todays_cards()
         deck.in_session = True
 
-    print("\n\n\n\n\n", deck.learn_today, "\n\n\n\n\n")
+    logging.debug("\n\n\n\n\n", deck.learn_today, "\n\n\n\n\n")
 
     # front = True
     # TODO: add code to deal with displaying english vs displaying ASL
     # (english front asl back)
 
     if request.method == 'POST':
-        print('HANDLING POST REQUEST')
+        logging.info('HANDLING POST REQUEST')
         quality_term = request.form['quality-term']
         quality = int(quality_term.split("-")[0])
         term = quality_term.split("-")[1]
@@ -88,12 +90,14 @@ def practice(deck_name):
 @app.route('/<string:deck_name>/<string:card_term>', methods=['POST', 'GET'])
 def view_card(deck_name, card_term):
     if request.method == 'POST':
-        print('HANDLING POST REQUEST TO ADD MEDIA')
+        logging.info('HANDLING POST REQUEST TO ADD MEDIA')
         if request.form['new_card'] == 'True':
             mp4_keep = request.form['mp4_keep'].split(",")
             url_suffix = request.form['url_suffix']
             mp4s = idx_to_links(card_term, url_suffix, mp4_keep)
-            card = ALL_DECKS[deck_name].add_card(card_term, mp4s)
+            deck = db.session.query(Deck).filter_by(name = deck_name).first()
+            # TODO: add error handling
+            card = deck.add_card(card_term, mp4s)
         else: # in this case we'd be editing/updating an existing card
             pass 
             # card = update_card(deck_name, card_term, mp4_keep, url_suffix)
@@ -104,9 +108,9 @@ def view_card(deck_name, card_term):
 
 @app.route('/<string:deck_name>/select_term', methods=['POST'])
 def select_term(deck_name):
-    print('HANDLING POST REQUEST TO CREATE NEW CARD')
+    logging.info('HANDLING POST REQUEST TO CREATE NEW CARD')
     new_term = request.form['new_term']
-    results = get_terms(new_term)
+    results = webscrape.get_terms(new_term)
 
     if results == None:  # no search results
         return render_template("wordNotFound.html")
@@ -126,15 +130,16 @@ def select_term(deck_name):
 
 
 # TODO: perhaps make the new_term parameter hidden from the url somehow?
+# TODO: the mp4 links are incorrect repeats https://signingsavvy... 
 @app.route('/<string:deck_name>/select_media/<string:new_term>',
            methods=['POST'])
 def select_media(deck_name, new_term):
-    print('HANDLING POST REQUEST TO CREATE NEW CARD')
+    logging.info('HANDLING POST REQUEST TO CREATE NEW CARD')
     # new_term  = request.form["new_term"]
     url_suffix = request.form["url_suffix"]
-    print(url_suffix)
+    logging.debug(url_suffix)
     # new_card = ALL_DECKS[deck_name].add_card(new_term)
-    mp4s = get_media(new_term, url_suffix)
+    mp4s = webscrape.get_media(new_term, url_suffix)
 
     return render_template("selectMedia.html",
                            term=new_term,
@@ -145,18 +150,15 @@ def select_media(deck_name, new_term):
 
 ####### helper functions #######
 def get_card(deck_name, card_term):
-    deck = ALL_DECKS[deck_name]
-    # card_entries = deck.cards[deck.cards['term'] == card_term]
-    print(deck.cards)
-    if card_term in deck.cards.index:
-        card = deck.cards.at[card_term, 'card']
-    else:
+    cards = Card.query.filter(
+            db.and_(Card.deck.has(name=deck_name),
+                    Card.english == card_term)).all()
+    if cards == None:
         raise Exception("The card " + card_term + " doesn't exist")
-    # elif len(card_entries) > 1:
-    #     raise Exception("There are multiple cards with the term " + card_term)
-
-    # card = card_entries.card.values[0]
-    return card
+        # TODO: maybe redirect to add card page?
+    elif len(cards) > 1:
+        raise Exception(f"There are multiple cards with the term {card_term} in deck {deck_name}")
+    return cards[0]
 
 
 #TODO: add description
@@ -171,14 +173,12 @@ def update_card(deck_name, card_term, mp4_keep, url_suffix=None):
     return card
 
 def idx_to_links(card_term, url_suffix, mp4_keep):
-    links = get_media(card_term, url_suffix)[0]
+    links = webscrape.get_media(card_term, url_suffix)[0]
     mp4s = []
     for i in range(len(mp4_keep)):
         if mp4_keep[i] == '1':
             mp4s += [links[i]]
     return mp4s
-    
-
 
 if __name__ == "__main__":
     app.run(debug=True)

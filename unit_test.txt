@@ -1,4 +1,5 @@
-INFO:root:____________ CREATE APP TEST _________________ 
+INFO:root:
+____________ CREATE APP TEST _________________ 
 
 /Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/flask_sqlalchemy/__init__.py:872: FSADeprecationWarning: SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead and will be disabled by default in the future.  Set it to True or False to suppress this warning.
   warnings.warn(FSADeprecationWarning(
@@ -7,247 +8,50 @@ ____________ ADD CARD TEST _________________
 
 INFO:root:all_cards
 INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
-.INFO:root:____________ CREATE APP TEST _________________ 
+.INFO:root:
+____________ CREATE APP TEST _________________ 
 
 INFO:root:
 ____________ CARD CONSTRUCTOR TEST _________________ 
 
-INFO:root:all_cards
-INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
-.INFO:root:____________ CREATE APP TEST _________________ 
+.INFO:root:
+____________ CREATE APP TEST _________________ 
+
+INFO:root:
+____________ CARD MEDIA TEST _________________ 
+
+INFO:root:[<Media 1>, <Media 2>]
+.INFO:root:
+____________ CREATE APP TEST _________________ 
 
 INFO:root:
 ____________ CARD QUERY TEST _________________ 
 
---- Logging error ---
-Traceback (most recent call last):
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/logging/__init__.py", line 1081, in emit
-    msg = self.format(record)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/logging/__init__.py", line 925, in format
-    return fmt.format(record)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/logging/__init__.py", line 664, in format
-    record.message = record.getMessage()
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/logging/__init__.py", line 369, in getMessage
-    msg = msg % self.args
-TypeError: not all arguments converted during string formatting
-Call stack:
-  File "unit_test_db.py", line 209, in <module>
-    unittest.main()
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/main.py", line 101, in __init__
-    self.runTests()
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/main.py", line 271, in runTests
-    self.result = testRunner.run(self.test)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/runner.py", line 176, in run
-    test(result)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/suite.py", line 84, in __call__
-    return self.run(*args, **kwds)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/suite.py", line 122, in run
-    test(result)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/suite.py", line 84, in __call__
-    return self.run(*args, **kwds)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/suite.py", line 122, in run
-    test(result)
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/flask_testing/utils.py", line 137, in __call__
-    super(TestCase, self).__call__(result)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/case.py", line 736, in __call__
-    return self.run(*args, **kwds)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/case.py", line 676, in run
-    self._callTestMethod(testMethod)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
-    method()
-  File "unit_test_db.py", line 104, in test_card_query
-    logging.info('last card in empty db', last_card_null)
-Message: 'last card in empty db'
-Arguments: (None,)
-INFO:root:<class 'NoneType'>
---- Logging error ---
-Traceback (most recent call last):
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/logging/__init__.py", line 1081, in emit
-    msg = self.format(record)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/logging/__init__.py", line 925, in format
-    return fmt.format(record)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/logging/__init__.py", line 664, in format
-    record.message = record.getMessage()
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/logging/__init__.py", line 369, in getMessage
-    msg = msg % self.args
-TypeError: not all arguments converted during string formatting
-Call stack:
-  File "unit_test_db.py", line 209, in <module>
-    unittest.main()
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/main.py", line 101, in __init__
-    self.runTests()
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/main.py", line 271, in runTests
-    self.result = testRunner.run(self.test)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/runner.py", line 176, in run
-    test(result)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/suite.py", line 84, in __call__
-    return self.run(*args, **kwds)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/suite.py", line 122, in run
-    test(result)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/suite.py", line 84, in __call__
-    return self.run(*args, **kwds)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/suite.py", line 122, in run
-    test(result)
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/flask_testing/utils.py", line 137, in __call__
-    super(TestCase, self).__call__(result)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/case.py", line 736, in __call__
-    return self.run(*args, **kwds)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/case.py", line 676, in run
-    self._callTestMethod(testMethod)
-  File "/Users/rebeccalilyverghese/opt/anaconda3/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
-    method()
-  File "unit_test_db.py", line 123, in test_card_query
-    logging.info('last_id', last_id)
-Message: 'last_id'
-Arguments: (6,)
+INFO:root:last_id
+INFO:root:6
 INFO:root:todays_cards
-INFO:root:deque([])
+INFO:root:deque([<Card 2>, <Card 3>, <Card 6>, <Card 1>, <Card 5>, <Card 4>])
 INFO:root:card dict values
 INFO:root:dict_values([<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>])
-FINFO:root:____________ CREATE APP TEST _________________ 
+.INFO:root:
+____________ CREATE APP TEST _________________ 
 
-.INFO:root:____________ CREATE APP TEST _________________ 
+.INFO:root:
+____________ CREATE APP TEST _________________ 
 
 INFO:root:
 ____________ TEST DECK CONSTRUCTOR TEST _________________ 
 
-.INFO:root:____________ CREATE APP TEST _________________ 
+.INFO:root:
+____________ CREATE APP TEST _________________ 
 
 INFO:root:
 ____________ GET CARD TEST _________________ 
 
 .
-======================================================================
-FAIL: test_card_query (__main__.MyTest)
 ----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "unit_test_db.py", line 135, in test_card_query
-    assert len(todays_cards) == len(card_dict.values())
-AssertionError
+Ran 7 tests in 25.401s
 
-----------------------------------------------------------------------
-Ran 6 tests in 25.229s
-
-FAILED (failures=1)
-init on load
-kwargs
-{'importance': 1}
-kwargs after
-{'importance': 1, 'english': 'apple', 'deck_id': 1}
-self.id 1
-card_id 1
-kwargs
-{'importance': 1}
-kwargs after
-{'importance': 1, 'english': 'name', 'deck_id': 1}
-self.id 2
-card_id 2
-kwargs
-{'importance': 1}
-kwargs after
-{'importance': 1, 'english': 'learn', 'deck_id': 1}
-self.id 3
-card_id 3
-kwargs
-{'importance': 1}
-kwargs after
-{'importance': 1, 'english': 'student', 'deck_id': 1}
-self.id 4
-card_id 4
-kwargs
-{'importance': 1}
-kwargs after
-{'importance': 1, 'english': 'teach', 'deck_id': 1}
-self.id 5
-card_id 5
-kwargs
-{'importance': 1}
-kwargs after
-{'importance': 1, 'english': 'teacher', 'deck_id': 1}
-self.id 6
-card_id 6
-init on load
-kwargs
-{}
-kwargs after
-{'english': 'apple', 'deck_id': 1}
-self.id 1
-card_id 1
-kwargs
-{}
-kwargs after
-{'english': 'name', 'deck_id': 1}
-self.id 2
-card_id 2
-kwargs
-{}
-kwargs after
-{'english': 'learn', 'deck_id': 1}
-self.id 3
-card_id 3
-kwargs
-{}
-kwargs after
-{'english': 'student', 'deck_id': 1}
-self.id 4
-card_id 4
-kwargs
-{}
-kwargs after
-{'english': 'teach', 'deck_id': 1}
-self.id 5
-card_id 5
-kwargs
-{}
-kwargs after
-{'english': 'teacher', 'deck_id': 1}
-self.id 6
-card_id 6
-init on load
-kwargs
-{}
-kwargs after
-{'english': 'apple', 'deck_id': 1}
-self.id 1
-card_id 1
-kwargs
-{}
-kwargs after
-{'english': 'name', 'deck_id': 1}
-self.id 2
-card_id 2
-kwargs
-{}
-kwargs after
-{'english': 'learn', 'deck_id': 1}
-self.id 3
-card_id 3
-kwargs
-{}
-kwargs after
-{'english': 'student', 'deck_id': 1}
-self.id 4
-card_id 4
-kwargs
-{}
-kwargs after
-{'english': 'teach', 'deck_id': 1}
-self.id 5
-card_id 5
-kwargs
-{}
-kwargs after
-{'english': 'teacher', 'deck_id': 1}
-self.id 6
-card_id 6
-todays_cards 
- []
-init on load
-init on load
-init on load
-kwargs
-{}
-kwargs after
-{'english': 'apple', 'deck_id': 1}
-self.id 1
-card_id 1
+OK
+todays_query
+[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]

@@ -7,14 +7,11 @@ import logging
 
 from card import Card
 from deck import Deck
-from shared_db import db
+from setup import db
 
 from webscrape import get_media
-from datetime import datetime
+from datetime import datetime, date
 
-# log = logging.getLogger(__name__)
-# print out debugging text; comment out of we don't want to see it anymore
-# log.setLevel(logging.info)
 logging.basicConfig(level=logging.INFO)
 
 # let's just use terms with singular meanings for now
@@ -29,7 +26,7 @@ TEST_TERMS = ['apple',
 class MyTest(TestCase):
 
     def create_app(self):
-        logging.info("____________ CREATE APP TEST _________________ \n")
+        logging.info("\n____________ CREATE APP TEST _________________ \n")
         app = Flask(__name__)
         app.config['TESTING'] = True
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///unit_tests.db'
@@ -86,8 +83,8 @@ class MyTest(TestCase):
         db.session.commit()
         
         all_cards = Card.query.all()
-        logging.info('all_cards')
-        logging.info(all_cards)
+        logging.debug('all_cards')
+        logging.debug(all_cards)
         assert all_cards == card_list
 
     def test_card_query(self):
@@ -100,10 +97,10 @@ class MyTest(TestCase):
         
         # check what happens when we do a query on an empty db
         last_id_null = db.session.query(func.max(Card.id)).scalar()
-        last_card_null= db.session.query(Card).filter(Card.id == last_id_null).first()
-        logging.info('last card in empty db', last_card_null)
-        logging.info(type(last_card_null))
-        # assert last_card_null == None
+        last_card_null_f= db.session.query(Card).filter(Card.id == last_id_null).first()
+        last_card_null_a= db.session.query(Card).filter(Card.id == last_id_null).all()
+        assert last_card_null_f == None
+        assert last_card_null_a == []
         # print('last id query with no cards', last_id_null)
         card_dict = {}
 
@@ -120,7 +117,8 @@ class MyTest(TestCase):
 
         # verify that the id is as expected when the db is populated
         last_id = db.session.query(func.max(Card.id)).scalar()
-        logging.info('last_id', last_id)
+        logging.info('last_id')
+        logging.info(last_id)
         teacher_id = Card.query.filter(Card.english == 'teacher').first().id
         assert last_id == teacher_id
 
@@ -130,8 +128,11 @@ class MyTest(TestCase):
 
         todays_query = Card.query.filter(
             db.and_(
-                Card.deck.has(name=self.name),
-                Card.next_review_date <= datetime.today().date())).all()
+                Card.deck.has(name=deck.name),
+                Card.next_review_date <= datetime.now())).all()
+
+        print('todays_query')
+        print(todays_query)
         
         logging.info('todays_cards')
         logging.info(todays_cards)
@@ -192,21 +193,35 @@ class MyTest(TestCase):
         assert card_dict['apple'] == apple_card
         
 
+    # test media access
+    def test_card_media(self):
+        logging.info("\n____________ CARD MEDIA TEST _________________ \n")
+        deck = Deck(name='test_deck')
+        db.session.add(deck)
+        db.session.commit()
+
+        links = get_media('apple')[0]
+        card = deck.add_card('apple', links)
+
+        apple_card = Card.query.filter(
+                db.and_(
+                    Card.deck.has(name='test_deck'),
+                    Card.english == 'apple')).first()
+        
+        logging.info('apple_card.media')
+        logging.info(apple_card.media)
+        
+        assert len(links) == len(apple_card.media)
+
+        for media in apple_card.media:
+            assert media.link in links
+
+
+
     # test Card update quality
     def test_card_update_quality(self):
         pass
 
-    # test Deck init on load
-
-    # test Deck querying
-
-    # test Deck update_todays_cards
-
-    # test Deck get_card
-
-    # test Deck add_card
-
-    # test Deck delete_card
 
 
 

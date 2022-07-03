@@ -1,8 +1,13 @@
-from shared_db import db
+from setup import db
 from datetime import datetime, timedelta
 from supermemo2 import SMTwo
+
 from sqlalchemy.sql.functions import func
 # import pandas as pd
+
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 
 class Media(db.Model):
@@ -47,14 +52,9 @@ class Card(db.Model):
     def __init__(self, english, mp4s, deck_id, **kwargs):
         # user only needs to pass in english, media, link it to a deck somehow ?
         # and can optionally pass in description, hint, and importance
-        # self.media = list? of Media objs? 
-        print('kwargs')
-        print(kwargs)
-
+        # self.media = sqlalchemy.orm.collections.InstrumentedList object
         kwargs['english'] = english
         kwargs['deck_id'] = deck_id
-        print('kwargs after')
-        print(kwargs)
 
         card_id = self.generate_id()
         self.id = card_id
@@ -63,8 +63,8 @@ class Card(db.Model):
         # todo: add something to check if the super() is updating self.id
         # right now when we are testing, self.id and card_id are the same so
         # we don't know if super() is overriding anything (with the same value)
-        print('self.id', self.id)
-        print('card_id', card_id)
+        logging.debug('self.id', self.id)
+        logging.debug('card_id', card_id)
 
         for link in mp4s:
             db.session.add(Media(link=link, card_id=card_id))

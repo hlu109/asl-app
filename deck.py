@@ -1,10 +1,15 @@
-from shared_db import db
+from setup import db
 from card import Card
+
 from datetime import datetime, timedelta
-# import pandas as pd
 import random
 from collections import deque
+# import pandas as pd
+
 from sqlalchemy import orm
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 
 class Deck(db.Model):
@@ -24,27 +29,21 @@ class Deck(db.Model):
 
     @orm.reconstructor
     def init_on_load(self):
-        print('init on load')
+        logging.debug('inside init on load')
         self.learn_today = deque([])  # deque of card objects
         self.in_session = False
 
     def update_todays_cards(self):
-        # TODO: UPDATE THIS
-        # find out type of next_review_date and type of datetime.today.date
-        # also check what time datetime.today() returns (vs datetime.now())
-        # one hypothesis is that the query is comparing against 00:00 today
-        # though all of today's cards have review dates after 00:00
         todays_cards = Card.query.filter(
             db.and_(
                 Card.deck.has(name=self.name),
-                Card.next_review_date <= datetime.today().date())).all()
-        print("todays_cards \n", todays_cards)
-        # self.cards['next review date'] <= datetime.today().date()].tolist()
-        # todays_cards = self.cards[self.cards['next review date'] <=
-        #                           datetime.today().date()]['term'].tolist()
+                Card.next_review_date <= datetime.now())).all()
+        logging.debug("todays_cards")
+        for card in todays_cards:
+            logging.debug(card.english)
+
         random.shuffle(todays_cards)
         self.learn_today = deque(todays_cards)
-        # print(self.cards.head(6))
 
     def get_card(self, term):
         card = Card.query.filter(
@@ -59,7 +58,6 @@ class Deck(db.Model):
         return card
 
     def add_card(self, term, mp4s, importance=1, tags=[]):
-        # TODO: check if card is already in deck
         if self.get_card(term) == None:
             card = Card(english=term,
                         mp4s=mp4s,
@@ -67,11 +65,16 @@ class Deck(db.Model):
                         importance=importance,
                         # tags=tags
                         )
+            logging.debug('term after card constructor')
+            logging.debug(card.english)
+            logging.debug('mp4s after card constructor')
+            logging.debug(card.media)
             db.session.add(card)
             db.session.commit()
             return card
         else:
-            print('card already exists, pls update using a different function')
+            # TODO: redirect to the view card page of term
+            logging.warning('card already exists, pls update using a different function')
             return False
 
     def delete_card(self, term):
@@ -82,7 +85,7 @@ class Deck(db.Model):
 
     # TODO add this
     def update_progress(self, term, quality):
-        print('updating deck')
+        logging.info('updating deck')
         # TODO: verify that card is inside this deck
         assert self.get_card(term) == None
         # assert term in self.cards.index
@@ -93,7 +96,6 @@ class Deck(db.Model):
         # self.cards.at[term, "next review date"] = card.nextReviewDate
         # self.cards.at[term, "quality"] = card.quality
 
-        # print(self.cards.head(6))
 
         # TODO: update today's deque if the card needs to be repeated
         if quality <= 1:

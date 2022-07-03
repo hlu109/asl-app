@@ -18,10 +18,10 @@
       <th>View Card</th>
       <!-- <th>Practice</th> -->
     </tr>
-    {% for term in deck.cards.index.tolist() %}
+    {% for card in cards %}
     <tr>
-      <td>{{ term }}</td>
-      <td><a href="/{{deck_name}}/{{term}}">View Card</a></td>
+      <td>{{ card.english }}</td>
+      <td><a href="/{{deck_name}}/{{card.english}}">View Card</a></td>
       <!-- <td>
                     <a href="/{{deck_id}}/practice">Practice</a>
                 </td> -->
