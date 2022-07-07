@@ -8,6 +8,8 @@
   {% set mp4 = mp4s[0][i] %}
   <br>
   <script>
+    console.log('mp4 link')
+    console.log('{{mp4}}')
     var addButton = document.createElement("input");
     addButton.id = "{{i}}";
     addButton.type = "button";
@@ -84,12 +86,13 @@
     field2.value = "{{url_suffix}}";
 
     const field3 = document.createElement('input');
-    field2.type = 'hidden';
-    field2.name = 'new_card';
-    field2.value = "True";
+    field3.type = 'hidden';
+    field3.name = 'new_card';
+    field3.value = "True";
 
     form.appendChild(field1);
     form.appendChild(field2);
+    form.appendChild(field3);
     document.body.appendChild(form);
     form.submit();
   }

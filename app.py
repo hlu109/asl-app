@@ -15,9 +15,14 @@ logging.basicConfig(level=logging.INFO)
 app = create_app()
 db.create_all(app=app)
 
-# add a test deck to the db
-# make_test_deck()
+# clear all old database entries
+db.session.query(Deck).delete()
+db.session.query(Card).delete()
+# TODO: add custom deconstructor
+db.session.commit()
 
+# add a test deck to the db
+make_test_deck()
 
 @app.route('/')
 def index():
@@ -86,19 +91,28 @@ def practice(deck_name):
                                deck_name=deck_name,
                                card=next_card)
 
-
+#TODO: view_card's number of videos showing is 
+# way more than what is being sent from select media
+# also some of the videos are from a different term
 @app.route('/<string:deck_name>/<string:card_term>', methods=['POST', 'GET'])
 def view_card(deck_name, card_term):
     if request.method == 'POST':
         logging.info('HANDLING POST REQUEST TO ADD MEDIA')
         if request.form['new_card'] == 'True':
+            logging.info('inside first if statement')
             mp4_keep = request.form['mp4_keep'].split(",")
+            logging.info(mp4_keep)
             url_suffix = request.form['url_suffix']
+            logging.info(url_suffix)
             mp4s = idx_to_links(card_term, url_suffix, mp4_keep)
+            logging.info(mp4s)
             deck = db.session.query(Deck).filter_by(name = deck_name).first()
+            logging.info(deck)
             # TODO: add error handling
             card = deck.add_card(card_term, mp4s)
+            logging.info(card)
         else: # in this case we'd be editing/updating an existing card
+            logging.info('inside else statement (should not get here)')
             pass 
             # card = update_card(deck_name, card_term, mp4_keep, url_suffix)
     else:
@@ -137,7 +151,7 @@ def select_media(deck_name, new_term):
     logging.info('HANDLING POST REQUEST TO CREATE NEW CARD')
     # new_term  = request.form["new_term"]
     url_suffix = request.form["url_suffix"]
-    logging.debug(url_suffix)
+    logging.info(url_suffix)
     # new_card = ALL_DECKS[deck_name].add_card(new_term)
     mp4s = webscrape.get_media(new_term, url_suffix)
 

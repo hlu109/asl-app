@@ -68,6 +68,7 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
 
         for var in variations_li:
             link_suffix = var.a['href']
+            print(f'link_suffix for {word}', link_suffix)
 
             # TODO: i was thinking about getting the button label (e.g. "ASL 
             # 1", "finger spell", etc) but it doesn't seem like that 
@@ -88,7 +89,10 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
             page_soup = BeautifulSoup(r.content, "html.parser")
             vid_div = page_soup.find("div", class_="videocontent")
 
-            media_url = os.path.join(SIGNINGSAVVY, vid_div.source['src'])
+            # updating since signingsavvy changed their links from relative to 
+            # absolute
+            # media_url = os.path.join(SIGNINGSAVVY, vid_div.source['src'])
+            media_url = vid_div.source['src']
             mp4s.append(media_url)
     
     elif source == 'LIFEPRINT': 

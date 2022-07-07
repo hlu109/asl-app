@@ -65,10 +65,11 @@ class Card(db.Model):
         # we don't know if super() is overriding anything (with the same value)
         logging.debug('self.id', self.id)
         logging.debug('card_id', card_id)
-
+        print('inside card constructor, now printing links:')
         for link in mp4s:
+            print(link)
             db.session.add(Media(link=link, card_id=card_id))
-        db.session.commit()
+        db.session.commit() 
         
         # self.deck_id = ??
         # TODO: how do we add a deck id ???

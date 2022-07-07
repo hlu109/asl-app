@@ -12,7 +12,7 @@ from setup import db
 from webscrape import get_media
 from datetime import datetime, date
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 # let's just use terms with singular meanings for now
 TEST_TERMS = ['apple',
@@ -176,7 +176,9 @@ class MyTest(TestCase):
         
         for term in TEST_TERMS:
             links = get_media(term)[0]
+            logging.debug(links)
             card = deck.add_card(term, links)
+            logging.debug(card.media[0].link)
             card_dict[term] = card
         
         all_cards = Card.query.all() # list of all cards that exist in the db
@@ -215,8 +217,6 @@ class MyTest(TestCase):
 
         for media in apple_card.media:
             assert media.link in links
-
-
 
     # test Card update quality
     def test_card_update_quality(self):
