@@ -41,7 +41,8 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
             word, the string to look up in the dictionary
             url_suffix, string with the format "sign/{TERM}/{ID}{/OPTIONAL VARIATION INDEX}" (e.g. "sign/RUN/10423/1")
             source, the asl website to search. must be from the list sources"""
-    
+    print('inside webscrape.get_media()')
+
     mp4s = []
     labels = []
 
@@ -77,6 +78,12 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
             var_label = var.a.text
             labels.append(var_label)
 
+            if link_suffix == 'javascript:;':
+                print('link_suffix', link_suffix)
+                print('var.a.has_attr(\'class\')', var.a.has_attr('class'))
+                print('var.a[\'class\']', var.a['class'])
+                print('var.a[\'class\'] == \'current\'', var.a['class'] == 'current')
+
             if var.a.has_attr('class') and var.a['class'] == 'current':
                 var_urls.append(search_url)
             else:
@@ -84,6 +91,7 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
 
         # iterate through variations of the sign, then save the mp4 link along
         # with the variation label
+        print('var_urls', var_urls)
         for url in var_urls:
             r = requests.get(url)
             page_soup = BeautifulSoup(r.content, "html.parser")
@@ -93,6 +101,7 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
             # absolute
             # media_url = os.path.join(SIGNINGSAVVY, vid_div.source['src'])
             media_url = vid_div.source['src']
+            # print(media_url)
             mp4s.append(media_url)
     
     elif source == 'LIFEPRINT': 

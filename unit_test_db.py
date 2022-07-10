@@ -5,7 +5,7 @@ from flask_testing import TestCase
 import unittest
 import logging
 
-from card import Card
+from card import Card, Media, History
 from deck import Deck
 from setup import db
 
@@ -24,7 +24,7 @@ TEST_TERMS = ['apple',
 
 
 class MyTest(TestCase):
-
+    
     def create_app(self):
         logging.info("\n____________ CREATE APP TEST _________________ \n")
         app = Flask(__name__)
@@ -42,7 +42,26 @@ class MyTest(TestCase):
         db.session.remove()
         db.drop_all()
 
+    # helper function to populate database
+    def populate_db(self, deck_name='test_deck', terms=TEST_TERMS):
+        deck = Deck(name=deck_name)
+        db.session.add(deck)
+        db.session.commit()
+        
+        # card_dict = {}
+        for term in terms:
+            links = get_media(term)[0]
+            logging.debug(links)
+            card = deck.add_card(term, links)
+            logging.debug(card.media[0].link)
+            # card_dict[term] = card
+        
+        # all_cards = Card.query.all() # list of all cards that exist in the db
+        # logging.info('all_cards')
+        # logging.info(all_cards)
 
+        # return card_dict
+    
     # test Deck constructor and querying
     def test_deck_constructor_query(self):
         """ only test constructing an empty deck 
@@ -218,12 +237,139 @@ class MyTest(TestCase):
         for media in apple_card.media:
             assert media.link in links
 
+    # test different deleting queries
+    def test_delete_queries(self):
+        logging.info("\n____________DELETE QUERIES TEST _________________ \n")
+        
+        self.populate_db()
+        all_cards = Card.query.all() # list of all cards that exist in the db
+        logging.info('all_cards')
+        logging.info(all_cards)
+
+        # delete cards, testing 3 different queries
+        db.session.query(Card).delete()
+        db.session.commit()
+
+        remaining_cards = db.session.query(Card).all()
+        logging.info('remaining_cards after db.session.query(Card).delete()')
+        logging.info(remaining_cards)
+
+        # repeat with different delete query
+        self.populate_db()
+        all_cards = Card.query.all() # list of all cards that exist in the db
+        logging.info('all_cards')
+        logging.info(all_cards)
+
+        # delete cards via 2nd query
+        Card.query.delete()
+        db.session.commit()
+
+        remaining_cards = db.session.query(Card).all()
+        logging.info('remaining_cards after Card.query.delete()')
+        logging.info(remaining_cards)
+
+        # repeat with 3rd delete query
+        self.populate_db()
+        all_cards = Card.query.all() # list of all cards that exist in the db
+        logging.info('all_cards')
+        logging.info(all_cards)
+
+        # delete cards via 3rd query
+        for card in all_cards:
+            db.session.delete(card)
+        db.session.commit()
+
+        remaining_cards = db.session.query(Card).all()
+        logging.info('remaining_cards after db.session.delete(card) with for loop')
+        logging.info(remaining_cards)
+
+        # TODO: i am just curious so I want to see what happens to deck when we delete all cards 
+
+
+    # test how to delete all cards and decks in database
+    def test_delete_cards_first(self):
+        logging.info("\n____________DELETE CARDS FIRST TEST _________________ \n")
+        self.populate_db()
+        all_cards = Card.query.all() # list of all cards that exist in the db
+        logging.info('all_cards')
+        logging.info(all_cards)
+
+        # test deleting cards first, then deck, then media and history
+        cards = db.session.query(Card).delete()
+        db.session.commit()
+        remaining_cards = db.session.query(Card).all()
+        logging.info('remaining_cards')
+        logging.info(remaining_cards)
+        assert remaining_cards == []
+        
+        # decks = db.session.query(Deck).all()
+        decks = db.session.query(Deck)
+        logging.info('decks after cards are deleted')
+        logging.info(decks.all())
+        db.session.query(Deck).delete()
+        db.session.commit()
+        remaining_decks = db.session.query(Deck).all()
+        logging.info('remaining decks after decks are deleted')
+        logging.info(remaining_decks)
+        assert remaining_decks == [] # Check if this is valid
+
+        logging.info('media and history before deletion')
+        logging.info(db.session.query(Media).all())
+        logging.info(db.session.query(History).all())
+        media = db.session.query(Media).delete()
+        history = db.session.query(History).delete()
+        db.session.commit()
+
+        logging.info('media and history after deletion')
+        logging.info(db.session.query(Media).all())
+        logging.info(db.session.query(History).all())
+        assert media == None 
+        assert history == None
+    
+    def test_delete_decks_first(self):
+        logging.info("\n____________DELETE DECKS FIRST TEST _________________ \n")
+        self.populate_db()
+        all_cards = db.session.query(Card).all()
+        logging.info('cards before')
+        logging.info(all_cards)
+        decks = db.session.query(Deck)
+        logging.info('decks before deletion')
+        logging.info(decks.all())
+        db.session.query(Deck).delete()
+        db.session.commit()
+        remaining_decks = db.session.query(Deck).all()
+        logging.info('decks after deletion')
+        logging.info(remaining_decks)
+        assert remaining_decks == []
+        
+        cards = db.session.query(Card)
+        logging.info('cards before explicit deletion')
+        logging.info(cards.all())
+        db.session.query(Card).delete()
+        db.session.commit()
+        remaining_cards = db.session.query(Card).all()
+        logging.info('cards after deletion')
+        logging.info(remaining_cards)
+        assert remaining_cards == []
+
+        media = db.session.query(Media)
+        history = db.session.query(History)
+        logging.info('media and history before explicit deletion')
+        logging.info(media.all())
+        logging.info(history.all())
+        db.session.query(Media).delete()
+        db.session.query(History).delete()
+        db.session.commit()
+        remaining_media = db.session.query(Media).all()
+        remaining_history = db.session.query(History).all()
+        logging.info('media and history after deletion')
+        logging.info(remaining_media)
+        logging.info(remaining_history)
+        assert remaining_media == [] and remaining_history == []
+
     # test Card update quality
     def test_card_update_quality(self):
         pass
-
-
-
 
 if __name__ == "__main__":
     unittest.main()

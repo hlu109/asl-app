@@ -67,6 +67,7 @@ class Card(db.Model):
         logging.debug('card_id', card_id)
         print('inside card constructor, now printing links:')
         for link in mp4s:
+            # TODO: add error handling to ensure mp4s is not empty
             print(link)
             db.session.add(Media(link=link, card_id=card_id))
         db.session.commit() 
