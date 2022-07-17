@@ -1,11 +1,13 @@
 from bs4 import BeautifulSoup
 import requests
 import os
+import logging
 
 sources = ['SIGNINGSAVVY', 'LIFEPRINT']
 SIGNINGSAVVY = 'https://www.signingsavvy.com'
 LIFEPRINT_PREFIX = 'https://lifeprint.com/asl101/pages-signs'
 LIFEPRINT_SUFFIX = '.htm'
+CURRENT_PAGE_LINK_SUFFIX = 'javascript:;'
 
 def get_terms(word, source='SIGNINGSAVVY'):
     """ if no signs exist, returns None. Otherwise, returns list of 3-tuples 
@@ -41,7 +43,6 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
             word, the string to look up in the dictionary
             url_suffix, string with the format "sign/{TERM}/{ID}{/OPTIONAL VARIATION INDEX}" (e.g. "sign/RUN/10423/1")
             source, the asl website to search. must be from the list sources"""
-    print('inside webscrape.get_media()')
 
     mp4s = []
     labels = []
@@ -69,7 +70,6 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
 
         for var in variations_li:
             link_suffix = var.a['href']
-            print(f'link_suffix for {word}', link_suffix)
 
             # TODO: i was thinking about getting the button label (e.g. "ASL 
             # 1", "finger spell", etc) but it doesn't seem like that 
@@ -78,20 +78,17 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
             var_label = var.a.text
             labels.append(var_label)
 
-            if link_suffix == 'javascript:;':
-                print('link_suffix', link_suffix)
-                print('var.a.has_attr(\'class\')', var.a.has_attr('class'))
-                print('var.a[\'class\']', var.a['class'])
-                print('var.a[\'class\'] == \'current\'', var.a['class'] == 'current')
 
-            if var.a.has_attr('class') and var.a['class'] == 'current':
+            # signingsavvy's website changed their class attribute value
+            if var.a.has_attr('class') and var.a['class'][0] == 'current':
+                # or
+                # if link_suffix == CURRENT_PAGE_LINK_SUFFIX:
                 var_urls.append(search_url)
             else:
                 var_urls.append(os.path.join(SIGNINGSAVVY, link_suffix))
 
         # iterate through variations of the sign, then save the mp4 link along
         # with the variation label
-        print('var_urls', var_urls)
         for url in var_urls:
             r = requests.get(url)
             page_soup = BeautifulSoup(r.content, "html.parser")
@@ -101,7 +98,6 @@ def get_media(word, url_suffix=None, source='SIGNINGSAVVY'):
             # absolute
             # media_url = os.path.join(SIGNINGSAVVY, vid_div.source['src'])
             media_url = vid_div.source['src']
-            # print(media_url)
             mp4s.append(media_url)
     
     elif source == 'LIFEPRINT': 

@@ -28,182 +28,10 @@ ____________ CREATE APP TEST _________________
 INFO:root:
 ____________ CARD QUERY TEST _________________ 
 
-inside webscrape.get_media()
-link_suffix for apple javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for apple sign/APPLE/902/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/APPLE/902/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31204.mp4
-inside webscrape.get_media()
-link_suffix for name javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for name sign/NAME/281/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/NAME/281/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/30/30948.mp4
-inside webscrape.get_media()
-link_suffix for learn javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for learn sign/LEARN/236/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/LEARN/236/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31423.mp4
-inside webscrape.get_media()
-link_suffix for student javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for student sign/STUDENT/701/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/STUDENT/701/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31424.mp4
-inside webscrape.get_media()
-link_suffix for teach javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teach sign/TEACH/704/2
-link_suffix for teach sign/TEACH/704/3
-link_suffix for teach sign/TEACH/704/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACH/704/2', 'https://www.signingsavvy.com/sign/TEACH/704/3', 'https://www.signingsavvy.com/sign/TEACH/704/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/6/6747.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31421.mp4
-inside webscrape.get_media()
-link_suffix for teacher javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teacher sign/TEACHER/420/2
-link_suffix for teacher sign/TEACHER/420/3
-link_suffix for teacher sign/TEACHER/420/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACHER/420/2', 'https://www.signingsavvy.com/sign/TEACHER/420/3', 'https://www.signingsavvy.com/sign/TEACHER/420/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/27/27869.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31023.mp4
-inside webscrape.get_media()
-link_suffix for apple javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for apple sign/APPLE/902/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/APPLE/902/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31204.mp4
-inside webscrape.get_media()
-link_suffix for name javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for name sign/NAME/281/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/NAME/281/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/30/30948.mp4
-inside webscrape.get_media()
-link_suffix for learn javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for learn sign/LEARN/236/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/LEARN/236/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31423.mp4
-inside webscrape.get_media()
-link_suffix for student javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for student sign/STUDENT/701/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/STUDENT/701/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31424.mp4
-inside webscrape.get_media()
-link_suffix for teach javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teach sign/TEACH/704/2
-link_suffix for teach sign/TEACH/704/3
-link_suffix for teach sign/TEACH/704/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACH/704/2', 'https://www.signingsavvy.com/sign/TEACH/704/3', 'https://www.signingsavvy.com/sign/TEACH/704/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/6/6747.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31421.mp4
-inside webscrape.get_media()
-link_suffix for teacher javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teacher sign/TEACHER/420/2
-link_suffix for teacher sign/TEACHER/420/3
-link_suffix for teacher sign/TEACHER/420/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACHER/420/2', 'https://www.signingsavvy.com/sign/TEACHER/420/3', 'https://www.signingsavvy.com/sign/TEACHER/420/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/27/27869.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31023.mp4
-inside webscrape.get_media()
-link_suffix for apple javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for apple sign/APPLE/902/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/APPLE/902/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31204.mp4
-inside webscrape.get_media()
-link_suffix for apple javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for apple sign/APPLE/902/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/APPLE/902/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31204.mp4
-inside webscrape.get_media()
-link_suffix for name javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for name sign/NAME/281/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/NAME/281/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/30/30948.mp4
-inside webscrape.get_media()
-link_suffix for learn javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for learn sign/LEARN/236/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/LEARN/236/2']INFO:root:last_id
+INFO:root:last_id
 INFO:root:6
 INFO:root:todays_cards
-INFO:root:deque([<Card 6>, <Card 4>, <Card 1>, <Card 5>, <Card 3>, <Card 2>])
+INFO:root:deque([<Card 3>, <Card 6>, <Card 5>, <Card 4>, <Card 1>, <Card 2>])
 INFO:root:card dict values
 INFO:root:dict_values([<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>])
 .INFO:root:
@@ -235,183 +63,13 @@ INFO:root:[]
 INFO:root:media and history after deletion
 INFO:root:[]
 INFO:root:[]
-FINFO:root:
+.INFO:root:
 ____________ CREATE APP TEST _________________ 
 
 INFO:root:
 ____________DELETE DECKS FIRST TEST _________________ 
 
-
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31423.mp4
-inside webscrape.get_media()
-link_suffix for student javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for student sign/STUDENT/701/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/STUDENT/701/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31424.mp4
-inside webscrape.get_media()
-link_suffix for teach javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teach sign/TEACH/704/2
-link_suffix for teach sign/TEACH/704/3
-link_suffix for teach sign/TEACH/704/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACH/704/2', 'https://www.signingsavvy.com/sign/TEACH/704/3', 'https://www.signingsavvy.com/sign/TEACH/704/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/6/6747.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31421.mp4
-inside webscrape.get_media()
-link_suffix for teacher javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teacher sign/TEACHER/420/2
-link_suffix for teacher sign/TEACHER/420/3
-link_suffix for teacher sign/TEACHER/420/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACHER/420/2', 'https://www.signingsavvy.com/sign/TEACHER/420/3', 'https://www.signingsavvy.com/sign/TEACHER/420/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/27/27869.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31023.mp4
-todays_query
-[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
-inside webscrape.get_media()
-link_suffix for apple javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for apple sign/APPLE/902/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/APPLE/902/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31204.mp4
-inside webscrape.get_media()
-link_suffix for name javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for name sign/NAME/281/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/NAME/281/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/30/30948.mp4
-inside webscrape.get_media()
-link_suffix for learn javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for learn sign/LEARN/236/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/LEARN/236/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31423.mp4
-inside webscrape.get_media()
-link_suffix for student javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for student sign/STUDENT/701/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/STUDENT/701/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31424.mp4
-inside webscrape.get_media()
-link_suffix for teach javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teach sign/TEACH/704/2
-link_suffix for teach sign/TEACH/704/3
-link_suffix for teach sign/TEACH/704/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACH/704/2', 'https://www.signingsavvy.com/sign/TEACH/704/3', 'https://www.signingsavvy.com/sign/TEACH/704/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/6/6747.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31421.mp4
-inside webscrape.get_media()
-link_suffix for teacher javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teacher sign/TEACHER/420/2
-link_suffix for teacher sign/TEACHER/420/3
-link_suffix for teacher sign/TEACHER/420/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACHER/420/2', 'https://www.signingsavvy.com/sign/TEACHER/420/3', 'https://www.signingsavvy.com/sign/TEACHER/420/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/27/27869.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31023.mp4
-inside webscrape.get_media()
-link_suffix for apple javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for apple sign/APPLE/902/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/APPLE/902/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31204.mp4
-inside webscrape.get_media()
-link_suffix for name javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for name sign/NAME/281/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/NAME/281/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/30/30948.mp4
-inside webscrape.get_media()
-link_suffix for learn javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for learn sign/LEARN/236/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/LEARN/236/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31423.mp4
-inside webscrape.get_media()
-link_suffix for student javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for student sign/STUDENT/701/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/STUDENT/701/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31424.mp4
-inside webscrape.get_media()
-link_suffix for teach javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teach sign/TEACH/704/2
-link_suffix for teach sign/TEACH/704/3
-link_suffix for teach sign/TEACH/704/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACH/704/2', 'https://www.signingsavvy.com/sign/TEACH/704/3', 'https://www.signingsavvy.com/sign/TEACH/704/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/6/6747.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31421.mp4
-inside webscrape.get_media()
-link_suffix for teacher javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current'INFO:root:cards before
+INFO:root:cards before
 INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
 INFO:root:decks before deletion
 INFO:root:[<Deck 1>]
@@ -431,7 +89,7 @@ INFO:root:[]
 ____________ CREATE APP TEST _________________ 
 
 INFO:root:
-____________DELETE QUERIES TEST _________________ 
+____________DELETION QUERIES TEST _________________ 
 
 INFO:root:all_cards
 INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
@@ -441,309 +99,43 @@ INFO:root:all_cards
 INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
 INFO:root:remaining_cards after Card.query.delete()
 INFO:root:[]
- False
-link_suffix for teacher sign/TEACHER/420/2
-link_suffix for teacher sign/TEACHER/420/3
-link_suffix for teacher sign/TEACHER/420/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACHER/420/2', 'https://www.signingsavvy.com/sign/TEACHER/420/3', 'https://www.signingsavvy.com/sign/TEACHER/420/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/27/27869.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31023.mp4
-inside webscrape.get_media()
-link_suffix for apple javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for apple sign/APPLE/902/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/APPLE/902/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31204.mp4
-inside webscrape.get_media()
-link_suffix for name javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for name sign/NAME/281/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/NAME/281/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/30/30948.mp4
-inside webscrape.get_media()
-link_suffix for learn javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for learn sign/LEARN/236/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/LEARN/236/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31423.mp4
-inside webscrape.get_media()
-link_suffix for student javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for student sign/STUDENT/701/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/STUDENT/701/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31424.mp4
-inside webscrape.get_media()
-link_suffix for teach javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teach sign/TEACH/704/2
-link_suffix for teach sign/TEACH/704/3
-link_suffix for teach sign/TEACH/704/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACH/704/2', 'https://www.signingsavvy.com/sign/TEACH/704/3', 'https://www.signingsavvy.com/sign/TEACH/704/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/6/6747.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31421.mp4
-inside webscrape.get_media()
-link_suffix for teacher javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teacher sign/TEACHER/420/2
-link_suffix for teacher sign/TEACHER/420/3
-link_suffix for teacher sign/TEACHER/420/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACHER/420/2', 'https://www.signingsavvy.com/sign/TEACHER/420/3', 'https://www.signingsavvy.com/sign/TEACHER/420/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/27/27869.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31023.mp4
-inside webscrape.get_media()
-link_suffix for apple javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for apple sign/APPLE/902/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/APPLE/902/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31204.mp4
-inside webscrape.get_media()
-link_suffix for name javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for name sign/NAME/281/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/NAME/281/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/30/30948.mp4
-inside webscrape.get_media()
-link_suffix for learn javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for learn sign/LEARN/236/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/LEARN/236/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31423.mp4
-inside webscrape.get_media()
-link_suffix for student javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for student sign/STUDENT/701/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/STUDENT/701/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31424.mp4
-inside webscrape.get_media()
-link_suffix for teach javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teach sign/TEACH/704/2
-link_suffix for teach sign/TEACH/704/3
-link_suffix for teach sign/TEACH/704/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACH/704/2', 'https://www.signingsavvy.com/sign/TEACH/704/3', 'https://www.signingsavvy.com/sign/TEACH/704/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/6/6747.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31421.mp4
-inside webscrape.get_media()
-link_suffix for teacher javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teacher sign/TEACHER/420/2
-link_suffix for teacher sign/TEACHER/420/3
-link_suffix for teacher sign/TEACHER/420/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACHER/420/2', 'https://www.signingsavvy.com/sign/TEACHER/420/3', 'https://www.signingsavvy.com/sign/TEACHER/420/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/27/27869.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31023.mp4
-inside webscrape.get_media()
-link_suffix for apple javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for apple sign/APPLE/902/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/APPLE/902/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31204.mp4
-inside webscrape.get_media()
-link_suffix for name javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for name sign/NAME/281/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/NAME/281/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/30/30948.mp4
-inside webscrape.get_media()
-link_suffix for learn javascript:;INFO:root:all_cards
+INFO:root:all_cards
 INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
-EINFO:root:
+INFO:root:media before deleting cards
+INFO:root:[<Media 1>, <Media 2>, <Media 3>, <Media 4>, <Media 5>, <Media 6>, <Media 7>, <Media 8>, <Media 9>, <Media 10>, <Media 11>, <Media 12>, <Media 13>, <Media 14>, <Media 15>, <Media 16>, <Media 17>, <Media 18>, <Media 19>, <Media 20>, <Media 21>, <Media 22>, <Media 23>, <Media 24>, <Media 25>, <Media 26>, <Media 27>, <Media 28>, <Media 29>, <Media 30>, <Media 31>, <Media 32>, <Media 33>, <Media 34>, <Media 35>, <Media 36>, <Media 37>, <Media 38>, <Media 39>, <Media 40>, <Media 41>, <Media 42>, <Media 43>, <Media 44>, <Media 45>, <Media 46>, <Media 47>, <Media 48>]
+INFO:root:deleting card 1 with the following media:
+INFO:root:card.media:
+INFO:root:[<Media 1>, <Media 2>, <Media 17>, <Media 18>, <Media 33>, <Media 34>]
+INFO:root:deleting card 2 with the following media:
+INFO:root:card.media:
+INFO:root:[<Media 3>, <Media 4>, <Media 19>, <Media 20>, <Media 35>, <Media 36>]
+INFO:root:deleting card 3 with the following media:
+INFO:root:card.media:
+INFO:root:[<Media 5>, <Media 6>, <Media 21>, <Media 22>, <Media 37>, <Media 38>]
+INFO:root:deleting card 4 with the following media:
+INFO:root:card.media:
+INFO:root:[<Media 7>, <Media 8>, <Media 23>, <Media 24>, <Media 39>, <Media 40>]
+INFO:root:deleting card 5 with the following media:
+INFO:root:card.media:
+INFO:root:[<Media 9>, <Media 10>, <Media 11>, <Media 12>, <Media 25>, <Media 26>, <Media 27>, <Media 28>, <Media 41>, <Media 42>, <Media 43>, <Media 44>]
+INFO:root:deleting card 6 with the following media:
+INFO:root:card.media:
+INFO:root:[<Media 13>, <Media 14>, <Media 15>, <Media 16>, <Media 29>, <Media 30>, <Media 31>, <Media 32>, <Media 45>, <Media 46>, <Media 47>, <Media 48>]
+INFO:root:third deletion completed
+INFO:root:media after deleting cards
+INFO:root:[]
+INFO:root:remaining_cards after db.session.delete(card) with for loop
+INFO:root:[]
+.INFO:root:
 ____________ CREATE APP TEST _________________ 
 
 INFO:root:
 ____________ GET CARD TEST _________________ 
 
 .
-======================================================================
-ERROR: test_delete_queries (__main__.MyTest)
 ----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1782, in _execute_context
-    self.dialect.do_executemany(
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 729, in do_executemany
-    cursor.executemany(statement, parameters)
-sqlite3.IntegrityError: NOT NULL constraint failed: media.card_id
+Ran 10 tests in 71.337s
 
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "unit_test_db.py", line 280, in test_delete_queries
-    db.session.commit()
-  File "<string>", line 2, in commit
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
-    self._transaction.commit(_to_root=self.future)
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 829, in commit
-    self._prepare_impl()
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
-    self.session.flush()
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
-    self._flush(objects)
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
-    transaction.rollback(_capture_exception=True)
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
-    compat.raise_(
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
-    raise exception
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
-    flush_context.execute()
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
-    rec.execute(self)
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
-    util.preloaded.orm_persistence.save_obj(
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/persistence.py", line 236, in save_obj
-    _emit_update_statements(
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/orm/persistence.py", line 1000, in _emit_update_statements
-    c = connection._execute_20(
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
-    return meth(self, args_10style, kwargs_10style, execution_options)
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
-    return connection._execute_clauseelement(
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
-    ret = self._execute_context(
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
-    self._handle_dbapi_exception(
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
-    util.raise_(
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
-    raise exception
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1782, in _execute_context
-    self.dialect.do_executemany(
-  File "/Users/rebeccalilyverghese/ASL App/asl-app/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 729, in do_executemany
-    cursor.executemany(statement, parameters)
-sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: media.card_id
-[SQL: UPDATE media SET card_id=? WHERE media.id = ?]
-[parameters: ((None, 1), (None, 2), (None, 3), (None, 4), (None, 5), (None, 6), (None, 7), (None, 8)  ... displaying 10 of 48 total bound parameter sets ...  (None, 47), (None, 48))]
-(Background on this error at: https://sqlalche.me/e/14/gkpj)
-
-======================================================================
-FAIL: test_delete_cards_first (__main__.MyTest)
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "unit_test_db.py", line 326, in test_delete_cards_first
-    assert media == None
-AssertionError
-
-----------------------------------------------------------------------
-Ran 10 tests in 65.873s
-
-FAILED (failures=1, errors=1)
-
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for learn sign/LEARN/236/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/LEARN/236/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31423.mp4
-inside webscrape.get_media()
-link_suffix for student javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for student sign/STUDENT/701/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/STUDENT/701/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31424.mp4
-inside webscrape.get_media()
-link_suffix for teach javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teach sign/TEACH/704/2
-link_suffix for teach sign/TEACH/704/3
-link_suffix for teach sign/TEACH/704/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACH/704/2', 'https://www.signingsavvy.com/sign/TEACH/704/3', 'https://www.signingsavvy.com/sign/TEACH/704/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/6/6747.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31421.mp4
-inside webscrape.get_media()
-link_suffix for teacher javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for teacher sign/TEACHER/420/2
-link_suffix for teacher sign/TEACHER/420/3
-link_suffix for teacher sign/TEACHER/420/4
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/TEACHER/420/2', 'https://www.signingsavvy.com/sign/TEACHER/420/3', 'https://www.signingsavvy.com/sign/TEACHER/420/4']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/27/27869.mp4
-https://www.signingsavvy.com/media2/mp4-ld/21/21558.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31023.mp4
-inside webscrape.get_media()
-link_suffix for apple javascript:;
-link_suffix javascript:;
-var.a.has_attr('class') True
-var.a['class'] == 'current' False
-link_suffix for apple sign/APPLE/902/2
-var_urls ['https://www.signingsavvy.com/javascript:;', 'https://www.signingsavvy.com/sign/APPLE/902/2']
-inside card constructor, now printing links:
-https://www.signingsavvy.com/media2/mp4-ld/28/28239.mp4
-https://www.signingsavvy.com/media2/mp4-ld/31/31204.mp4
+OK
+todays_query
+[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]

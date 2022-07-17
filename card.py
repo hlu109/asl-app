@@ -14,13 +14,17 @@ class Media(db.Model):
     __tablename__ = 'media'
     id = db.Column(db.Integer, primary_key=True)
     link = db.Column(db.Text, nullable=False)
-    card_id = db.Column(db.Integer, db.ForeignKey('card.id'), nullable=False)
+    card_id = db.Column(db.Integer, 
+                        db.ForeignKey('card.id', ondelete = 'CASCADE'), 
+                        nullable=False)
     # might be useful when we have different media on different cards with the same term
 
 
 class History(db.Model):
     __tablename__ = 'history'
-    card_id = db.Column(db.Integer, db.ForeignKey('card.id'), primary_key=True)
+    card_id = db.Column(db.Integer, 
+                        db.ForeignKey('card.id', ondelete = 'CASCADE'), 
+                        primary_key=True)
     review_date = db.Column(db.DateTime, nullable=False)  # yyyy-mm-dd format
     quality = db.Column(db.Integer, nullable=False)
 
@@ -30,8 +34,12 @@ class Card(db.Model):
     ## identifiers and user-facing card components ##
     id = db.Column(db.Integer, primary_key=True)
     english = db.Column(db.Text, nullable=False)
-    media = db.relationship('Media', uselist=True, backref='card')
-    deck_id = db.Column(db.Integer, db.ForeignKey('deck.id'), nullable=False)
+    media = db.relationship('Media', uselist=True, backref='card', 
+                            cascade = 'all, delete-orphan', 
+                            passive_deletes=True)
+    deck_id = db.Column(db.Integer, 
+                        db.ForeignKey('deck.id', ondelete = 'CASCADE'), 
+                        nullable=False)
 
     ## performance-related ##
     last_review_date = db.Column(db.DateTime, nullable=True)
@@ -42,7 +50,9 @@ class Card(db.Model):
                                  default=datetime.now,
                                  nullable=False)
     quality = db.Column(db.Integer, default=0, nullable=False)
-    history = db.relationship('History', uselist=True, backref='card')
+    history = db.relationship('History', uselist=True, 
+                              cascade = 'all, delete-orphan', 
+                              passive_deletes=True)
 
     ## other helpful attributes ##
     description = db.Column(db.Text, nullable=True)
@@ -65,10 +75,10 @@ class Card(db.Model):
         # we don't know if super() is overriding anything (with the same value)
         logging.debug('self.id', self.id)
         logging.debug('card_id', card_id)
-        print('inside card constructor, now printing links:')
+        # print('inside card constructor, now printing links:')
         for link in mp4s:
             # TODO: add error handling to ensure mp4s is not empty
-            print(link)
+            # print(link)
             db.session.add(Media(link=link, card_id=card_id))
         db.session.commit() 
         
@@ -125,3 +135,11 @@ class Card(db.Model):
         hint = ''
         self.hint = hint
         db.session.commit()
+    
+    def delete(card):
+        # delete all associated media and history objects first
+
+        # now delete the card itself
+
+        # TODO: add a custom function for mass deletion (e.g. clearing an entire db)
+        pass

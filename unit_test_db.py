@@ -237,9 +237,9 @@ class MyTest(TestCase):
         for media in apple_card.media:
             assert media.link in links
 
-    # test different deleting queries
-    def test_delete_queries(self):
-        logging.info("\n____________DELETE QUERIES TEST _________________ \n")
+    # test different deletion queries
+    def test_deletion_queries(self):
+        logging.info("\n____________DELETION QUERIES TEST _________________ \n")
         
         self.populate_db()
         all_cards = Card.query.all() # list of all cards that exist in the db
@@ -269,15 +269,23 @@ class MyTest(TestCase):
         logging.info(remaining_cards)
 
         # repeat with 3rd delete query
+        logging.debug('now starting third deletion query')
         self.populate_db()
+        logging.debug('database populated')
         all_cards = Card.query.all() # list of all cards that exist in the db
         logging.info('all_cards')
         logging.info(all_cards)
+        logging.info('media before deleting cards')
+        logging.info(Media.query.all())
 
-        # delete cards via 3rd query
+        # delete cards via 3rd query 
         for card in all_cards:
             db.session.delete(card)
-        db.session.commit()
+            db.session.commit()
+        
+        logging.info('third deletion completed')
+        logging.info('media after deleting cards')
+        logging.info(Media.query.all())
 
         remaining_cards = db.session.query(Card).all()
         logging.info('remaining_cards after db.session.delete(card) with for loop')
@@ -323,8 +331,8 @@ class MyTest(TestCase):
         logging.info('media and history after deletion')
         logging.info(db.session.query(Media).all())
         logging.info(db.session.query(History).all())
-        assert media == None 
-        assert history == None
+        assert db.session.query(Media).all() == []
+        assert db.session.query(History).all() == []
     
     def test_delete_decks_first(self):
         logging.info("\n____________DELETE DECKS FIRST TEST _________________ \n")
