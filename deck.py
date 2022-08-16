@@ -18,8 +18,10 @@ class Deck(db.Model):
     name = db.Column(db.String(50), nullable=False)
     progress = db.Column(db.Integer, default=0, nullable=False)
     # TODO: update this with % of cards that have 4 or higher quality score / total cards
-    cards = db.relationship('Card', uselist=True, backref='deck', 
-                            cascade='all, delete, delete-orphan',
+    cards = db.relationship('Card', uselist=True, 
+                            backref='deck', 
+                            # back_populates='deck', 
+                            # cascade='all, delete, delete-orphan',
                             passive_deletes=True)
 
     # check if we want to modify backref and lazy ?

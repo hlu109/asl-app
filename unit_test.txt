@@ -7,7 +7,7 @@ INFO:root:
 ____________ ADD CARD TEST _________________ 
 
 INFO:root:all_cards
-INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
+INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>]
 .INFO:root:
 ____________ CREATE APP TEST _________________ 
 
@@ -29,11 +29,11 @@ INFO:root:
 ____________ CARD QUERY TEST _________________ 
 
 INFO:root:last_id
-INFO:root:6
+INFO:root:5
 INFO:root:todays_cards
-INFO:root:deque([<Card 3>, <Card 6>, <Card 5>, <Card 4>, <Card 1>, <Card 2>])
+INFO:root:deque([<Card 1>, <Card 4>, <Card 3>, <Card 2>, <Card 5>])
 INFO:root:card dict values
-INFO:root:dict_values([<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>])
+INFO:root:dict_values([<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>])
 .INFO:root:
 ____________ CREATE APP TEST _________________ 
 
@@ -50,7 +50,7 @@ INFO:root:
 ____________DELETE CARDS FIRST TEST _________________ 
 
 INFO:root:all_cards
-INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
+INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>]
 INFO:root:remaining_cards
 INFO:root:[]
 INFO:root:decks after cards are deleted
@@ -58,7 +58,7 @@ INFO:root:[<Deck 1>]
 INFO:root:remaining decks after decks are deleted
 INFO:root:[]
 INFO:root:media and history before deletion
-INFO:root:[<Media 1>, <Media 2>, <Media 3>, <Media 4>, <Media 5>, <Media 6>, <Media 7>, <Media 8>, <Media 9>, <Media 10>, <Media 11>, <Media 12>, <Media 13>, <Media 14>, <Media 15>, <Media 16>]
+INFO:root:[<Media 1>, <Media 2>, <Media 3>, <Media 4>, <Media 5>, <Media 6>, <Media 7>, <Media 8>, <Media 9>, <Media 10>, <Media 11>, <Media 12>]
 INFO:root:[]
 INFO:root:media and history after deletion
 INFO:root:[]
@@ -70,17 +70,17 @@ INFO:root:
 ____________DELETE DECKS FIRST TEST _________________ 
 
 INFO:root:cards before
-INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
+INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>]
 INFO:root:decks before deletion
 INFO:root:[<Deck 1>]
 INFO:root:decks after deletion
 INFO:root:[]
 INFO:root:cards before explicit deletion
-INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
+INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>]
 INFO:root:cards after deletion
 INFO:root:[]
 INFO:root:media and history before explicit deletion
-INFO:root:[<Media 1>, <Media 2>, <Media 3>, <Media 4>, <Media 5>, <Media 6>, <Media 7>, <Media 8>, <Media 9>, <Media 10>, <Media 11>, <Media 12>, <Media 13>, <Media 14>, <Media 15>, <Media 16>]
+INFO:root:[<Media 1>, <Media 2>, <Media 3>, <Media 4>, <Media 5>, <Media 6>, <Media 7>, <Media 8>, <Media 9>, <Media 10>, <Media 11>, <Media 12>]
 INFO:root:[]
 INFO:root:media and history after deletion
 INFO:root:[]
@@ -92,38 +92,20 @@ INFO:root:
 ____________DELETION QUERIES TEST _________________ 
 
 INFO:root:all_cards
-INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
+INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>]
 INFO:root:remaining_cards after db.session.query(Card).delete()
 INFO:root:[]
 INFO:root:all_cards
-INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
+INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>]
 INFO:root:remaining_cards after Card.query.delete()
 INFO:root:[]
 INFO:root:all_cards
-INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
+INFO:root:[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>]
 INFO:root:media before deleting cards
-INFO:root:[<Media 1>, <Media 2>, <Media 3>, <Media 4>, <Media 5>, <Media 6>, <Media 7>, <Media 8>, <Media 9>, <Media 10>, <Media 11>, <Media 12>, <Media 13>, <Media 14>, <Media 15>, <Media 16>, <Media 17>, <Media 18>, <Media 19>, <Media 20>, <Media 21>, <Media 22>, <Media 23>, <Media 24>, <Media 25>, <Media 26>, <Media 27>, <Media 28>, <Media 29>, <Media 30>, <Media 31>, <Media 32>, <Media 33>, <Media 34>, <Media 35>, <Media 36>, <Media 37>, <Media 38>, <Media 39>, <Media 40>, <Media 41>, <Media 42>, <Media 43>, <Media 44>, <Media 45>, <Media 46>, <Media 47>, <Media 48>]
-INFO:root:deleting card 1 with the following media:
-INFO:root:card.media:
-INFO:root:[<Media 1>, <Media 2>, <Media 17>, <Media 18>, <Media 33>, <Media 34>]
-INFO:root:deleting card 2 with the following media:
-INFO:root:card.media:
-INFO:root:[<Media 3>, <Media 4>, <Media 19>, <Media 20>, <Media 35>, <Media 36>]
-INFO:root:deleting card 3 with the following media:
-INFO:root:card.media:
-INFO:root:[<Media 5>, <Media 6>, <Media 21>, <Media 22>, <Media 37>, <Media 38>]
-INFO:root:deleting card 4 with the following media:
-INFO:root:card.media:
-INFO:root:[<Media 7>, <Media 8>, <Media 23>, <Media 24>, <Media 39>, <Media 40>]
-INFO:root:deleting card 5 with the following media:
-INFO:root:card.media:
-INFO:root:[<Media 9>, <Media 10>, <Media 11>, <Media 12>, <Media 25>, <Media 26>, <Media 27>, <Media 28>, <Media 41>, <Media 42>, <Media 43>, <Media 44>]
-INFO:root:deleting card 6 with the following media:
-INFO:root:card.media:
-INFO:root:[<Media 13>, <Media 14>, <Media 15>, <Media 16>, <Media 29>, <Media 30>, <Media 31>, <Media 32>, <Media 45>, <Media 46>, <Media 47>, <Media 48>]
+INFO:root:[<Media 1>, <Media 2>, <Media 3>, <Media 4>, <Media 5>, <Media 6>, <Media 7>, <Media 8>, <Media 9>, <Media 10>, <Media 11>, <Media 12>, <Media 13>, <Media 14>, <Media 15>, <Media 16>, <Media 17>, <Media 18>, <Media 19>, <Media 20>, <Media 21>, <Media 22>, <Media 23>, <Media 24>, <Media 25>, <Media 26>, <Media 27>, <Media 28>, <Media 29>, <Media 30>, <Media 31>, <Media 32>, <Media 33>, <Media 34>, <Media 35>, <Media 36>]
 INFO:root:third deletion completed
 INFO:root:media after deleting cards
-INFO:root:[]
+INFO:root:[<Media 1>, <Media 2>, <Media 3>, <Media 4>, <Media 5>, <Media 6>, <Media 7>, <Media 8>, <Media 9>, <Media 10>, <Media 11>, <Media 12>, <Media 13>, <Media 14>, <Media 15>, <Media 16>, <Media 17>, <Media 18>, <Media 19>, <Media 20>, <Media 21>, <Media 22>, <Media 23>, <Media 24>, <Media 25>, <Media 26>, <Media 27>, <Media 28>, <Media 29>, <Media 30>, <Media 31>, <Media 32>, <Media 33>, <Media 34>, <Media 35>, <Media 36>]
 INFO:root:remaining_cards after db.session.delete(card) with for loop
 INFO:root:[]
 .INFO:root:
@@ -134,8 +116,8 @@ ____________ GET CARD TEST _________________
 
 .
 ----------------------------------------------------------------------
-Ran 10 tests in 71.337s
+Ran 10 tests in 43.946s
 
 OK
 todays_query
-[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>, <Card 6>]
+[<Card 1>, <Card 2>, <Card 3>, <Card 4>, <Card 5>]

@@ -18,7 +18,7 @@ def make_test_deck():
         # 'person',
         'learn',
         'student',
-        'teach',
+        # 'teach', # has multiple results 
         'teacher'
     ]
 

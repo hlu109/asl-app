@@ -17,7 +17,7 @@ class Media(db.Model):
     card_id = db.Column(db.Integer, 
                         db.ForeignKey('card.id', ondelete = 'CASCADE'), 
                         nullable=False)
-    # might be useful when we have different media on different cards with the same term
+    # card = db.relationship('Card', back_populates='media')
 
 
 class History(db.Model):
@@ -27,6 +27,7 @@ class History(db.Model):
                         primary_key=True)
     review_date = db.Column(db.DateTime, nullable=False)  # yyyy-mm-dd format
     quality = db.Column(db.Integer, nullable=False)
+    # card = db.relationship('Card', back_populates='history')
 
 
 class Card(db.Model):
@@ -34,12 +35,17 @@ class Card(db.Model):
     ## identifiers and user-facing card components ##
     id = db.Column(db.Integer, primary_key=True)
     english = db.Column(db.Text, nullable=False)
-    media = db.relationship('Media', uselist=True, backref='card', 
-                            cascade = 'all, delete-orphan', 
+    media = db.relationship('Media', 
+                            uselist=True, # indicates should be loaded as list 
+                                          # (not scalar)
+                            backref='card', 
+                            # back_populates='card', 
+                            # cascade = 'all, delete, delete-orphan', 
                             passive_deletes=True)
     deck_id = db.Column(db.Integer, 
                         db.ForeignKey('deck.id', ondelete = 'CASCADE'), 
                         nullable=False)
+    # deck = db.relationship('Deck', back_populates='cards')
 
     ## performance-related ##
     last_review_date = db.Column(db.DateTime, nullable=True)
@@ -51,8 +57,11 @@ class Card(db.Model):
                                  nullable=False)
     quality = db.Column(db.Integer, default=0, nullable=False)
     history = db.relationship('History', uselist=True, 
-                              cascade = 'all, delete-orphan', 
+                            #   cascade = 'all, delete, delete-orphan', 
+                            #   backref = 'card',
+                            #   back_populates = 'card',
                               passive_deletes=True)
+    
 
     ## other helpful attributes ##
     description = db.Column(db.Text, nullable=True)

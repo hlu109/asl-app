@@ -19,7 +19,7 @@ TEST_TERMS = ['apple',
                 'name',
                 'learn',
                 'student',
-                'teach',
+                # 'teach',
                 'teacher']
 
 
@@ -380,4 +380,5 @@ class MyTest(TestCase):
         pass
 
 if __name__ == "__main__":
+
     unittest.main()

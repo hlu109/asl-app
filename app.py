@@ -1,4 +1,4 @@
-from setup import db, create_app
+from setup import db, create_app, tear_down
 
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -12,12 +12,10 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
+
 app = create_app()
 db.create_all(app=app)
 
-# clear all old database entries
-db.session.query(Deck).delete()
-db.session.query(Card).delete()
 # TODO: add custom deconstructor
 db.session.commit()
 
@@ -193,7 +191,6 @@ def idx_to_links(card_term, url_suffix, mp4_keep):
         if mp4_keep[i] == '1':
             mp4s += [links[i]]
     return mp4s
-
 
 
 if __name__ == "__main__":
