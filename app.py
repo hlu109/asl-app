@@ -83,8 +83,7 @@ def practice(deck_name):
         #on that page, add button to go back to deck
 
     else:  # first starting the practice session
-        next_card_term = deck.learn_today.popleft()
-        next_card = get_card(deck_name, next_card_term)
+        next_card = deck.learn_today.popleft()
         return render_template("practice.html",
                                deck_name=deck_name,
                                card=next_card)

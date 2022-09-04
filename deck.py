@@ -87,11 +87,10 @@ class Deck(db.Model):
         # self.cards.drop(term, inplace=True)
         db.session.commit()
 
-    # TODO add this
     def update_progress(self, term, quality):
         logging.info('updating deck')
         # TODO: verify that card is inside this deck
-        assert self.get_card(term) == None
+        assert self.get_card(term) != None
         # assert term in self.cards.index
         card = self.get_card(term)
         card.update_quality(quality)

@@ -22,9 +22,9 @@ class Media(db.Model):
 
 class History(db.Model):
     __tablename__ = 'history'
+    id = db.Column(db.Integer, primary_key=True)
     card_id = db.Column(db.Integer, 
-                        db.ForeignKey('card.id', ondelete = 'CASCADE'), 
-                        primary_key=True)
+                        db.ForeignKey('card.id', ondelete = 'CASCADE'))
     review_date = db.Column(db.DateTime, nullable=False)  # yyyy-mm-dd format
     quality = db.Column(db.Integer, nullable=False)
     # card = db.relationship('Card', back_populates='history')
