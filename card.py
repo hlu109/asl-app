@@ -85,6 +85,7 @@ class Card(db.Model):
         self.id = card_id
 
         super(Card, self).__init__(**kwargs)
+        db.session.commit()
         # todo: add something to check if the super() is updating self.id
         # right now when we are testing, self.id and card_id are the same so
         # we don't know if super() is overriding anything (with the same value)
