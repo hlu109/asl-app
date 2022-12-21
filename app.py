@@ -13,7 +13,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 app = create_app()
-db.create_all(app=app)
+# db.create_all(app=app)
 
 # TODO: add custom deconstructor
 db.session.commit()
