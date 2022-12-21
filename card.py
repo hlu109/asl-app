@@ -14,8 +14,8 @@ class Media(db.Model):
     __tablename__ = 'media'
     id = db.Column(db.Integer, primary_key=True)
     link = db.Column(db.Text, nullable=False)
-    card_id = db.Column(db.Integer, 
-                        db.ForeignKey('card.id', ondelete = 'CASCADE'), 
+    card_id = db.Column(db.Integer,
+                        db.ForeignKey('card.id', ondelete='CASCADE'),
                         nullable=False)
     # card = db.relationship('Card', back_populates='media')
 
@@ -23,8 +23,8 @@ class Media(db.Model):
 class History(db.Model):
     __tablename__ = 'history'
     id = db.Column(db.Integer, primary_key=True)
-    card_id = db.Column(db.Integer, 
-                        db.ForeignKey('card.id', ondelete = 'CASCADE'))
+    card_id = db.Column(db.Integer, db.ForeignKey('card.id',
+                                                  ondelete='CASCADE'))
     review_date = db.Column(db.DateTime, nullable=False)  # yyyy-mm-dd format
     quality = db.Column(db.Integer, nullable=False)
     # card = db.relationship('Card', back_populates='history')
@@ -35,16 +35,20 @@ class Card(db.Model):
     ## identifiers and user-facing card components ##
     id = db.Column(db.Integer, primary_key=True)
     english = db.Column(db.Text, nullable=False)
-    media = db.relationship('Media', 
-                            uselist=True, # indicates should be loaded as list 
-                                          # (not scalar)
-                            backref='card', 
-                            # back_populates='card', 
-                            # cascade = 'all, delete, delete-orphan', 
-                            passive_deletes=True)
-    deck_id = db.Column(db.Integer, 
-                        db.ForeignKey('deck.id', ondelete = 'CASCADE'), 
+    media = db.relationship(
+        'Media',
+        uselist=True,  # indicates should be loaded as list 
+        # (not scalar)
+        backref='card',
+        # back_populates='card',
+        # cascade = 'all, delete, delete-orphan',
+        passive_deletes=True)
+    deck_id = db.Column(db.Integer,
+                        db.ForeignKey('deck.id', ondelete='CASCADE'),
                         nullable=False)
+    # practice_id = db.Column(db.Integer,
+    #                         db.ForeignKey('deck.id', ondelete='CASCADE'),
+    #                         nullable=True)
     # deck = db.relationship('Deck', back_populates='cards')
 
     ## performance-related ##
@@ -56,12 +60,14 @@ class Card(db.Model):
                                  default=datetime.now,
                                  nullable=False)
     quality = db.Column(db.Integer, default=0, nullable=False)
-    history = db.relationship('History', uselist=True, 
-                            #   cascade = 'all, delete, delete-orphan', 
-                            #   backref = 'card',
-                            #   back_populates = 'card',
-                              passive_deletes=True)
-    
+    review_again = db.Column(db.Boolean, default=False)
+    history = db.relationship(
+        'History',
+        uselist=True,
+        #   cascade = 'all, delete, delete-orphan',
+        #   backref = 'card',
+        #   back_populates = 'card',
+        passive_deletes=True)
 
     ## other helpful attributes ##
     description = db.Column(db.Text, nullable=True)
@@ -77,7 +83,7 @@ class Card(db.Model):
 
         card_id = self.generate_id()
         self.id = card_id
-        
+
         super(Card, self).__init__(**kwargs)
         # todo: add something to check if the super() is updating self.id
         # right now when we are testing, self.id and card_id are the same so
@@ -89,11 +95,10 @@ class Card(db.Model):
             # TODO: add error handling to ensure mp4s is not empty
             # print(link)
             db.session.add(Media(link=link, card_id=card_id))
-        db.session.commit() 
-        
+        db.session.commit()
+
         # self.deck_id = ??
         # TODO: how do we add a deck id ???
-
 
     def generate_id(self):
         """ stupid simple id generator that returns autoincrementing integers 
@@ -104,12 +109,22 @@ class Card(db.Model):
 
         if db_size == 0:
             return 1
-        else: 
-            # if the db contains any cards, we have to find the current highest 
-            # id separately because its possible that max_id != # cards (e.g. 
+        else:
+            # if the db contains any cards, we have to find the current highest
+            # id separately because its possible that max_id != # cards (e.g.
             # if we deleted any cards)
             max_id = db.session.query(func.max(Card.id)).scalar()
             return max_id + 1
+
+    # def add_to_practice(self):
+    #     """ add the card to its deck's practice table """
+    #     self.practice_id = self.deck_id
+    #     db.session.commit()
+
+    # def remove_from_practice(self):
+    #     """ remove the card from its deck's practice table """
+    #     self.practice_id = None
+    #     db.session.commit()
 
     def update_quality(self, quality):
         self.quality = quality
@@ -127,13 +142,20 @@ class Card(db.Model):
 
         interval = timedelta(days=sm2.interval)
         # TODO: update algorithm for shorter intervals (e.g. 10 min)
-        self.nextReviewDate = (self.last_review_date + interval)
+        self.next_review_date = (self.last_review_date + interval)
+
+        if quality <= 2:
+            self.review_again = True
+        else:
+            self.review_again = False
 
         review_instance = History(review_date=self.last_review_date,
                                   quality=self.quality,
                                   card_id=self.id)
         db.session.add(review_instance)
         db.session.commit()
+        logging.info('self.next_review_date: ' + str(self.next_review_date))
+        logging.info('self.review_again: ' + str(self.review_again))
 
     # TODO: create function to get Hint
     def get_hint(self):
@@ -144,7 +166,7 @@ class Card(db.Model):
         hint = ''
         self.hint = hint
         db.session.commit()
-    
+
     def delete(card):
         # delete all associated media and history objects first
 
