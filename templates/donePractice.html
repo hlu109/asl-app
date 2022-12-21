@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% block body %}
+<div class="content">
+    No more flashcards to practice today
+    <br>
+    <a href="/{{deck_name}}">Return to deck view</a>
+
+  <!-- <button type="button" onclick="toggle_hint()">Toggle hint</button> -->
+
+    <!-- quality buttons -->
+    <!-- <form action="/{{deck_name}}/practice" method="POST">
+      <button type="submit" name="quality-term" value="5-{{term}}">
+        5: Perfect (Easy)
+      </button>
+    </form> -->
+
+  </div>
+</div>
+
+<!-- not sure why accessing an external js file isnt working -->
+<!-- <script>
+  src = "../js/toggle_hint.js";
+</script> -->
+<script>
+  function toggle_hint() {
+    el = document.getElementById("hint");
+    if (el.style.visibility == "hidden") {
+      el.style.visibility = "visible";
+    } else {
+      el.style.visibility = "hidden";
+    }
+  }
+
+  function toggle_backside() {
+    el = document.getElementById("backside");
+    if (el.style.visibility == "hidden") {
+      el.style.visibility = "visible";
+    } else {
+      el.style.visibility = "hidden";
+    }
+  }
+</script>
+{% endblock %}

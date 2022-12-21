@@ -2,16 +2,16 @@
 <title>View cards in deck</title>
 {% endblock %} {% block body %}
 <div class="content">
+  <a href="/decks">Return to home</a>
   <h1>Cards:</h1>
-  
+
   <!-- <button type="button" onclick="add_cards()">Add New Cards</button>
   <div id="add_card">???</div> -->
   <form action="/{{deck_name}}/select_term" method="POST">
-    <input type="text" name="new_term" id="new_term">
-    <input type="submit" value="Add New Card">
+    <input type="text" name="new_term" id="new_term" />
+    <input type="submit" value="Add New Card" />
   </form>
 
-  
   <table>
     <tr>
       <th>English</th>

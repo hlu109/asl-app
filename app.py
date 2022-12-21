@@ -90,9 +90,7 @@ def practice(deck_name):
         if next_card is None:
             deck.in_session = False
             db.session.commit()
-            return "no more flashcards to practice today"
-            # TODO: route back to page that tells them they are done practicing
-            #on that page, add button to go back to deck
+            return render_template("donePractice.html", deck_name=deck_name)
 
         else:  # first starting the practice session
             # next_card = deck.learn_today.popleft()
@@ -129,7 +127,7 @@ def view_card(deck_name, card_term):
             # card = update_card(deck_name, card_term, mp4_keep, url_suffix)
     else:
         card = get_card(deck_name, card_term)
-    return render_template("viewCard.html", card=card)
+    return render_template("viewCard.html", card=card, deck_name=deck_name)
 
 
 @app.route('/<string:deck_name>/select_term', methods=['POST'])
