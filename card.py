@@ -98,9 +98,13 @@ class Card(db.Model):
         for link in mp4s:
             # TODO: add error handling to ensure mp4s is not empty
             # print(link)
-            logging.info('skip adding media and see if bug persists')
-            # logging.info('attempting to add link ' + link + ' to card ' + english)
-            # db.session.add(Media(link=link, card_id=card_id))
+            # logging.info('skip adding media and see if bug persists')
+            logging.info('attempting to add link ' + link + ' to card ' +
+                         english)
+            try:
+                db.session.add(Media(link=link, card_id=card_id))
+            except Exception as e:
+                logging.info(e)
         db.session.commit()
 
         # self.deck_id = ??
