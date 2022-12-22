@@ -2,6 +2,9 @@ from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy
 from flask import Flask
 import os
+import logging
+from logging.handlers import RotatingFileHandler
+from flask.logging import default_handler
 # from deck import Deck
 # from card import Card
 # import webscrape
@@ -49,24 +52,24 @@ def tear_down():
     db.drop_all()
 
 
-# def make_test_deck():
-#     deck = Deck(name='test_deck')
-#     db.session.add(deck)
-#     db.session.commit()
+def configure_logging(app):
+    # Logging Configuration
+    if app.config['LOG_WITH_GUNICORN']:
+        gunicorn_error_logger = logging.getLogger('gunicorn.error')
+        app.logger.handlers.extend(gunicorn_error_logger.handlers)
+        app.logger.setLevel(logging.DEBUG)
+    else:
+        file_handler = RotatingFileHandler('instance/flask-user-management.log',
+                                           maxBytes=16384,
+                                           backupCount=20)
+        file_formatter = logging.Formatter(
+            '%(asctime)s %(levelname)s %(threadName)s-%(thread)d: %(message)s [in %(filename)s:%(lineno)d]'
+        )
+        file_handler.setFormatter(file_formatter)
+        file_handler.setLevel(logging.INFO)
+        app.logger.addHandler(file_handler)
 
-#     terms = [
-#         'apple',
-#         # 'happy', # lol webscraping is not working for some reason on this term
-#         # 'sign', # webscrape doesn't work when there are multiple links for a term
-#         'name',
-#         # 'person',
-#         'learn',
-#         'student',
-#         # 'teach', # has multiple results
-#         'teacher'
-#     ]
+    # Remove the default logger configured by Flask
+    app.logger.removeHandler(default_handler)
 
-#     for term in terms:
-#         media, labels = webscrape.get_media(term)
-#         deck.add_card(term, media)
-#         # card = deck.get_card(term, media)
+    app.logger.info('Starting the Flask User Management App...')
