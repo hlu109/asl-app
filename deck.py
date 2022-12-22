@@ -68,6 +68,8 @@ class Deck(db.Model):
         self.learn_today = deque(todays_cards)
 
     def get_card(self, term):
+        logging.info('all cards:')
+        logging.info(Card.query.all())
         card = Card.query.filter(
             db.and_(
                 Card.deck_id == self.id,
@@ -93,15 +95,8 @@ class Deck(db.Model):
                 # tags=tags
             )
             db.session.add(card)
-            try:
-                logging.info('try adding media before session commit')
-                card.add_media(mp4s)
-                db.session.commit()
-            except Exception as e:
-                logging.info('failed adding media before session commit')
-                logging.info(e)
-                db.session.commit()
-                card.add_media(mp4s)
+            card.add_media(mp4s)
+            db.session.commit()
 
             logging.debug('term after card constructor')
             logging.debug(card.english)

@@ -19,7 +19,7 @@ app = create_app()
 db.session.commit()
 
 # add a test deck to the db
-# make_test_deck()
+make_test_deck()
 
 
 @app.route('/')
