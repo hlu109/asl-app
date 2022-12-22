@@ -85,18 +85,28 @@ class Deck(db.Model):
         if self.get_card(term) == None:
             card = Card(
                 english=term,
-                mp4s=mp4s,
+                # mp4s=mp4s,
+                mp4s=None,
                 deck_id=self.id,
                 # practice_id=self.id,
                 importance=importance,
                 # tags=tags
             )
+            db.session.add(card)
+            try:
+                logging.info('try adding media before session commit')
+                card.add_media(mp4s)
+                db.session.commit()
+            except Exception as e:
+                logging.info('failed adding media before session commit')
+                logging.info(e)
+                db.session.commit()
+                card.add_media(mp4s)
+
             logging.debug('term after card constructor')
             logging.debug(card.english)
             logging.debug('mp4s after card constructor')
             logging.debug(card.media)
-            db.session.add(card)
-            db.session.commit()
             return card
         else:
             # TODO: redirect to the view card page of term

@@ -91,20 +91,24 @@ class Card(db.Model):
         # we don't know if super() is overriding anything (with the same value)
         logging.debug('self.id', self.id)
         logging.debug('card_id', card_id)
-        card = Card.query.filter(Card.english == english).first()
-        logging.info('card should have empty media')
-        logging.info(card.media)
-        # print('inside card constructor, now printing links:')
-        for link in mp4s:
-            # TODO: add error handling to ensure mp4s is not empty
-            # print(link)
-            # logging.info('skip adding media and see if bug persists')
-            logging.info('attempting to add link ' + link + ' to card ' +
-                         english)
-            try:
-                db.session.add(Media(link=link, card_id=card_id))
-            except Exception as e:
-                logging.info(e)
+        # all_cards = Card.query.all()
+        # logging.info('all_cards')
+        # logging.info(all_cards)
+        # if all_cards:
+        #     this_card = all_cards[-1]
+        #     logging.info('card should have empty media')
+        #     logging.info(this_card.media)
+        # else:
+        #     logging.info('no cards created')
+        # # print('inside card constructor, now printing links:')
+        # for link in mp4s:
+        #     # TODO: add error handling to ensure mp4s is not empty
+        #     logging.info('attempting to add link ' + link + ' to card ' +
+        #                  english)
+        #     try:
+        #         db.session.add(Media(link=link, card_id=card_id))
+        #     except Exception as e:
+        #         logging.info(e)
         db.session.commit()
 
         # self.deck_id = ??
@@ -125,6 +129,17 @@ class Card(db.Model):
             # if we deleted any cards)
             max_id = db.session.query(func.max(Card.id)).scalar()
             return max_id + 1
+
+    def add_media(self, mp4s):
+        for link in mp4s:
+            # TODO: add error handling to ensure mp4s is not empty
+            logging.info('attempting to add link ' + link + ' to card ' +
+                         self.english)
+            try:
+                db.session.add(Media(link=link, card_id=self.id))
+            except Exception as e:
+                logging.info(e)
+        db.session.commit()
 
     # def add_to_practice(self):
     #     """ add the card to its deck's practice table """
