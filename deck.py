@@ -84,6 +84,8 @@ class Deck(db.Model):
         return card
 
     def add_card(self, term, mp4s, importance=1, tags=[]):
+        logging.info('does card already exist? self.get_card(term)')
+        logging.info(self.get_card(term))
         if self.get_card(term) == None:
             card = Card(
                 english=term,

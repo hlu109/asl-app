@@ -53,7 +53,7 @@ class Card(db.Model):
 
     ## performance-related ##
     last_review_date = db.Column(db.DateTime, nullable=True)
-    last_EF = db.Column(db.Integer, default=-1, nullable=False)
+    last_EF = db.Column(db.Float, default=-1, nullable=False)
     last_interval = db.Column(db.Integer, default=-1, nullable=False)
     repetitions = db.Column(db.Integer, default=0, nullable=False)
     next_review_date = db.Column(db.DateTime,
@@ -158,6 +158,8 @@ class Card(db.Model):
             sm2 = SMTwo.first_review(self.quality, datetime.today().date())
         else:
             sm2 = SMTwo(self.last_EF, self.last_interval, self.repetitions)
+            # sm2 = SMTwo(float(self.last_EF), int(self.last_interval),
+            #             int(self.repetitions))
             sm2.review(self.quality, datetime.today().date())
 
         self.last_review_date = datetime.today().date()

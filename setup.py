@@ -44,7 +44,7 @@ def create_app():
     return app
 
     # tear_down()  #TODO: need to remove later
-    return app
+    # return app
 
 
 def tear_down():
