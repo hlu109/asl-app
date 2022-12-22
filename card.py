@@ -91,11 +91,16 @@ class Card(db.Model):
         # we don't know if super() is overriding anything (with the same value)
         logging.debug('self.id', self.id)
         logging.debug('card_id', card_id)
+        card = Card.query.filter(Card.english == english).first()
+        logging.info('card should have empty media')
+        logging.info(card.media)
         # print('inside card constructor, now printing links:')
         for link in mp4s:
             # TODO: add error handling to ensure mp4s is not empty
             # print(link)
-            db.session.add(Media(link=link, card_id=card_id))
+            logging.info('skip adding media and see if bug persists')
+            # logging.info('attempting to add link ' + link + ' to card ' + english)
+            # db.session.add(Media(link=link, card_id=card_id))
         db.session.commit()
 
         # self.deck_id = ??
