@@ -68,6 +68,8 @@ class Deck(db.Model):
         self.learn_today = deque(todays_cards)
 
     def get_card(self, term):
+        # logging.info('all cards:')
+        # logging.info(Card.query.all())
         card = Card.query.filter(
             db.and_(
                 Card.deck_id == self.id,
@@ -82,21 +84,26 @@ class Deck(db.Model):
         return card
 
     def add_card(self, term, mp4s, importance=1, tags=[]):
+        # logging.info('does card already exist? self.get_card(term)')
+        # logging.info(self.get_card(term))
         if self.get_card(term) == None:
             card = Card(
                 english=term,
-                mp4s=mp4s,
+                # mp4s=mp4s,
+                mp4s=None,
                 deck_id=self.id,
                 # practice_id=self.id,
                 importance=importance,
                 # tags=tags
             )
+            db.session.add(card)
+            card.add_media(mp4s)
+            db.session.commit()
+
             logging.debug('term after card constructor')
             logging.debug(card.english)
             logging.debug('mp4s after card constructor')
             logging.debug(card.media)
-            db.session.add(card)
-            db.session.commit()
             return card
         else:
             # TODO: redirect to the view card page of term

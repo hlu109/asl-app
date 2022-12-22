@@ -1,37 +1,32 @@
-{% extends 'base.html' %}
-
-
-{% block head %}
+{% extends 'base.html' %} {% block head %}
 <title>Deck View</title>
-{% endblock %}
-
-{% block body %}
+{% endblock %} {% block body %}
 <div class="content">
-    <h1>Decks:</h1>
+  <h1>Decks:</h1>
 
-    <form action="/decks" method="POST">
-        <input type="text" name="new_deck_name" id="new_deck_name">
-        <input type="submit" value="Create New Deck">
-    </form>
+  <form action="/decks" method="POST">
+    <input type="text" name="new_deck_name" id="new_deck_name" />
+    <input type="submit" value="Create New Deck" />
+  </form>
 
-      
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Size</th>
-            <th>Practice</th>
-        </tr>
-        {% for deck in decks %}
-            <tr>
-                <td>{{ deck.name }}</td>
-                <td>TODO add a size attribute </td>
-                <td>
-                    <a href="/{{deck.name}}">View deck</a>
-                    <br>
-                    <a href="/{{deck.name}}/practice">Practice</a>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Size</th>
+      <th>Practice</th>
+    </tr>
+    {% for deck in decks %}
+    <tr>
+      <td>{{ deck.name }}</td>
+      <!-- TODO: add a size attribute -->
+      <td>x</td>
+      <td>
+        <a href="/{{deck.name}}">View deck</a>
+        <br />
+        <a href="/{{deck.name}}/practice">Practice</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
 </div>
 {% endblock %}
