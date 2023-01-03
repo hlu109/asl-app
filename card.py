@@ -53,7 +53,7 @@ class Card(db.Model):
 
     ## performance-related ##
     last_review_date = db.Column(db.DateTime, nullable=True)
-    last_EF = db.Column(db.Integer, default=-1, nullable=False)
+    last_EF = db.Column(db.Float, default=-1, nullable=False)
     last_interval = db.Column(db.Integer, default=-1, nullable=False)
     repetitions = db.Column(db.Integer, default=0, nullable=False)
     next_review_date = db.Column(db.DateTime,
@@ -85,16 +85,30 @@ class Card(db.Model):
         self.id = card_id
 
         super(Card, self).__init__(**kwargs)
+        db.session.commit()
         # todo: add something to check if the super() is updating self.id
         # right now when we are testing, self.id and card_id are the same so
         # we don't know if super() is overriding anything (with the same value)
         logging.debug('self.id', self.id)
         logging.debug('card_id', card_id)
-        # print('inside card constructor, now printing links:')
-        for link in mp4s:
-            # TODO: add error handling to ensure mp4s is not empty
-            # print(link)
-            db.session.add(Media(link=link, card_id=card_id))
+        # all_cards = Card.query.all()
+        # logging.info('all_cards')
+        # logging.info(all_cards)
+        # if all_cards:
+        #     this_card = all_cards[-1]
+        #     logging.info('card should have empty media')
+        #     logging.info(this_card.media)
+        # else:
+        #     logging.info('no cards created')
+        # # print('inside card constructor, now printing links:')
+        # for link in mp4s:
+        #     # TODO: add error handling to ensure mp4s is not empty
+        #     logging.info('attempting to add link ' + link + ' to card ' +
+        #                  english)
+        #     try:
+        #         db.session.add(Media(link=link, card_id=card_id))
+        #     except Exception as e:
+        #         logging.info(e)
         db.session.commit()
 
         # self.deck_id = ??
@@ -116,6 +130,17 @@ class Card(db.Model):
             max_id = db.session.query(func.max(Card.id)).scalar()
             return max_id + 1
 
+    def add_media(self, mp4s):
+        for link in mp4s:
+            # TODO: add error handling to ensure mp4s is not empty
+            logging.info('attempting to add link ' + link + ' to card ' +
+                         self.english)
+            try:
+                db.session.add(Media(link=link, card_id=self.id))
+            except Exception as e:
+                logging.info(e)
+        db.session.commit()
+
     # def add_to_practice(self):
     #     """ add the card to its deck's practice table """
     #     self.practice_id = self.deck_id
@@ -133,6 +158,8 @@ class Card(db.Model):
             sm2 = SMTwo.first_review(self.quality, datetime.today().date())
         else:
             sm2 = SMTwo(self.last_EF, self.last_interval, self.repetitions)
+            # sm2 = SMTwo(float(self.last_EF), int(self.last_interval),
+            #             int(self.repetitions))
             sm2.review(self.quality, datetime.today().date())
 
         self.last_review_date = datetime.today().date()
