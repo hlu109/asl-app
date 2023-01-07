@@ -51,6 +51,11 @@ class Deck(db.Model):
         self.learn_today = deque([])  # deque of card objects
         # self.in_session = False
 
+    @property
+    def size(self):
+        # db.session.query(Deck).filter_by(id=self.id).first()
+        return Card.query.filter_by(deck_id=self.id).count()
+
     def update_todays_cards(self):
         todays_cards = Card.query.filter(
             db.and_(Card.deck.has(name=self.name),

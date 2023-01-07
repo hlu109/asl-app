@@ -4,12 +4,16 @@
 {% endblock %} {% block body %}
 
 <div class="content">
-  {% for i in range(mp4s[0]|length) %} 
-  {% set mp4 = mp4s[0][i] %}
-  <br>
+  <p>
+    Select at least one ASL sign variation. you would like on the flashcard.
+    Click 'Finish Card' at the bottom of the page when done.
+  </p>
+
+  {% for i in range(mp4s[0]|length) %} {% set mp4 = mp4s[0][i] %}
+  <br />
   <script>
-    console.log('mp4 link')
-    console.log('{{mp4}}')
+    console.log("mp4 link");
+    console.log("{{mp4}}");
     var addButton = document.createElement("input");
     addButton.id = "{{i}}";
     addButton.type = "button";
@@ -18,15 +22,16 @@
 
     document.getElementsByClassName("content")[0].appendChild(addButton);
   </script>
-  
-  <br>
+
+  <br />
   <video width="400" controls>
     <source src="{{mp4}}" type="video/mp4" />
   </video>
-  <br>
+  <br />
 
   {% endfor %}
 
+  <!-- TODO: add verification that at least one video is selected -->
   <button type="button" onclick="finish()">Finish Card</button>
 
   {% set num_media = mp4s[0]|length %}
@@ -35,23 +40,16 @@
     mp4_keep.fill(0);
     function add_on_click() {
       for (let i = 0; i < parseInt("{{num_media}}"); i++) {
-        (
-          function() {
-            var btn = document.getElementById(i);
-            btn.addEventListener(
-              'click', 
-              function() {
-                add_media(i);
-              }
-            );
-          } 
-          () 
-        );
+        (function () {
+          var btn = document.getElementById(i);
+          btn.addEventListener("click", function () {
+            add_media(i);
+          });
+        })();
       }
     }
     add_on_click();
   </script>
-
 </div>
 
 <script>
@@ -71,23 +69,23 @@
   }
 
   function finish() {
-    const form = document.createElement('form');
-    form.method = 'POST';
+    const form = document.createElement("form");
+    form.method = "POST";
     form.action = "/{{deck_name}}/{{term}}";
 
-    const field1 = document.createElement('input');
-    field1.type = 'hidden';
-    field1.name = 'mp4_keep';
+    const field1 = document.createElement("input");
+    field1.type = "hidden";
+    field1.name = "mp4_keep";
     field1.value = mp4_keep.toString();
-    
-    const field2 = document.createElement('input');
-    field2.type = 'hidden';
-    field2.name = 'url_suffix';
+
+    const field2 = document.createElement("input");
+    field2.type = "hidden";
+    field2.name = "url_suffix";
     field2.value = "{{url_suffix}}";
 
-    const field3 = document.createElement('input');
-    field3.type = 'hidden';
-    field3.name = 'new_card';
+    const field3 = document.createElement("input");
+    field3.type = "hidden";
+    field3.name = "new_card";
     field3.value = "True";
 
     form.appendChild(field1);

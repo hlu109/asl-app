@@ -2,33 +2,53 @@
 <title>View cards in deck</title>
 {% endblock %} {% block body %}
 <div class="content">
-  <a href="/decks">Return to home</a>
-  <h1>Cards:</h1>
-  <a href="/{{deck_name}}/practice">Practice this deck</a>
-
-  <!-- <button type="button" onclick="add_cards()">Add New Cards</button>
-  <div id="add_card">???</div> -->
-  <form action="/{{deck_name}}/select_term" method="POST">
-    <input type="text" name="new_term" id="new_term" />
-    <input type="submit" value="Add New Card" />
+  <form action="/decks">
+    <button type="submit">Return to home</button>
   </form>
+  <h1>Cards:</h1>
 
-  <table>
-    <tr>
-      <th>English</th>
-      <th>View Card</th>
-      <!-- <th>Practice</th> -->
-    </tr>
-    {% for card in cards %}
-    <tr>
-      <td>{{ card.english }}</td>
-      <td><a href="/{{deck_name}}/{{card.english}}">View Card</a></td>
-      <!-- <td>
+  <div class="section">
+    <form action="/{{deck_name}}/practice">
+      <button type="submit">Practice this deck</button>
+    </form>
+  </div>
+
+  <br />
+
+  <div class="section">
+    <!-- <button type="button" onclick="add_cards()">Add New Cards</button>
+  <div id="add_card">???</div> -->
+    <h3>Add New Card</h3>
+    Enter English term:
+    <form action="/{{deck_name}}/select_term" method="POST">
+      <input type="text" name="new_term" id="new_term" />
+      <input type="submit" value="add!" />
+    </form>
+  </div>
+
+  <div class="section">
+    <h3>Cards in this deck</h3>
+    <table>
+      <tr>
+        <th>English</th>
+        <th>Actions</th>
+        <!-- <th>Practice</th> -->
+      </tr>
+      {% for card in cards %}
+      <tr>
+        <td>{{ card.english }}</td>
+        <td>
+          <form action="/{{deck_name}}/{{card.english}}">
+            <button type="submit">View Card</button>
+          </form>
+        </td>
+        <!-- <td>
                     <a href="/{{deck_id}}/practice">Practice</a>
                 </td> -->
-    </tr>
-    {% endfor %}
-  </table>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 
   <!-- <form action="/" method="POST">
         <input type="text" name="content" id="content">

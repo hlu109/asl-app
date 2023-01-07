@@ -4,17 +4,19 @@
 {% endblock %} {% block body %}
 
 <div class="content">
+  <p>Select the English variation of the desired term:</p>
 
-    {% for i in range(results|length) %} 
-    {% set result = results[i] %}
-    {% set term = result[0] %}
-    {% set url_suffix = result[1] %}
-    {% set description = result[2] %}
-        <form action="/{{deck_name}}/select_media/{{term}} ({{description}})" method="POST">
-            <button type="submit" name="url_suffix" value="{{url_suffix}}">
-                {{term}} : as in "{{description}}"
-            </button>    
-        </form>
-    {% endfor %}
+  {% for i in range(results|length) %} {% set result = results[i] %} {% set term
+  = result[0] %} {% set url_suffix = result[1] %} {% set description = result[2]
+  %}
+  <form
+    action="/{{deck_name}}/select_media/{{term}} ({{description}})"
+    method="POST"
+  >
+    <button type="submit" name="url_suffix" value="{{url_suffix}}">
+      {{term}} : as in "{{description}}"
+    </button>
+  </form>
+  {% endfor %}
 </div>
 {% endblock %}

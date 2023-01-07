@@ -418,6 +418,26 @@ class MyTest(TestCase):
     def test_card_update_quality(self):
         pass
 
+    def test_deck_size(self):
+        logging.info("\n____________TEST DECK SIZE _________________ \n")
+
+        # (a lot of duplicated code from populate_db() )
+        deck = Deck(name='test deck')
+        db.session.add(deck)
+        db.session.commit()
+
+        self.assertEquals(0, deck.size)
+        for i, term in enumerate(TEST_TERMS):
+            links = get_media(term)[0]
+            logging.debug(links)
+            card = deck.add_card(term, links)
+            logging.debug(card.media[0].link)
+            self.assertEquals(i + 1, deck.size)
+
+        self.assertEquals(len(TEST_TERMS), deck.size)
+
 
 if __name__ == "__main__":
+    # run ```python3 unit_test_db.py &> unit_test.txt``` to pipe outputs to
+    # text file
     unittest.main()

@@ -2,9 +2,13 @@
 <title>ASL APP</title>
 {% endblock %} {% block body %}
 <div class="content">
-  <h1>Welcome!</h1>
+  <h1>Flash ASL</h1>
 
-  <p>Go to your <a href="/decks">decks</a>.</p>
+  <form action="/decks">
+    <button type="submit">Access your decks</button>
+  </form>
+
+  <!-- <p>Go to your <a href="/decks">decks</a>.</p> -->
 
   <p>
     This is a proof-of-concept web application for digital flashcards tailored
