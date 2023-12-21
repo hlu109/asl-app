@@ -4,24 +4,38 @@
 <div class="content">
   {% set term = card.english %}
   <form action="/{{deck_name}}">
-    <button type="submit">Return to deck</button>
+    <button type="submit"><i class="fa-solid fa-box-archive"></i> Deck</button>
   </form>
 
-  <h1>{{term}}</h1>
+  <div class="card_view_outer">
+    <div class="card_view_inner">
+      <h1>{{term}}</h1>
+
+      <div class="video_content">
+        {% for i in range(card.media|length) %} {% set mp4 = card.media[i].link %}
+        <div>
+          <!-- div is needed so that videos are stacked vertically -->
+          <video width="400" muted onmouseover="this.play()" onmouseout="this.pause()">
+            <source src="{{mp4}}" type="video/mp4" />
+          </video>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 
   <!-- TODO: Get hint from dictionary and ask user if they want to use that hint or create new one -->
-  <button type="button" onclick="toggle_hint()">Toggle Hint</button>
-  <div id="hint" style="visibility: hidden">(add hint)</div>
-
-  {% for i in range(card.media|length) %} {% set mp4 = card.media[i].link %}
-
-  <div>
-    <video width="400" controls>
-      <source src="{{mp4}}" type="video/mp4" />
-    </video>
+  <!-- TODO: can you create reusable elements e.g. for the hint which will appear in view card and practice mode? -->
+  <div class="hint_container">
+    <button type="button" class="icon_button" title="Toggle hint" style="float: left;" onclick="toggle_hint()"><i class="fa-regular fa-lightbulb"></i></button>
+    <div class="hint" id="hint" style="visibility: hidden">
+      <p>(add hint)</p>
+    </div>
   </div>
-  {% endfor %}
+  
 </div>
+
+
 
 <script>
   function toggle_hint() {

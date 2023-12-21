@@ -1,30 +1,54 @@
 {% extends 'base.html' %} {% block body %}
 <div class="content">
-  {% set term = card.english %}
 
-  <h1>{{term}}</h1>
-  <p>
+  <form action="/decks">
+    <button class="icon_button" type="submit" style="float: left;">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </form>
+  
+  <div style="margin-left: 50px">
     Try to produce the sign(s) for this term. Verify by showing the back of this
     flashcard, then select the correctness and quality of your response to
     proceed.
-  </p>
+  </div>
 
-  <button type="button" onclick="toggle_hint()">Toggle hint</button>
-  <div id="hint" style="visibility: hidden">(add hint)</div>
+  <div id="card_practice_container">
 
-  <button type="button" onclick="toggle_backside()">
-    Show back of flashcard
-  </button>
-  <div id="backside" style="visibility: hidden">
-    {% for i in range(card.media|length) %} {% set mp4 = card.media[i].link %}
-    <div>
-      <video width="400" controls>
-        <source src="{{mp4}}" type="video/mp4" />
-      </video>
+    <div class="card_practice_outer" id="card_front" onclick="flip_card()" style="visibility: visible">
+      <!-- front of card -->
+      <div class="card_practice_inner">
+        {% set term = card.english %}
+        <h1>{{term}}</h1>
+      </div>
     </div>
-    {% endfor %}
+      
+    <div class="card_practice_outer" id="card_back" onclick="flip_card()" style="visibility: hidden">
+      <!-- back of card -->
+      <div class="card_practice_inner">
+        {% for i in range(card.media|length) %} {% set mp4 = card.media[i].link %}
+        <div>
+          <video width="400" muted onmouseover="this.play()" onmouseout="this.pause()">
+            <source src="{{mp4}}" type="video/mp4" />
+          </video>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
 
-    <!-- quality buttons -->
+  </div>
+
+  <div class="hint_container">
+    <button type="button" class="icon_button" title="Toggle hint" style="float: left;" onclick="toggle_hint()">
+      <i class="fa-regular fa-lightbulb"></i>
+    </button>
+    <div class="hint" id="hint" style="visibility: hidden">
+      <p>(add hint)</p>
+    </div>
+  </div>
+
+  <!-- quality buttons -->
+  <div id="quality_buttons">
     <form action="/{{deck_name}}/practice" method="POST">
       <button type="submit" name="quality-term" value="5-{{term}}">
         5: Perfect (Easy)
@@ -62,12 +86,18 @@
     }
   }
 
-  function toggle_backside() {
-    el = document.getElementById("backside");
-    if (el.style.visibility == "hidden") {
-      el.style.visibility = "visible";
+  function flip_card() {
+    card_front = document.getElementById("card_front");
+    card_back = document.getElementById("card_back");
+    quality_buttons = document.getElementById("quality_buttons");
+    if (card_front.style.visibility == "visible") {
+      card_front.style.visibility = "hidden";
+      quality_buttons.style.visibility = "visible";
+      card_back.style.visibility = "visible";
     } else {
-      el.style.visibility = "hidden";
+      card_front.style.visibility = "visible";
+      quality_buttons.style.visibility = "hidden";
+      card_back.style.visibility = "hidden";
     }
   }
 </script>

@@ -3,44 +3,62 @@
 {% endblock %} {% block body %}
 <div class="content">
   <form action="/decks">
-    <button type="submit">Return to home</button>
+    <button type="submit"><i class="fa-solid fa-house"></i> Home</button>
   </form>
-  <h1>Cards:</h1>
+  <h1>{{deck_name}}</h1>
 
-  <div class="section">
-    <form action="/{{deck_name}}/practice">
-      <button type="submit">Practice this deck</button>
-    </form>
+  <div class="section" style="height: 60px; border: 0px solid black ;">
+
+    <div style="float: left; margin-top: 11px;">
+      <!-- vertical-align: bottom is not working -->
+      <!-- kinda janky that we have to manually hardcode it -->
+      <form action="/{{deck_name}}/practice">
+        <button type="submit" id="practice_button">
+          <i class="fa-solid fa-circle-play"></i> 
+          Practice
+        </button>
+      </form>
+    </div>
+
+    <div style="float: right; text-align: left;">
+      Add new term:
+      <form action="/{{deck_name}}/select_term" method="POST">
+        <input type="text" name="new_term" id="new_term" />
+        <button class="icon_button" type="submit">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </form>
+    </div>
   </div>
 
-  <br />
-
   <div class="section">
-    <!-- <button type="button" onclick="add_cards()">Add New Cards</button>
-  <div id="add_card">???</div> -->
-    <h3>Add New Card</h3>
-    Enter English term:
-    <form action="/{{deck_name}}/select_term" method="POST">
-      <input type="text" name="new_term" id="new_term" />
-      <input type="submit" value="add!" />
-    </form>
-  </div>
-
-  <div class="section">
-    <h3>Cards in this deck</h3>
+    <hr>
     <table>
       <tr>
-        <th>English</th>
-        <th>Actions</th>
+        <th> Cards in this deck </th>
+        <th style="width:5px"> </th>
         <!-- <th>Practice</th> -->
       </tr>
       {% for card in cards %}
       <tr>
-        <td>{{ card.english }}</td>
         <td>
           <form action="/{{deck_name}}/{{card.english}}">
-            <button type="submit">View Card</button>
+            <button class="table_entry" type="submit">
+              <!-- <div style="float: left; padding: auto 10px auto 10px;">{{ card.english }}</div> -->
+              {{ card.english }}
+              
+              <div class="video_crop_container">
+                <video class="video_crop" width="200" muted onmouseover="this.play()" onmouseout="this.pause()">
+                  <source src="{{card.media[0].link}}" type="video/mp4" />
+                </video>  
+              </div>
+            </button>
           </form>
+        </td>
+        <td style="vertical-align: top;">
+          <!-- <form action="/{{deck_name}}/{{card.english}}"> -->
+            <button type="submit"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+          <!-- </form> -->
         </td>
         <!-- <td>
                     <a href="/{{deck_id}}/practice">Practice</a>
@@ -48,6 +66,7 @@
       </tr>
       {% endfor %}
     </table>
+
   </div>
 
   <!-- <form action="/" method="POST">
@@ -55,4 +74,21 @@
         <input type="submit" value="Add Task">
     </form> -->
 </div>
+
+<script>
+  // const videos = document.querySelectorAll('.video_crop');
+
+  // videos.forEach(video => {
+  //   video.addEventListener('mouseenter', () => {
+  //     video.play();
+  //   });
+    
+  //   video.addEventListener('mouseleave', () => {
+  //     video.pause();
+  //     // video.currentTime = 0;
+  //   });
+  // });
+
+</script>
 {% endblock %}
+
