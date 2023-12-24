@@ -10,7 +10,7 @@
   <!-- profile button -->
   <!-- TODO: add popup; also maybe move this button to a base template or header -->
   <button id="profile_button" type="submit" style="float: right;">
-    <i class="fa-solid fa-user"></i> username
+    <i class="fa-solid fa-user"></i> {{email}}
   </button>
 </header>
 
@@ -31,9 +31,9 @@
     </div>
 
     <div style="float: right; text-align: left;">
-      Add new term:
+      Add new card:
       <form action="/{{deck_name}}/select_term" method="POST">
-        <input type="text" name="new_term" id="new_term" />
+        <input type="text" name="new_term" id="new_term" placeholder="English term"/>
         <button class="icon_button" type="submit">
           <i class="fa-solid fa-plus"></i>
         </button>

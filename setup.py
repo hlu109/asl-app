@@ -1,16 +1,15 @@
-from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy
 from flask import Flask
 import os
 import logging
 from logging.handlers import RotatingFileHandler
 from flask.logging import default_handler
-# from deck import Deck
-# from card import Card
-# import webscrape
+from flask_login import LoginManager
 
-db = SQLAlchemy()
-
+from .auth import auth as auth_blueprint
+from .main import main as main_blueprint
+from .db import db
+from .user import User
 
 def create_app():
     app = Flask(__name__)
@@ -21,14 +20,39 @@ def create_app():
     else:
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SECRET_KEY'] = 'secret-key-goes-here' # placeholder otherwise flask yells at us 
     db.init_app(app)
+
+    # set up login manager
+    login_manager = LoginManager()
+    login_manager.login_view = "main.index" # redirect page if non-logged-in user tried to access a login-protected page 
+    login_manager.init_app(app)
+
+    # specify user loader
+    @login_manager.user_loader
+    def load_user(user_id):
+        # since the user_id is just the primary key of our user table, use it in the query for the user
+        return User.query.get(int(user_id))
+
+
+    # register blueprints for authorization and non-auth pages 
+    app.register_blueprint(auth_blueprint)
+    app.register_blueprint(main_blueprint)
+
     app.app_context().push()
 
     # Check if the database needs to be initialized
     engine = sqlalchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     inspector = sqlalchemy.inspect(engine)
-    
-    if not inspector.has_table("card") and not inspector.has_table("deck"):
+
+    re_create_database = False # only for debugging 
+
+    if re_create_database:
+        with app.app_context():
+            db.create_all()
+            app.logger.info('re create_all database')
+            
+    elif not inspector.has_table("card") and not inspector.has_table("deck"):
         with app.app_context():
             tear_down()
             # db.drop_all()
@@ -73,3 +97,4 @@ def configure_logging(app):
     app.logger.removeHandler(default_handler)
 
     app.logger.info('Starting the Flask User Management App...')
+

@@ -3,7 +3,7 @@
 {% endblock %} {% block body %}
 <header>
   <!-- back button to log-in page -->
-  <form action="/">
+  <form action="/logout">
     <button type="submit" class="back_button">
       <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>
     </button>
@@ -12,7 +12,7 @@
   <!-- profile button -->
   <!-- TODO: add popup; also maybe move this button to a base template or header -->
   <button id="profile_button" type="submit" style="float: right;">
-    <i class="fa-solid fa-user"></i> username
+    <i class="fa-solid fa-user"></i> {{email}}
   </button>
 </header>
 
@@ -23,19 +23,12 @@
     <div style="float: right; text-align: left;">
       Create new deck:
       <form action="/decks" method="POST">
-        <input type="text" name="new_deck_name" id="new_deck_name" />
+        <input type="text" name="new_deck_name" id="new_deck_name" placeholder="Deck name"/>
           <button class="icon_button" type="submit">
           <i class="fa-solid fa-plus"></i>
         </button>
       </form>
     </div>
-
-    <!-- Create new deck:
-    <form action="/decks" method="POST">
-      <input type="text" name="new_deck_name" id="new_deck_name" />
-
-      <input type="submit" value="create!" />
-    </form> -->
   </div>
 
   <div class="section">

@@ -1,5 +1,5 @@
-from setup import db
-from card import Card
+from .db import db
+from .card import Card
 
 from datetime import datetime, timedelta
 import random

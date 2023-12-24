@@ -4,11 +4,68 @@
 <div class="content">
   <h1>Flash ASL</h1>
 
-  <form action="/decks">
-    <button type="submit">Access your decks</button>
-  </form>
+  <!-- login block -->
+  <div class="login_block">
+    <!-- warning for incorrect credentials -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          <div class="notification is-danger">
+              {{ messages[0] }}
+          </div>
+      {% endif %}
+    {% endwith %}
 
-  <!-- <p>Go to your <a href="/decks">decks</a>.</p> -->
+    <form method="POST" action="/login">
+      <div class="field">
+        <div class="control">
+            <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+            <input class="input is-large" type="password" name="password" placeholder="Your Password">
+        </div>
+      </div>
+      <div class="field">
+        <label class="checkbox">
+            <input type="checkbox" name="remember">
+            Remember me
+        </label>
+      </div>
+      <button class="button is-block is-info is-large is-fullwidth">Login</button>
+    </form>
+  </div>
+
+  <!-- signup block -->
+  <div class="signup_block">
+    <!-- warning notification if attemped signup with email already in use -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="notification is-danger">
+            {{ messages[0] }}.
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- signup form -->
+    <form method="POST" action="/signup">
+      <div class="field">
+          <div class="control">
+              <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
+          </div>
+      </div>
+
+      <div class="field">
+          <div class="control">
+              <input class="input is-large" type="password" name="password" placeholder="Password">
+          </div>
+      </div>
+
+      <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
+    </form>
+  </div>
+
 
   <p>
     This is a proof-of-concept web application for digital flashcards tailored
