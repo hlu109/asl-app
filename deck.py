@@ -18,6 +18,10 @@ class Deck(db.Model):
     name = db.Column(db.String(50), nullable=False)
     in_session = db.Column(db.Boolean, default=False)
     progress = db.Column(db.Integer, default=0, nullable=False)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('user.id', ondelete='CASCADE'),
+                        nullable=False)
+
     # TODO: update this with % of cards that have 4 or higher quality score / total cards
     cards = db.relationship(
         'Card',
@@ -73,24 +77,14 @@ class Deck(db.Model):
         self.learn_today = deque(todays_cards)
 
     def get_card(self, term):
-        # logging.info('all cards:')
-        # logging.info(Card.query.all())
         card = Card.query.filter(
             db.and_(
                 Card.deck_id == self.id,
                 # Card.deck.has(name=self.name),
                 Card.english == term)).first()
-        # db.and_(Card.deck.any(name=self.name),
-        #         Card.english == term)).first()
-        # db.and_(Card.deck.name == self.name,
-        #         Card.english == term)).first()
-        # # Card.deck is a comparator object (???)
-        # card = self.cards.at[term, "card"]
         return card
 
     def add_card(self, term, mp4s, importance=1, tags=[]):
-        # logging.info('does card already exist? self.get_card(term)')
-        # logging.info(self.get_card(term))
         if self.get_card(term) == None:
             card = Card(
                 english=term,

@@ -12,7 +12,7 @@
     = result[0] %} {% set url_suffix = result[1] %} {% set description = result[2]
     %}
     <form
-      action="/{{deck_name}}/select_media/{{term}} ({{description}})"
+      action="/decks/{{deck_name}}/select_media/{{term}} ({{description}})"
       method="POST"
     >
       <button id="select_term_button" type="submit" name="url_suffix" value="{{url_suffix}}">

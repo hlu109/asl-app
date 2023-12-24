@@ -4,7 +4,7 @@
     function redirect() {
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = "/{{deck_name}}/select_media/{{term}}";
+        form.action = "/decks/{{deck_name}}/select_media/{{term}}";
 
         const field = document.createElement('input');
         field.type = 'hidden';

@@ -43,7 +43,7 @@
       <tr>
         
         <td>
-          <form action="/{{deck.name}}">
+          <form action="/decks/{{deck.name}}">
             <button class="deck_entry" type="submit">
               {{ deck.name }}
               <br>
@@ -62,13 +62,13 @@
         </td>
         <!-- <td style="text-align: center">{{ deck.size }}</td> -->
         <td>
-          <form action="/{{deck.name}}">
+          <form action="/decks/{{deck.name}}">
             <button type="submit" title="View deck" class="icon_button" style="float: left;">
               <i class="fa-regular fa-eye"></i>
             </button>
           </form>
 
-          <form action="/{{deck.name}}/practice">
+          <form action="/decks/{{deck.name}}/practice">
             <button type="submit" title="Practice" class="icon_button" style="float: left;">
               <i class="fa-solid fa-circle-play"></i> 
             </button>

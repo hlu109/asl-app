@@ -22,7 +22,7 @@
     <div style="float: left; margin-top: 11px;">
       <!-- vertical-align: bottom is not working -->
       <!-- kinda janky that we have to manually hardcode it -->
-      <form action="/{{deck_name}}/practice">
+      <form action="/decks/{{deck_name}}/practice">
         <button type="submit" id="practice_button">
           <i class="fa-solid fa-circle-play"></i> 
           Practice
@@ -32,7 +32,7 @@
 
     <div style="float: right; text-align: left;">
       Add new card:
-      <form action="/{{deck_name}}/select_term" method="POST">
+      <form action="/decks/{{deck_name}}/select_term" method="POST">
         <input type="text" name="new_term" id="new_term" placeholder="English term"/>
         <button class="icon_button" type="submit">
           <i class="fa-solid fa-plus"></i>
@@ -52,7 +52,7 @@
       {% for card in cards %}
       <tr>
         <td>
-          <form action="/{{deck_name}}/{{card.english}}">
+          <form action="/decks/{{deck_name}}/{{card.english}}">
             <button class="card_entry" type="submit">
               <span class="card_entry_term">
                 {{ card.english }}
@@ -67,23 +67,15 @@
           </form>
         </td>
         <td style="vertical-align: top;">
-          <!-- <form action="/{{deck_name}}/{{card.english}}"> -->
+          <!-- <form action="/decks/{{deck_name}}/{{card.english}}"> -->
             <button type="submit"><i class="fa-solid fa-ellipsis-vertical"></i></button>
           <!-- </form> -->
         </td>
-        <!-- <td>
-                    <a href="/{{deck_id}}/practice">Practice</a>
-                </td> -->
       </tr>
       {% endfor %}
     </table>
 
   </div>
-
-  <!-- <form action="/" method="POST">
-        <input type="text" name="content" id="content">
-        <input type="submit" value="Add Task">
-    </form> -->
 </div>
 
 {% endblock %}

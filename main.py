@@ -1,7 +1,6 @@
 from .db import db
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
 from flask_login import login_required, current_user
-from datetime import datetime
 from .deck import Deck
 from .card import Card
 from . import webscrape
@@ -22,41 +21,36 @@ def view_all_decks():
     if request.method == 'POST':
         logging.info('HANDLING POST REQUEST TO CREATE NEW DECK')
         new_deck_name = request.form['new_deck_name']
-        new_deck = Deck(name=new_deck_name)
+        new_deck = Deck(name=new_deck_name, user_id=current_user.id)
         db.session.add(new_deck)
         db.session.commit()
+        return redirect(url_for('main.view_deck', deck_name=new_deck_name))
 
-    all_decks = db.session.query(Deck).all()
+    all_decks = Deck.query.filter_by(user_id=current_user.id).all()
     return render_template("decks.html", decks=all_decks, email=current_user.email)
 
 
-@main.route('/<string:deck_name>')
+@main.route('/decks/<string:deck_name>')
 @login_required
 def view_deck(deck_name):
-    cards = db.session.query(Card).filter(Card.deck.has(name=deck_name)).all()
+    cards = get_all_cards_in_deck(deck_name, user_id=current_user.id)
+
     # TODO: add error handling
     return render_template("viewDeck.html", deck_name=deck_name, cards=cards, email=current_user.email)
 
 
-@main.route('/<string:deck_name>/practice', methods=['POST', 'GET'])
-# inputs: deck, queue of cards to learn today, mode: ASL or English first (add this later)
-# need button to reveal back of card
-# then need button for quality
-# then add checkbox to review again - bool
+@main.route('/decks/<string:deck_name>/practice', methods=['POST', 'GET'])
+# TODO add checkbox to review again - bool
 # return post, quality, bool for review again
-@login_required
+@login_required            
 def practice(deck_name):
-    deck = db.session.query(Deck).filter_by(name=deck_name).first()
-    # print("\n\n\n\n\n", deck.learn_today)
+    deck = get_deck(deck_name, user_id=current_user.id)
+
     # TODO: add error handling
     if not deck.in_session:
         print('starting session')
-        # deck.update_todays_cards()
         deck.in_session = True
         db.session.commit()
-
-    # logging.debug("\n\n\n\n\n", deck.learn_today, "\n\n\n\n\n")
-    # print("\n\n\n\n\n", deck.learn_today)
 
     # front = True
     # TODO: add code to deal with displaying english vs displaying ASL
@@ -67,14 +61,9 @@ def practice(deck_name):
         quality_term = request.form['quality-term']
         quality = int(quality_term.split("-")[0])
         term = quality_term.split("-")[1]
-
-        # print('in post request handling')
-        # print(deck.learn_today)
-
         deck.update_progress(term, quality)
-        # print('after updating progress')
-        # print(deck.learn_today)
-        return redirect('/' + deck_name + '/practice')
+
+        return redirect('/decks/' + deck_name + '/practice')
 
     else:
         next_card = deck.get_practice_card()
@@ -93,10 +82,7 @@ def practice(deck_name):
                                    card=next_card, email=current_user.email)
 
 
-#TODO: view_card's number of videos showing is
-# way more than what is being sent from select media
-# also some of the videos are from a different term
-@main.route('/<string:deck_name>/<string:card_term>', methods=['POST', 'GET'])
+@main.route('/decks/<string:deck_name>/<string:card_term>', methods=['POST', 'GET'])
 @login_required
 def view_card(deck_name, card_term):
     if request.method == 'POST':
@@ -109,7 +95,7 @@ def view_card(deck_name, card_term):
             logging.info(url_suffix)
             mp4s = idx_to_links(card_term, url_suffix, mp4_keep)
             logging.info(mp4s)
-            deck = db.session.query(Deck).filter_by(name=deck_name).first()
+            deck = get_deck(deck_name, user_id=current_user.id)
             logging.info(deck)
             # TODO: add error handling
             card = deck.add_card(card_term, mp4s)
@@ -119,11 +105,11 @@ def view_card(deck_name, card_term):
             pass
             # card = update_card(deck_name, card_term, mp4_keep, url_suffix)
     else:
-        card = get_card(deck_name, card_term)
+        card = get_card(deck_name, card_term, user_id=current_user.id)
     return render_template("viewCard.html", card=card, deck_name=deck_name, email=current_user.email)
 
 
-@main.route('/<string:deck_name>/select_term', methods=['POST'])
+@main.route('/decks/<string:deck_name>/select_term', methods=['POST'])
 @login_required
 def select_term(deck_name):
     logging.info('HANDLING POST REQUEST TO CREATE NEW CARD')
@@ -143,13 +129,8 @@ def select_term(deck_name):
                                results=results, email=current_user.email)
 
 
-# TODO!!! check all instances of get_media and ensure that they are using
-# url_suffix if necessary, currently videos are not showing up for run
-
-
 # TODO: perhaps make the new_term parameter hidden from the url somehow?
-# TODO: the mp4 links are incorrect repeats https://signingsavvy...
-@main.route('/<string:deck_name>/select_media/<string:new_term>',
+@main.route('/decks/<string:deck_name>/select_media/<string:new_term>',
            methods=['POST'])
 @login_required
 def select_media(deck_name, new_term):
@@ -168,10 +149,19 @@ def select_media(deck_name, new_term):
 
 
 ####### helper functions #######
-def get_card(deck_name, card_term):
-    cards = Card.query.filter(
-        db.and_(Card.deck.has(name=deck_name),
-                Card.english == card_term)).all()
+def get_deck(deck_name, user_id):
+    deck = db.session.query(Deck).filter(
+        db.and_(Deck.user_id==user_id,
+                Deck.name==deck_name)).first()
+    return deck
+
+def get_all_cards_in_deck(deck_name, user_id):
+    deck = get_deck(deck_name, user_id)
+    cards = db.session.query(Card).filter(Card.deck == deck).all()
+    return cards
+    
+def get_card(deck_name, card_term, user_id):
+    cards = get_all_cards_in_deck(deck_name, user_id)
     if cards == None:
         raise Exception("The card " + card_term + " doesn't exist")
         # TODO: maybe redirect to add card page?
@@ -184,7 +174,7 @@ def get_card(deck_name, card_term):
 
 #TODO: add description
 def update_card(deck_name, card_term, mp4_keep, url_suffix=None):
-    card = get_card(deck_name, card_term)
+    card = get_card(deck_name, card_term, user_id=current_user.id)
     # TODO: update this function
     card.media = idx_to_links(card_term, url_suffix, mp4_keep)
     # links = get_media(card_term, url_suffix)[0]

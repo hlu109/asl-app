@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block body %}
 <header>
   <!-- back button to go to deck view -->
-  <form action="/{{deck_name}}">
+  <form action="/decks/{{deck_name}}">
     <button class="icon_button" type="submit" style="float: left;">
       <i class="fa-solid fa-xmark"></i>
     </button>
@@ -58,7 +58,7 @@
 
   <!-- quality buttons -->
   <div id="quality_buttons">
-    <form action="/{{deck_name}}/practice" method="POST">
+    <form action="/decks/{{deck_name}}/practice" method="POST">
       <button type="submit" name="quality-term" value="5-{{term}}">
         5: Perfect (Easy)
       </button>

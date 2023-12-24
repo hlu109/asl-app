@@ -76,7 +76,7 @@
   function finish() {
     const form = document.createElement("form");
     form.method = "POST";
-    form.action = "/{{deck_name}}/{{term}}";
+    form.action = "/decks/{{deck_name}}/{{term}}";
 
     const field1 = document.createElement("input");
     field1.type = "hidden";

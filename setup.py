@@ -46,9 +46,12 @@ def create_app():
     inspector = sqlalchemy.inspect(engine)
 
     re_create_database = False # only for debugging 
+    teardown = False # only for debugging  
 
     if re_create_database:
         with app.app_context():
+            if teardown:
+                tear_down()
             db.create_all()
             app.logger.info('re create_all database')
             
