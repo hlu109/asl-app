@@ -27,8 +27,8 @@ def create_app():
     # Check if the database needs to be initialized
     engine = sqlalchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     inspector = sqlalchemy.inspect(engine)
-    if True:
-        # if not inspector.has_table("card") and not inspector.has_table("deck"):
+    
+    if not inspector.has_table("card") and not inspector.has_table("deck"):
         with app.app_context():
             tear_down()
             # db.drop_all()
