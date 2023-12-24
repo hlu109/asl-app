@@ -1,13 +1,22 @@
 {% extends 'base.html' %} {% block body %}
-<div class="content">
-
-  <form action="/decks">
+<header>
+  <!-- back button to go to deck view -->
+  <form action="/{{deck_name}}">
     <button class="icon_button" type="submit" style="float: left;">
       <i class="fa-solid fa-xmark"></i>
     </button>
   </form>
+
+  <!-- profile button -->
+  <!-- TODO: we might want to remove this from the practice view -->
+  <!-- <button id="profile_button" type="submit" style="float: right;">
+    <i class="fa-solid fa-user"></i> username
+  </button> -->
+</header>
+
+<div class="content">
   
-  <div style="margin-left: 50px">
+  <div style="margin: auto 10%; text-align: justify;">
     Try to produce the sign(s) for this term. Verify by showing the back of this
     flashcard, then select the correctness and quality of your response to
     proceed.

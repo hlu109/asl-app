@@ -4,35 +4,39 @@
 {% endblock %} {% block body %}
 
 <div class="content">
-  <p>
-    Select at least one ASL sign variation. you would like on the flashcard.
-    Click 'Finish Card' at the bottom of the page when done.
-  </p>
+  <div class="section" style="width: 410px;">
+    <p>
+      Select at least one ASL sign variation you would like on the flashcard.
+    </p>
+  </div>
 
-  {% for i in range(mp4s[0]|length) %} {% set mp4 = mp4s[0][i] %}
-  <br />
-  <script>
-    console.log("mp4 link");
-    console.log("{{mp4}}");
-    var addButton = document.createElement("input");
-    addButton.id = "{{i}}";
-    addButton.type = "button";
-    addButton.style.backgroundColor = "orange";
-    addButton.value = "Add to Card";
+  <div id="media_selection_section">
+    {% for i in range(mp4s[0]|length) %} {% set mp4 = mp4s[0][i] %}
+    <script>
+      console.log("mp4 link");
+      console.log("{{mp4}}");
+      // create button
+      var addButton = document.createElement("button");
+      addButton.id = "{{i}}";
+      addButton.type = "button";
+      addButton.className = "media_deselected";
+      // put the video inside the button
+      addButton.innerHTML = '<video muted onmouseover="this.play()" onmouseout="this.pause()" class="video_selection"> \
+            <source src="{{mp4}}" type="video/mp4" /> \
+          </video>';
 
-    document.getElementsByClassName("content")[0].appendChild(addButton);
-  </script>
+      // add the button as a nested element in the section div
+      document.getElementById("media_selection_section").appendChild(addButton);
+    </script>
+    {% endfor %}
+  </div>
 
-  <br />
-  <video width="400" controls>
-    <source src="{{mp4}}" type="video/mp4" />
-  </video>
-  <br />
 
-  {% endfor %}
 
   <!-- TODO: add verification that at least one video is selected -->
-  <button type="button" onclick="finish()">Finish Card</button>
+  <div >
+    <button id="done_button" type="button" onclick="finish()" style="float: right;">Done</button>
+  </div>
 
   {% set num_media = mp4s[0]|length %}
   <script>
@@ -55,14 +59,15 @@
 <script>
   function add_media(i) {
     el = document.getElementById(i);
-    if (el.style.backgroundColor == "orange") {
-      el.style.backgroundColor = "lightgreen";
-      el.value = "Remove from Card";
+    if (mp4_keep[i] == 0) {
+      el.className = "media_selected";
+      // el.style.backgroundColor = "lightgreen";
+      // el.innerHTML = '<i class="fa-regular fa-square-check"></i>';
       mp4_keep[i] = 1;
       console.log("list", mp4_keep);
     } else {
-      el.style.backgroundColor = "orange";
-      el.value = "Add to Card";
+      el.className = "media_deselected";
+      // el.innerHTML = '<i class="fa-regular fa-square"></i>';
       mp4_keep[i] = 0;
       console.log("list", mp4_keep);
     }

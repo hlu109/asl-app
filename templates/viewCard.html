@@ -1,11 +1,21 @@
 {% extends 'base.html' %} {% block head %}
 <title>View card</title>
 {% endblock %} {% block body %}
+<header>
+  <!-- button to go back to deck -->
+  <form action="/{{deck_name}}">
+    <button type="submit" class="back_button"><i class="fa-solid fa-box-archive"></i> Deck</button>
+  </form>
+
+  <!-- profile button -->
+  <!-- TODO: add popup; also maybe move this button to a base template or header -->
+  <button id="profile_button" type="submit" style="float: right;">
+    <i class="fa-solid fa-user"></i> username
+  </button>
+</header>
+
 <div class="content">
   {% set term = card.english %}
-  <form action="/{{deck_name}}">
-    <button type="submit"><i class="fa-solid fa-box-archive"></i> Deck</button>
-  </form>
 
   <div class="card_view_outer">
     <div class="card_view_inner">

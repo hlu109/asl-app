@@ -1,13 +1,23 @@
 {% extends 'base.html' %} {% block head %}
 <title>View cards in deck</title>
 {% endblock %} {% block body %}
-<div class="content">
+<header>
+  <!-- back button to go to all decks -->
   <form action="/decks">
-    <button type="submit"><i class="fa-solid fa-house"></i> Home</button>
+    <button type="submit" class="back_button"><i class="fa-solid fa-house"></i> Home</button>
   </form>
+
+  <!-- profile button -->
+  <!-- TODO: add popup; also maybe move this button to a base template or header -->
+  <button id="profile_button" type="submit" style="float: right;">
+    <i class="fa-solid fa-user"></i> username
+  </button>
+</header>
+
+<div class="content">
   <h1>{{deck_name}}</h1>
 
-  <div class="section" style="height: 60px; border: 0px solid black ;">
+  <div class="create_new_header">
 
     <div style="float: left; margin-top: 11px;">
       <!-- vertical-align: bottom is not working -->
@@ -43,9 +53,10 @@
       <tr>
         <td>
           <form action="/{{deck_name}}/{{card.english}}">
-            <button class="table_entry" type="submit">
-              <!-- <div style="float: left; padding: auto 10px auto 10px;">{{ card.english }}</div> -->
-              {{ card.english }}
+            <button class="card_entry" type="submit">
+              <span class="card_entry_term">
+                {{ card.english }}
+              </span>
               
               <div class="video_crop_container">
                 <video class="video_crop" width="200" muted onmouseover="this.play()" onmouseout="this.pause()">
@@ -75,20 +86,5 @@
     </form> -->
 </div>
 
-<script>
-  // const videos = document.querySelectorAll('.video_crop');
-
-  // videos.forEach(video => {
-  //   video.addEventListener('mouseenter', () => {
-  //     video.play();
-  //   });
-    
-  //   video.addEventListener('mouseleave', () => {
-  //     video.pause();
-  //     // video.currentTime = 0;
-  //   });
-  // });
-
-</script>
 {% endblock %}
 

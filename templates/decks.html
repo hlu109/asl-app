@@ -1,44 +1,89 @@
 {% extends 'base.html' %} {% block head %}
 <title>Deck View</title>
 {% endblock %} {% block body %}
-<div class="content">
+<header>
+  <!-- back button to log-in page -->
   <form action="/">
-    <button type="submit">Return to homepage</button>
+    <button type="submit" class="back_button">
+      <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>
+    </button>
   </form>
 
+  <!-- profile button -->
+  <!-- TODO: add popup; also maybe move this button to a base template or header -->
+  <button id="profile_button" type="submit" style="float: right;">
+    <i class="fa-solid fa-user"></i> username
+  </button>
+</header>
+
+<div class="content">
   <h1>Decks:</h1>
 
-  <div class="section">
-    <h2>Create new deck</h2>
-    Enter deck name:
+  <div class="create_new_header">
+    <div style="float: right; text-align: left;">
+      Create new deck:
+      <form action="/decks" method="POST">
+        <input type="text" name="new_deck_name" id="new_deck_name" />
+          <button class="icon_button" type="submit">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Create new deck:
     <form action="/decks" method="POST">
       <input type="text" name="new_deck_name" id="new_deck_name" />
 
       <input type="submit" value="create!" />
-    </form>
+    </form> -->
   </div>
 
   <div class="section">
-    <h2>Your decks</h2>
+    <hr>
     <table>
       <tr>
         <th>Name</th>
-        <th>Size</th>
-        <th>Actions</th>
+        <th style="width: 75px;">Actions</th>
+        <!-- TODO: the action buttons get weirdly wrapped if the window is too narrow -->
       </tr>
       {% for deck in decks %}
       <tr>
-        <td>{{ deck.name }}</td>
-        <td style="text-align: center">{{ deck.size }}</td>
+        
         <td>
           <form action="/{{deck.name}}">
-            <button type="submit">View deck</button>
+            <button class="deck_entry" type="submit">
+              {{ deck.name }}
+              <br>
+              <small>
+                <!-- &nbsp; &nbsp;  -->
+                {{ deck.size }}
+                {% if deck.size != 1 %}
+                cards
+                {% else %}
+                card
+                {% endif %}
+              </small>
+              
+              </button>
+          </form>
+        </td>
+        <!-- <td style="text-align: center">{{ deck.size }}</td> -->
+        <td>
+          <form action="/{{deck.name}}">
+            <button type="submit" title="View deck" class="icon_button" style="float: left;">
+              <i class="fa-regular fa-eye"></i>
+            </button>
           </form>
 
           <form action="/{{deck.name}}/practice">
-            <button type="submit">Practice</button>
+            <button type="submit" title="Practice" class="icon_button" style="float: left;">
+              <i class="fa-solid fa-circle-play"></i> 
+            </button>
           </form>
-          <br />
+
+          <!-- <form action=""> -->
+            <button type="submit" class="menu_button" style="float: left;"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+          <!-- </form> -->
         </td>
       </tr>
       {% endfor %}
