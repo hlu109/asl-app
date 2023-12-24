@@ -11,32 +11,35 @@
     <div id="login_block">
       <!-- warning for incorrect credentials -->
       {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="notification is-danger">
-                {{ messages[0] }}
-            </div>
-        {% endif %}
+      {% if messages %}
+      <div class="notification is-danger">
+        {{ messages[0] }}
+      </div>
+      {% endif %}
       {% endwith %}
 
       <form method="POST" action="/login">
         <div class="field">
           <div class="control">
-              <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
+            <input class="input is-large" type="email" name="email"
+              placeholder="Email" autofocus>
           </div>
         </div>
 
         <div class="field">
           <div class="control">
-              <input class="input is-large" type="password" name="password" placeholder="Password">
+            <input class="input is-large" type="password" name="password"
+              placeholder="Password">
           </div>
         </div>
         <div class="field">
           <label class="checkbox">
-              <input type="checkbox" name="remember">
-              Remember me
+            <input type="checkbox" name="remember">
+            Remember me
           </label>
         </div>
-        <button class="button is-block is-info is-large is-fullwidth">Login</button>
+        <button
+          class="button is-block is-info is-large is-fullwidth">Login</button>
       </form>
     </div>
 
@@ -45,29 +48,32 @@
       <!-- warning notification if attemped signup with email already in use -->
       {% with messages = get_flashed_messages() %}
       {% if messages %}
-          <div class="notification is-danger">
-              {{ messages[0] }}
-          </div>
+      <div class="notification is-danger">
+        {{ messages[0] }}
+      </div>
       {% endif %}
       {% endwith %}
 
       <!-- signup form -->
       <form method="POST" action="/signup">
         <div class="field">
-            <div class="control">
-                <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
-            </div>
+          <div class="control">
+            <input class="input is-large" type="email" name="email"
+              placeholder="Email" autofocus>
+          </div>
         </div>
 
         <div class="field">
-            <div class="control">
-                <input class="input is-large" type="password" name="password" placeholder="Password">
-            </div>
+          <div class="control">
+            <input class="input is-large" type="password" name="password"
+              placeholder="Password">
+          </div>
         </div>
 
         <br>
 
-        <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
+        <button class="button is-block is-info is-large is-fullwidth">Sign
+          Up</button>
       </form>
     </div>
   </div>
@@ -75,32 +81,34 @@
   <div class="content">
     <p>
       This is a proof-of-concept web application for digital flashcards tailored
-      for practicing ASL (American Sign Language). As a minimal working example,
-      it allows users to create new flashcard decks, populate the decks with
-      flashcards, choose among multiple ASL sign variations for each term, and
-      practice the flashcards using the spaced-repetition technique for better
-      information retention.
+      for practicing ASL (American Sign Language). Users can create new
+      flashcard decks, populate the decks with flashcards, choose among multiple
+      ASL sign variations for each term, and practice the flashcards using the
+      spaced-repetition technique for better information retention.
     </p>
 
     <p>
       Existing general-purpose flashcard applications are not well-suited for
-      efficiently managing large quantities of visual elements, which is necessary
+      efficiently managing large quantities of visual elements, which is
+      necessary
       to ASL as a visual language. This app solves that issue by connecting
-      directly to an ASL dictionary (<a href="https://www.signingsavvy.com/"
-        >signingsavvy.com</a
-      >). Furthermore, while there are a few ASL flashcard apps already out there,
+      directly to an ASL dictionary (<a
+        href="https://www.signingsavvy.com/">signingsavvy.com</a>). Furthermore,
+      while there are a few ASL flashcard apps already out there,
       we do not know of any that implement spaced repetition, which is common in
       many general-purpose flashcard or language apps like Anki or Duolingo.
     </p>
     <p>
-      This app is developed using Flask and hosted on AWS. Find the source code on
+      This app is developed using Flask and hosted on AWS. Find the source code
+      on
       <a href="https://github.com/hlu109/asl-app">github</a>.
     </p>
 
     <p>
       Disclaimer: The developers of this app are both Hearing. This is simply a
       project to fill a personal niche problem - practicing ASL vocabulary at a
-      customized pace - and is not intended to teach ASL, replace a language class
+      customized pace - and is not intended to teach ASL, replace a language
+      class
       with a qualified instructor, or substitute for immersion in the Deaf/HoH
       community.
     </p>
