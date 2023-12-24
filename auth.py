@@ -36,7 +36,7 @@ def signup():
     user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
 
     if user: # if a user is found, we want to redirect back to signup page so user can try again
-        flash('Email address already exists')
+        flash('Email address already exists.')
         return redirect(url_for('main.index'))
 
     # create a new user with the form data. Hash the password so the plaintext version isn't saved.
@@ -46,6 +46,8 @@ def signup():
     db.session.add(new_user)
     db.session.commit()
 
+    # autoamtically log the user in this time 
+    login_user(new_user)
     return redirect(url_for('main.view_all_decks'))
 
 @auth.route('/logout')

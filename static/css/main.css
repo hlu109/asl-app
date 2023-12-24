@@ -314,3 +314,19 @@ video.video_selection {
     margin-left: auto;
     margin-right: auto;
 }
+
+#auth_block {
+    width: 50%;
+    height: 150px;
+    /* border: 1px solid black; */
+    margin: auto;
+
+}
+
+#login_block {
+    float: left;
+}
+
+#signup_block {
+    float: right;
+}
