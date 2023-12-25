@@ -1,4 +1,4 @@
-from .db import db
+from db import db
 from datetime import datetime, timedelta
 from supermemo2 import SMTwo
 

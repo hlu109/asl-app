@@ -1,5 +1,5 @@
-from .setup import create_app
-from .db import db
+from setup import create_app
+from db import db
 
 import logging
 

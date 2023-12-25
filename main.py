@@ -1,9 +1,9 @@
-from .db import db
+from db import db
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
 from flask_login import login_required, current_user
-from .deck import Deck
-from .card import Card
-from . import webscrape
+from deck import Deck
+from card import Card
+import webscrape
 import logging
 
 

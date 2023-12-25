@@ -6,9 +6,9 @@ import unittest
 import logging
 import random
 
-from .card import Card, Media, History
-from .deck import Deck
-from .db import db
+from card import Card, Media, History
+from deck import Deck
+from db import db
 
 from webscrape import get_media
 from datetime import datetime, date

@@ -1,8 +1,8 @@
-from .deck import Deck
-from .card import Card
+from deck import Deck
+from card import Card
 import webscrape
 
-from .db import db
+from db import db
 
 
 def make_test_deck():

@@ -6,10 +6,10 @@ from logging.handlers import RotatingFileHandler
 from flask.logging import default_handler
 from flask_login import LoginManager
 
-from .auth import auth as auth_blueprint
-from .main import main as main_blueprint
-from .db import db
-from .user import User
+from auth import auth as auth_blueprint
+from main import main as main_blueprint
+from db import db
+from user import User
 
 def create_app():
     app = Flask(__name__)
