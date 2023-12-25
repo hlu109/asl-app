@@ -5,18 +5,20 @@
   <h1>Flash ASL</h1>
 
   <div id="auth_block">
-    <h3 style="text-align: center; margin-top: 0px;">Log in or sign up</h3>
+    <h3 style="text-align: center; margin-top: 0px; margin-bottom: 5px;">
+      Log in or sign up
+    </h3>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    <!-- when with_categories=True, the return value will be a list of tuples in the form (category, message) -->
 
     <!-- login block -->
     <div id="login_block">
       <!-- warning for incorrect credentials -->
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
       <div class="notification is-danger">
-        {{ messages[0] }}
+        {% if messages and messages[0][0] == "login" %}
+        {{ messages[0][1] }}
+        {% endif %}
       </div>
-      {% endif %}
-      {% endwith %}
 
       <form method="POST" action="/login">
         <div class="field">
@@ -46,13 +48,11 @@
     <!-- signup block -->
     <div id="signup_block">
       <!-- warning notification if attemped signup with email already in use -->
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
       <div class="notification is-danger">
-        {{ messages[0] }}
+        {% if messages and messages[0][0] == "signup" %}
+        {{ messages[0][1] }}
+        {% endif %}
       </div>
-      {% endif %}
-      {% endwith %}
 
       <!-- signup form -->
       <form method="POST" action="/signup">
@@ -76,6 +76,8 @@
           Up</button>
       </form>
     </div>
+    {% endwith %}
+
   </div>
 
   <div class="content">
