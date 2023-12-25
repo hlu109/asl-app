@@ -15,5 +15,4 @@ db.session.commit()
 
 if __name__ == "__main__":
     # TODO where can we put this in the file? bottom? 
-    
-    app.run(debug=True)
+    app.run()

@@ -5,6 +5,7 @@ certifi==2021.10.8
 charset-normalizer==2.0.9
 click==8.0.3
 Flask==2.0.2
+Flask-Login==0.6.3
 Flask-SQLAlchemy==2.5.1
 Flask-Testing==0.8.1
 greenlet==1.1.2

@@ -55,7 +55,7 @@ def create_app():
             db.create_all()
             app.logger.info('re create_all database')
             
-    elif not inspector.has_table("card") and not inspector.has_table("deck"):
+    elif not inspector.has_table("card") or not inspector.has_table("deck") or not inspector.has_table("user"):
         with app.app_context():
             tear_down()
             # db.drop_all()
@@ -66,7 +66,7 @@ def create_app():
 
             app.logger.info('Initialized the database!')
     else:
-        app.logger.info('Database already contains the cards and decks tables.')
+        app.logger.info('Database already contains the tables for users, decks, and cards.')
 
     return app
 
