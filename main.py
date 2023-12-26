@@ -1,5 +1,5 @@
 from db import db
-from flask import Flask, render_template, request, redirect, url_for, Blueprint
+from flask import Flask, render_template, request, redirect, url_for, Blueprint, flash
 from flask_login import login_required, current_user
 from deck import Deck
 from card import Card
@@ -117,13 +117,14 @@ def select_term(deck_name):
     results = webscrape.get_terms(new_term)
 
     if results == None:  # no search results
-        return render_template("wordNotFound.html", email=current_user.email)
+        flash("Word not found")
+        return redirect(url_for('main.view_deck', deck_name=deck_name))
     elif len(results) == 1:
         # if the word has a unique result, redirect to select_media
         return render_template("redirectToSelectMedia.html",
                                deck_name=deck_name,
                                term=new_term, email=current_user.email)
-    else:
+    else: # multiple results
         return render_template("selectTerm.html",
                                deck_name=deck_name,
                                results=results, email=current_user.email)

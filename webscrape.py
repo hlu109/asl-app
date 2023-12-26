@@ -28,12 +28,16 @@ def get_terms(word, source='SIGNINGSAVVY'):
                 # word does not exist
                 return None
         
+        # multiple search results 
         results = []
         terms_li = search_results_div.ul.find_all('li')
 
         for term in terms_li:
-            description = term.em.text.replace("&quot", "\"").split("\"")[1]
-            results.append((term.a.text, term.a['href'], description))
+            if term.em is not None:
+                description = term.em.text.replace("&quot", "\"").split("\"")[1]
+            else:
+                description = None
+            results.append((term.a.text.title(), term.a['href'], description))
     
     return results
 

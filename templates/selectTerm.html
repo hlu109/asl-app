@@ -4,21 +4,34 @@
 {% endblock %} {% block body %}
 
 <div class="content">
-  
+
   <div id="select_term_list">
     <p>Select the English variation of the desired term:</p>
-  
-    {% for i in range(results|length) %} {% set result = results[i] %} {% set term
-    = result[0] %} {% set url_suffix = result[1] %} {% set description = result[2]
-    %}
+
+    <!-- logic to include or exclude term description -->
+    {% for i in range(results|length) %} {% set result = results[i] %}
+    {% set term = result[0] %}
+    {% set url_suffix = result[1] %}
+    {% set description = result[2] %}
+    {% if description is not none %}
     <form
       action="/decks/{{deck_name}}/select_media/{{term}} ({{description}})"
-      method="POST"
-    >
-      <button id="select_term_button" type="submit" name="url_suffix" value="{{url_suffix}}">
+      method="POST">
+      <button id="select_term_button" type="submit" name="url_suffix"
+        value="{{url_suffix}}">
         {{term}} : as in "{{description}}"
       </button>
     </form>
+    {% else %}
+    <form
+      action="/decks/{{deck_name}}/select_media/{{term}}"
+      method="POST">
+      <button id="select_term_button" type="submit" name="url_suffix"
+        value="{{url_suffix}}">
+        {{term}}
+      </button>
+    </form>
+    {% endif %}
     {% endfor %}
   </div>
 </div>

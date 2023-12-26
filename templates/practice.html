@@ -15,7 +15,7 @@
 </header>
 
 <div class="content">
-  
+
   <div style="margin: auto 10%; text-align: justify;">
     Try to produce the sign(s) for this term. Verify by showing the back of this
     flashcard, then select the correctness and quality of your response to
@@ -24,20 +24,24 @@
 
   <div id="card_practice_container">
 
-    <div class="card_practice_outer" id="card_front" onclick="flip_card()" style="visibility: visible">
+    <div class="card_practice_outer" id="card_front" onclick="flip_card()"
+      style="visibility: visible">
       <!-- front of card -->
       <div class="card_practice_inner">
         {% set term = card.english %}
         <h1>{{term}}</h1>
       </div>
     </div>
-      
-    <div class="card_practice_outer" id="card_back" onclick="flip_card()" style="visibility: hidden">
+
+    <div class="card_practice_outer" id="card_back" onclick="flip_card()"
+      style="visibility: hidden">
       <!-- back of card -->
       <div class="card_practice_inner">
-        {% for i in range(card.media|length) %} {% set mp4 = card.media[i].link %}
+        {% for i in range(card.media|length) %} {% set mp4 = card.media[i].link
+        %}
         <div>
-          <video width="400" muted onmouseover="this.play()" onmouseout="this.pause()">
+          <video width="400" muted onmouseover="this.play()"
+            onmouseout="this.pause(); this.currentTime = 0;">
             <source src="{{mp4}}" type="video/mp4" />
           </video>
         </div>
@@ -48,7 +52,8 @@
   </div>
 
   <div class="hint_container">
-    <button type="button" class="icon_button" title="Toggle hint" style="float: left;" onclick="toggle_hint()">
+    <button type="button" class="icon_button" title="Toggle hint"
+      style="float: left;" onclick="toggle_hint()">
       <i class="fa-regular fa-lightbulb"></i>
     </button>
     <div class="hint" id="hint" style="visibility: hidden">

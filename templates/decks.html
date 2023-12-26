@@ -19,15 +19,20 @@
 <div class="content">
   <h1>Decks:</h1>
 
-  <div class="create_new_header">
-    <div style="float: right; text-align: left;">
-      Create new deck:
-      <form action="/decks" method="POST">
-        <input type="text" name="new_deck_name" id="new_deck_name" placeholder="Deck name"/>
-          <button class="icon_button" type="submit">
-          <i class="fa-solid fa-plus"></i>
-        </button>
-      </form>
+  <div class="section">
+    <div class="create_new_header">
+      <div class="create_form_outer">
+        <div class="create_form_inner">
+          Create deck:
+          <form action="/decks" method="POST">
+            <input class="add_entry" type="text" name="new_deck_name"
+              id="new_deck_name" placeholder="Deck name" />
+            <button class="icon_button" type="submit">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -41,7 +46,7 @@
       </tr>
       {% for deck in decks %}
       <tr>
-        
+
         <td>
           <form action="/decks/{{deck.name}}">
             <button class="deck_entry" type="submit">
@@ -56,26 +61,29 @@
                 card
                 {% endif %}
               </small>
-              
-              </button>
+
+            </button>
           </form>
         </td>
         <!-- <td style="text-align: center">{{ deck.size }}</td> -->
         <td>
           <form action="/decks/{{deck.name}}">
-            <button type="submit" title="View deck" class="icon_button" style="float: left;">
+            <button type="submit" title="View deck" class="icon_button"
+              style="float: left;">
               <i class="fa-regular fa-eye"></i>
             </button>
           </form>
 
           <form action="/decks/{{deck.name}}/practice">
-            <button type="submit" title="Practice" class="icon_button" style="float: left;">
-              <i class="fa-solid fa-circle-play"></i> 
+            <button type="submit" title="Practice" class="icon_button"
+              style="float: left;">
+              <i class="fa-solid fa-circle-play"></i>
             </button>
           </form>
 
           <!-- <form action=""> -->
-            <button type="submit" class="menu_button" style="float: left;"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+          <button type="submit" class="menu_button" style="float: left;"><i
+              class="fa-solid fa-ellipsis-vertical"></i></button>
           <!-- </form> -->
         </td>
       </tr>

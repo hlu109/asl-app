@@ -4,7 +4,8 @@
 <header>
   <!-- back button to go to all decks -->
   <form action="/decks">
-    <button type="submit" class="back_button"><i class="fa-solid fa-house"></i> Home</button>
+    <button type="submit" class="back_button"><i class="fa-solid fa-house"></i>
+      Home</button>
   </form>
 
   <!-- profile button -->
@@ -17,27 +18,38 @@
 <div class="content">
   <h1>{{deck_name}}</h1>
 
-  <div class="create_new_header">
+  <div class="section">
+    <div class="create_new_header">
+      <div style="float: left; margin-top: 11px;">
+        <!-- vertical-align: bottom is not working -->
+        <!-- kinda janky that we have to manually hardcode it -->
+        <form action="/decks/{{deck_name}}/practice">
+          <button type="submit" id="practice_button">
+            <i class="fa-solid fa-circle-play"></i>
+            Practice
+          </button>
+        </form>
+      </div>
 
-    <div style="float: left; margin-top: 11px;">
-      <!-- vertical-align: bottom is not working -->
-      <!-- kinda janky that we have to manually hardcode it -->
-      <form action="/decks/{{deck_name}}/practice">
-        <button type="submit" id="practice_button">
-          <i class="fa-solid fa-circle-play"></i> 
-          Practice
-        </button>
-      </form>
-    </div>
-
-    <div style="float: right; text-align: left;">
-      Add new card:
-      <form action="/decks/{{deck_name}}/select_term" method="POST">
-        <input type="text" name="new_term" id="new_term" placeholder="English term"/>
-        <button class="icon_button" type="submit">
-          <i class="fa-solid fa-plus"></i>
-        </button>
-      </form>
+      <div class="create_form_outer">
+        <div class="create_form_inner">
+          Add card:
+          <form action="/decks/{{deck_name}}/select_term" method="POST">
+            <input class="add_entry" type="text" name="new_term" id="new_term"
+              placeholder="English term" />
+            <button class="icon_button" type="submit">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </form>
+          <div class="notification">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {{ messages[0] }}
+            {% endif %}
+            {% endwith %}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -57,18 +69,21 @@
               <span class="card_entry_term">
                 {{ card.english }}
               </span>
-              
+
               <div class="video_crop_container">
-                <video class="video_crop" width="200" muted onmouseover="this.play()" onmouseout="this.pause()">
+                <video class="video_crop" width="200" muted
+                  onmouseover="this.play()"
+                  onmouseout="this.pause(); this.currentTime = 0;">
                   <source src="{{card.media[0].link}}" type="video/mp4" />
-                </video>  
+                </video>
               </div>
             </button>
           </form>
         </td>
         <td style="vertical-align: top;">
           <!-- <form action="/decks/{{deck_name}}/{{card.english}}"> -->
-            <button type="submit"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+          <button type="submit"><i
+              class="fa-solid fa-ellipsis-vertical"></i></button>
           <!-- </form> -->
         </td>
       </tr>
@@ -79,4 +94,3 @@
 </div>
 
 {% endblock %}
-
