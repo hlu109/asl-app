@@ -31,11 +31,9 @@
     {% endfor %}
   </div>
 
-
-
-  <!-- TODO: add verification that at least one video is selected -->
-  <div >
-    <button id="done_button" type="button" onclick="finish()" style="float: right;">Done</button>
+  <div>
+    <button id="done_button" type="button" onclick="finish()"
+      style="float: right;">Done</button>
   </div>
 
   {% set num_media = mp4s[0]|length %}
@@ -74,30 +72,47 @@
   }
 
   function finish() {
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = "/decks/{{deck_name}}/{{term}}";
+    // check that at least one video is selected, otherwise pass a warning
+    var num_selected = mp4_keep.reduce((a,b)=>a+b);
+    console.log("num_selected", num_selected);
+    if (num_selected == 0) {
+      // if there is already a warning, don't add a second copy 
+      if (document.getElementsByClassName("warning").length == 0) {
+        var warning = document.createElement("div");
+        warning.className = "warning";
+        warning.innerHTML = "At least one video must be selected";
+        var content = document.getElementsByClassName("content")[0];
+        var parentNode = content.parentNode;
+        parentNode.insertBefore(warning, content);
+      }
+      window.scrollTo(0, 0);
+    } else {
+      // submit post request
+      const form_media = document.createElement("form");
+      form_media.method = "POST";
+      form_media.action = "/decks/{{deck_name}}/{{term}}";
 
-    const field1 = document.createElement("input");
-    field1.type = "hidden";
-    field1.name = "mp4_keep";
-    field1.value = mp4_keep.toString();
+      const field1 = document.createElement("input");
+      field1.type = "hidden";
+      field1.name = "mp4_keep";
+      field1.value = mp4_keep.toString();
 
-    const field2 = document.createElement("input");
-    field2.type = "hidden";
-    field2.name = "url_suffix";
-    field2.value = "{{url_suffix}}";
+      const field2 = document.createElement("input");
+      field2.type = "hidden";
+      field2.name = "url_suffix";
+      field2.value = "{{url_suffix}}";
 
-    const field3 = document.createElement("input");
-    field3.type = "hidden";
-    field3.name = "new_card";
-    field3.value = "True";
+      const field3 = document.createElement("input");
+      field3.type = "hidden";
+      field3.name = "new_card";
+      field3.value = "True";
 
-    form.appendChild(field1);
-    form.appendChild(field2);
-    form.appendChild(field3);
-    document.body.appendChild(form);
-    form.submit();
+      form_media.appendChild(field1);
+      form_media.appendChild(field2);
+      form_media.appendChild(field3);
+      document.body.appendChild(form_media);
+      form_media.submit();
+    }
   }
 </script>
 

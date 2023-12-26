@@ -3,6 +3,11 @@ header {
     /* margin-bottom: 1px; */
 }
 
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
 table {
     /* border: 1px solid black; */
     margin-top: -10px;
@@ -347,4 +352,12 @@ video.video_selection {
 
 .field {
     margin: 5px auto;
+}
+
+.warning {
+    background-color: rgba(204, 77, 3, 0.8);
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
 }
