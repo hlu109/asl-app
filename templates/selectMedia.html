@@ -77,8 +77,8 @@
     console.log("num_selected", num_selected);
     if (num_selected == 0) {
       // if there is already a warning, don't add a second copy 
-      if (document.getElementsByClassName("header").length == 0) {
-        var warning = document.createElement("div");
+      if (document.getElementsByClassName("warning").length == 0) {
+        var warning = document.createElement("header");
         warning.className = "warning";
         warning.innerHTML = "At least one video must be selected";
         var content = document.getElementsByClassName("content")[0];

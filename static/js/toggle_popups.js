@@ -9,7 +9,7 @@ window.onload = function () {
     window.addEventListener('click', ({ target }) => {
         // ignore if we clicked the popup toggle button
         const popup_button = target.closest('.popup_button');
-        console.log('popup_button', popup_button);
+        // console.log('popup_button', popup_button);
 
         // TODO: we have to check the associated popup that the toggle controls
         if (popup_button == null) {
