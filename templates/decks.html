@@ -10,10 +10,23 @@
   </form>
 
   <!-- profile button -->
-  <!-- TODO: add popup; also maybe move this button to a base template or header -->
-  <button id="profile_button" type="submit" style="float: right;">
+  <!-- TODO: maybe move this button to a base template or header -->
+  <button class="popup_button" id="profile_button" type="button"
+    style="float: right;"
+    onclick="togglePopup('profile_popup')">
     <i class="fa-solid fa-user"></i> {{email}}
   </button>
+
+  <!-- profile popup -->
+  <div class="popup" id="profile_popup">
+    <form action="/logout">
+      <button type="submit" class="back_button">
+        <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>
+        Log out
+      </button>
+    </form>
+  </div>
+
 </header>
 
 <div class="content">
@@ -41,7 +54,7 @@
     <table>
       <tr>
         <th>Name</th>
-        <th style="width: 75px;">Actions</th>
+        <th style="width: 40px;"> </th>
         <!-- TODO: the action buttons get weirdly wrapped if the window is too narrow -->
       </tr>
       {% for deck in decks %}
@@ -52,8 +65,8 @@
             <button class="deck_entry" type="submit">
               {{ deck.name }}
               <br>
+              <!-- display number of cards in each deck -->
               <small>
-                <!-- &nbsp; &nbsp;  -->
                 {{ deck.size }}
                 {% if deck.size != 1 %}
                 cards
@@ -65,15 +78,7 @@
             </button>
           </form>
         </td>
-        <!-- <td style="text-align: center">{{ deck.size }}</td> -->
-        <td>
-          <form action="/decks/{{deck.name}}">
-            <button type="submit" title="View deck" class="icon_button"
-              style="float: left;">
-              <i class="fa-regular fa-eye"></i>
-            </button>
-          </form>
-
+        <td style="vertical-align: top">
           <form action="/decks/{{deck.name}}/practice">
             <button type="submit" title="Practice" class="icon_button"
               style="float: left;">
@@ -81,14 +86,33 @@
             </button>
           </form>
 
-          <!-- <form action=""> -->
-          <button type="submit" class="menu_button" style="float: left;"><i
-              class="fa-solid fa-ellipsis-vertical"></i></button>
-          <!-- </form> -->
+          <!-- menu selection button -->
+          <button type="button" class="popup_button" id="menu_button"
+            onclick="togglePopup('menu_popup_{{ deck.name }}')"
+            style="float: left;">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+          </button>
+
+          <!-- menu popup -->
+          <div class="popup menu_popup" id="menu_popup_{{ deck.name }}">
+            <!-- edit button, delete button -->
+            <button type="submit" title="placeholder">
+              <i class="fa-solid fa-pencil"></i>
+              Edit
+            </button>
+            <button type="submit" title="placeholder">
+              <i class="fa-solid fa-trash-can"></i>
+              Delete
+            </button>
+          </div>
+
         </td>
       </tr>
       {% endfor %}
     </table>
   </div>
 </div>
+
+<script src="../static/js/toggle_popups.js"></script>
+
 {% endblock %}

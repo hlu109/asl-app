@@ -24,6 +24,7 @@ th {
 }
 
 td {
+    position: relative;
     /* border: 1px solid black; */
     /* padding: 0px; */
 }
@@ -390,5 +391,36 @@ input.add_entry {
     /* width: calc(min(calc(100% - 120px), calc(150px + 50px))); */
     float: right;
     text-align: left;
-    /* margin-left: 10px; */
+}
+
+.popup {
+    visibility: hidden;
+    display: block;
+}
+
+#profile_popup {
+    position: fixed;
+    top: 30px;
+    right: 10px;
+    z-index: 9;
+    max-width: 300px;
+    background-color: #eee;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+/* Toggle this class - hide and show the popup */
+.show {
+    /* display: block; */
+    visibility: visible;
+}
+
+.menu_popup {
+    /* border: 1px solid black; */
+    position: absolute;
+    right: -100px;
+    top: 0px;
+    width: 100px;
+    margin-left: 2px;
+    text-align: left;
 }

@@ -9,10 +9,22 @@
   </form>
 
   <!-- profile button -->
-  <!-- TODO: add popup; also maybe move this button to a base template or header -->
-  <button id="profile_button" type="submit" style="float: right;">
+  <!-- TODO: maybe move this button to a base template or header -->
+  <button class="popup_button" id="profile_button" type="button"
+    style="float: right;"
+    onclick="togglePopup('profile_popup')">
     <i class="fa-solid fa-user"></i> {{email}}
   </button>
+
+  <!-- profile popup -->
+  <div class="popup" id="profile_popup">
+    <form action="/logout">
+      <button type="submit" class="back_button">
+        <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>
+        Log out
+      </button>
+    </form>
+  </div>
 </header>
 
 <div class="content">
@@ -23,7 +35,8 @@
       <h1>{{term}}</h1>
 
       <div class="video_content">
-        {% for i in range(card.media|length) %} {% set mp4 = card.media[i].link
+        {% for i in range(card.media|length) %} {% set mp4 =
+        card.media[i].link
         %}
         <div>
           <!-- div is needed so that videos are stacked vertically -->
@@ -50,14 +63,7 @@
 
 </div>
 
-<script>
-  function toggle_hint() {
-    el = document.getElementById("hint");
-    if (el.style.visibility == "hidden") {
-      el.style.visibility = "visible";
-    } else {
-      el.style.visibility = "hidden";
-    }
-  }
-</script>
+<script src="../static/js/toggle_popups.js"></script>
+<script src="../static/js/toggle_hint.js"></script>
+
 {% endblock %}

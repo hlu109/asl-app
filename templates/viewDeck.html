@@ -9,10 +9,22 @@
   </form>
 
   <!-- profile button -->
-  <!-- TODO: add popup; also maybe move this button to a base template or header -->
-  <button id="profile_button" type="submit" style="float: right;">
+  <!-- TODO: maybe move this button to a base template or header -->
+  <button class="popup_button" id="profile_button" type="button"
+    style="float: right;"
+    onclick="togglePopup('profile_popup')">
     <i class="fa-solid fa-user"></i> {{email}}
   </button>
+
+  <!-- profile popup -->
+  <div class="popup" id="profile_popup">
+    <form action="/logout">
+      <button type="submit" class="back_button">
+        <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>
+        Log out
+      </button>
+    </form>
+  </div>
 </header>
 
 <div class="content">
@@ -80,11 +92,28 @@
             </button>
           </form>
         </td>
-        <td style="vertical-align: top;">
-          <!-- <form action="/decks/{{deck_name}}/{{card.english}}"> -->
-          <button type="submit"><i
-              class="fa-solid fa-ellipsis-vertical"></i></button>
-          <!-- </form> -->
+        <td style="vertical-align: top; position: relative;">
+          <!-- menu selection button -->
+          <button type="button" class="popup_button" id="menu_button"
+            onclick="togglePopup('menu_popup_{{ card.english }}')"
+            style="float: left;">
+            <!-- we need to generate a unique id for the menu button for each card -->
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+          </button>
+
+          <!-- menu popup -->
+          <div class="popup menu_popup" id="menu_popup_{{ card.english }}">
+            <!-- edit button, delete button -->
+            <button type="submit" title="placeholder">
+              <i class="fa-solid fa-pencil"></i>
+              Edit
+            </button>
+
+            <button type="submit" title="placeholder">
+              <i class="fa-solid fa-trash-can"></i>
+              Delete
+            </button>
+          </div>
         </td>
       </tr>
       {% endfor %}
@@ -92,5 +121,7 @@
 
   </div>
 </div>
+
+<script src="../static/js/toggle_popups.js"></script>
 
 {% endblock %}
