@@ -5,7 +5,7 @@ from deck import Deck
 from card import Card
 import webscrape
 import logging
-
+import pdb 
 
 # create blueprints 
 main = Blueprint('main', __name__)
@@ -162,7 +162,9 @@ def get_all_cards_in_deck(deck_name, user_id):
     return cards
     
 def get_card(deck_name, card_term, user_id):
-    cards = get_all_cards_in_deck(deck_name, user_id)
+    deck = get_deck(deck_name, user_id)
+    cards = db.session.query(Card).filter(
+        db.and_(Card.deck == deck, Card.english == card_term)).all()
     if cards == None:
         raise Exception("The card " + card_term + " doesn't exist")
         # TODO: maybe redirect to add card page?
