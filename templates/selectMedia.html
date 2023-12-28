@@ -90,7 +90,12 @@
       // submit post request
       const form_media = document.createElement("form");
       form_media.method = "POST";
-      form_media.action = "/decks/{{deck_name}}/{{term}}";
+      form_media.action = "/decks/{{deck_name}}";
+
+      const field_term = document.createElement("input");
+      field_term.type = "hidden";
+      field_term.name = "card_term";
+      field_term.value = "{{term}}";
 
       const field1 = document.createElement("input");
       field1.type = "hidden";
@@ -107,6 +112,7 @@
       field3.name = "new_card";
       field3.value = "True";
 
+      form_media.appendChild(field_term);
       form_media.appendChild(field1);
       form_media.appendChild(field2);
       form_media.appendChild(field3);

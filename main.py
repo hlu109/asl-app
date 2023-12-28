@@ -30,9 +30,31 @@ def view_all_decks():
     return render_template("decks.html", decks=all_decks, email=current_user.email)
 
 
-@main.route('/decks/<string:deck_name>')
+@main.route('/decks/<string:deck_name>', methods=["POST", "GET"])
 @login_required
 def view_deck(deck_name):
+    logging.info("are we here?")
+    if request.method == 'POST':
+        logging.info('HANDLING POST REQUEST TO ADD MEDIA')
+        if request.form['new_card'] == 'True':
+            card_term = request.form['card_term']
+            mp4_keep = request.form['mp4_keep'].split(",")
+            logging.info(mp4_keep)
+            url_suffix = request.form['url_suffix']
+            logging.info(url_suffix)
+            mp4s = idx_to_links(card_term, url_suffix, mp4_keep)
+            logging.info(mp4s)
+            deck = get_deck(deck_name, user_id=current_user.id)
+            logging.info(deck)
+            # TODO: add error handling
+            card = deck.add_card(card_term, mp4s)
+            logging.info(card)
+        else:  # in this case we'd be editing/updating an existing card
+            logging.info('inside else statement (should not get here)')
+            pass
+            # card = update_card(deck_name, card_term, mp4_keep, url_suffix)
+
+    # retrieve all cards in the deck and display it
     cards = get_all_cards_in_deck(deck_name, user_id=current_user.id)
 
     # TODO: add error handling
@@ -82,30 +104,10 @@ def practice(deck_name):
                                    card=next_card, email=current_user.email)
 
 
-@main.route('/decks/<string:deck_name>/<string:card_term>', methods=['POST', 'GET'])
+@main.route('/decks/<string:deck_name>/<string:card_term>')
 @login_required
 def view_card(deck_name, card_term):
-    if request.method == 'POST':
-        logging.info('HANDLING POST REQUEST TO ADD MEDIA')
-        if request.form['new_card'] == 'True':
-            logging.info('inside first if statement')
-            mp4_keep = request.form['mp4_keep'].split(",")
-            logging.info(mp4_keep)
-            url_suffix = request.form['url_suffix']
-            logging.info(url_suffix)
-            mp4s = idx_to_links(card_term, url_suffix, mp4_keep)
-            logging.info(mp4s)
-            deck = get_deck(deck_name, user_id=current_user.id)
-            logging.info(deck)
-            # TODO: add error handling
-            card = deck.add_card(card_term, mp4s)
-            logging.info(card)
-        else:  # in this case we'd be editing/updating an existing card
-            logging.info('inside else statement (should not get here)')
-            pass
-            # card = update_card(deck_name, card_term, mp4_keep, url_suffix)
-    else:
-        card = get_card(deck_name, card_term, user_id=current_user.id)
+    card = get_card(deck_name, card_term, user_id=current_user.id)
     return render_template("viewCard.html", card=card, deck_name=deck_name, email=current_user.email)
 
 
